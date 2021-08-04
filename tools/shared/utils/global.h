@@ -16,6 +16,14 @@
 #include "universal.h"
 #include <stdio.h>
 
+#define ARGS_NUMBER 2
+#define VECTLEN1 1
+#define NUMI_SIZE 4
+#define NUMU_SIZE 4
+#define POW0 0
+#define POW1 1
+#define POW2 2
+
 /* An index into the symbol table. */
 typedef enum SPTR {
   NME_NULL = -1,
@@ -208,6 +216,7 @@ typedef struct {
   bool trans_inv; /* global equiv to -Mx,7,0x10000 */
   int tpcount;
   int tpvalue[TPNVERSION]; /* target processor(s), for unified binary */
+  bool qp; /* Enable quad precision and Enable quad precision complex. */
 } FLG;
 
 extern FLG flg;

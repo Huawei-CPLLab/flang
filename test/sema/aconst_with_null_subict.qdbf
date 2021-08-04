@@ -1,0 +1,23 @@
+F90 PARSER begins
+{pgfortran after parser
+F90 BBLOCK begins
+{pgfortran after bblock
+F90 PROCESS_ALIGN begins
+{pgfortran after process-align
+F90 TRANSFORMER begins
+{pgfortran after transform
+F90 COMMUNICATIONS ANALYZER begins
+{pgfortran after comm-analyze
+F90 CALL ANALYZER begins
+{pgfortran after call-analyze
+F90 COMMUNICATIONS GENERATOR begins
+{pgfortran after comm-generator
+F90 CONVERT_FORALL begins
+{pgfortran after convert-forall
+F90 CONVERT_OUTPUT begins
+{pgfortran after convert-output
+{pgfortran after bredundss
+{pgfortran after redundss
+{pgfortran after before-output
+{pgfortran after output
+{pgfortran after fini

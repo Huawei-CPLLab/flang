@@ -5,8 +5,8 @@
 !* Attribute oriented initializations using intrinsic functions
 
 program e10
- 
- interface 
+
+ interface
   subroutine copy_str_to_result( str, result)
     integer :: result(:)
     character(len=*) :: str
@@ -218,8 +218,13 @@ program e10
        8,		&
    !select_rkind4
        8,		&
+#ifdef __flang_quadfp__
+   !select_rkind5
+       16,		&
+#else
    !select_rkind5
        -1,		&
+#endif
    !select_rkind6
        4,		&
    !select_rkind7
@@ -230,8 +235,13 @@ program e10
        8,		&
    !select_rkind10
        8,		&
+#ifdef __flang_quadfp__
+   !select_rkind11
+       16,		&
+#else
    !select_rkind11
        -2,		&
+#endif
    !select_rkind12
        -2,		&
    !select_rkind13
@@ -246,14 +256,26 @@ program e10
        8,		&
    !select_rkind18
        8,		&
+#ifdef __flang_quadfp__
+   !select_rkind19
+       16,		&
+   !select_rkind20
+       16,		&
+#else
    !select_rkind19
        -2,		&
    !select_rkind20
        -3,		&
+#endif
    !select_rkind21
        -2,		&
+#ifdef __flang_quadfp__
+   !select_rkind22
+       -2,		&
+#else
    !select_rkind22
        -3,		&
+#endif
    !i2dimarryparam1
        50, 40, 30, 20, 10, 1,		&
        2, 3, 4, 5,		&
@@ -328,8 +350,8 @@ program e10
    character(len=6) :: adjustr1 = adjustr("abc   ")
    character(len=6) :: adjustr2 = adjustr(strparam3)
 
-  type t1 
-    character(len=6) :: str1 	
+  type t1
+    character(len=6) :: str1
   end type
   type (t1) :: t1_inst1
   type (t1), parameter:: t1_param1 = t1( adjustl("   abc") )
@@ -340,7 +362,7 @@ program e10
   type (t1), parameter:: t1_param3 = t1( adjustr("abc   ") )
   type (t1), parameter:: t1_param4 = t1( adjustr(strparam3) )
 
-  type t2 
+  type t2
     integer :: t2_i
   end type
   type (t2), parameter :: t2_param =  t2(9)
@@ -421,7 +443,7 @@ program e10
   integer :: size8 = size(i4dimarry3,4);
   integer :: size9 = size( reshape((/50,40,30,20,10,1,2,3,4,5/), (/5,2/)),2 );
 
-   character(len=6) :: trim1 = trim("xxyybc    ")
+  character(len=6) :: trim1 = trim("xxyybc    ")
   character(len=13) :: trim2 = trim("zxxyybcwwvvzz")
   character(len=6) :: trim3 = trim(strparam3)
   character(len = 12) :: trim4 = trim(strparam3)
@@ -434,12 +456,12 @@ program e10
   character :: char1 = char(65)
   character :: char2 = char(iparam2)
   character :: chararry1(6) = char((/48,49,50,51,52,53/))
- 		
-  character, parameter :: cparam ='Z' 
+
+  character, parameter :: cparam ='Z'
   integer :: ichar1 = ichar('X')
   integer :: ichar2 = ichar(cparam)
   integer :: ichararry1(5) = ichar((/'a','b','c','0','1'/))		!ERR
- 
+
   integer :: iachar1 = iachar('X')
   integer :: iachararry1(5) = iachar((/'a','b','c','0','1'/))
 
@@ -548,7 +570,7 @@ program e10
 !  print *,"! intarry2"
 !  print *,intarry2;
   result(6:7) = intarry2
-  
+
 !  print *,"! nint1"
 !  print *,nint1;
   result(8) = nint1
@@ -783,8 +805,8 @@ program e10
   result(264) = iachar(char2)
 !  print *,"! chararry1"
 !  print *,chararry1;
-   result(265:270) = iachar(chararry1)
-   
+  result(265:270) = iachar(chararry1)
+
 !  print *,"! ichar1"
 !  print *,ichar1;
   result(271) = ichar1

@@ -10,6 +10,8 @@
  * \brief  mthdecls.h - Fortran math support (all platforms/targets) 
  */
 
+static const int g_one = 1;
+#define is_little_endian()    (*(const char *) & g_one != 0)
 /* pi/180 */
 #define DEG_TO_RAD 0.174532925199432957692E-1
 /* 180/pi */
@@ -29,6 +31,10 @@
 #endif
 #include <complex.h>
 #endif
+
+#define I_SIZE 2 /* i[] has 2 elements and 128 bits */
+#define LITTLE_SIGN_MASK  0x7fffffff
+#define BIG_SIGN_MASK 0xffffff7f
 
 /*
  * Windows does not recognize the "_Complex" keyword for complex types but does
@@ -498,6 +504,7 @@ double __mth_i_dbessel_yn(int n, double arg);
 double __f90_dbessel_yn(int n1, int n, double d);
 double __mth_i_dceil(double);
 double __mth_i_dfloor(double);
+long double __mth_i_qabs(long double q);
 
 #if	! defined (TARGET_X8664) && ! defined(LINUX8664)
 /*

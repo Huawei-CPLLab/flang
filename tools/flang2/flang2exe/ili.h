@@ -162,10 +162,12 @@ typedef enum ILIO_KIND {
   ILIO_512LNK = 32,
   ILIO_X87LNK = 33,
   ILIO_DOUBLEDOUBLELNK = 34,
-  ILIO_FLOAT128LNK = 35
+  ILIO_FLOAT128LNK = 35,
+  /* just for debug to dump ili */
+  ILIO_QP = 36
 } ILIO_KIND;
 
-#define ILIO_MAX 35
+#define ILIO_MAX 36
 #define ILIO_ISLINK(n) ((n) >= ILIO_IRLNK)
 
 /* Reflexive defines */
@@ -178,6 +180,8 @@ typedef enum ILIO_KIND {
 #define ILIO_HP ILIO_HP
 #define ILIO_SP ILIO_SP
 #define ILIO_DP ILIO_DP
+/* just for debug to dump ili */
+#define ILIO_QP ILIO_QP
 #define ILIO_CS ILIO_CS
 #define ILIO_CD ILIO_CD
 #define ILIO_AR ILIO_AR

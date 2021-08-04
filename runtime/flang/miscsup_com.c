@@ -4465,6 +4465,24 @@ ENTF90(EXPOND, expond)(__REAL8_T *d)
   return ENTF90(EXPONDX, expondx)(*d);
 }
 
+__INT_T
+ENTF90(EXPONQX, exponqx)(__REAL16_T q)
+{
+  __REAL16_SPLIT g;
+  g.q = q;
+  if (((g.i.h & 0x7fffffff) | (g.i.j & 0xffffffff) |
+       (g.i.k & 0xffffffff) | (g.i.l & 0xffffffff)) == 0)
+    return 0;
+  else
+    return ((g.ll.h >> 48) & 0x7FFF) - 16382;
+}
+
+__INT_T
+ENTF90(EXPONQ, exponq)(const __REAL16_T *q)
+{
+   return ENTF90(EXPONQX, exponqx)(*q);
+}
+
 __INT8_T
 ENTF90(KEXPONX, kexponx)(__REAL4_T f)
 {
@@ -4698,6 +4716,42 @@ ENTF90(SCALED, scaled)(__REAL8_T *d, void *i, __INT_T *size)
   x.i.h = e << 20;
   x.i.l = 0;
   return *d * x.d;
+}
+
+__REAL16_T
+ENTF90(SCALEQX, scaleqx)(__REAL16_T q, __INT_T i)
+{
+  int e;
+  __REAL16_SPLIT x;
+
+  e = 16383 + i;
+  if (e < 0)
+    e = 0;
+  else if (e > 32767)
+    e = 32767;
+  x.i.h = e << 16;
+  x.i.j = 0;
+  x.i.k = 0;
+  x.i.l = 0;
+  return q * x.q;
+}
+
+__REAL16_T
+ENTF90(SCALEQ, scaleq)(__REAL16_T *q, void *i, __INT_T *size)
+{
+  int e;
+  __REAL16_SPLIT x;
+
+  e = 16383 + I8(__fort_varying_int)(i, size);
+  if (e < 0)
+    e = 0;
+  else if (e > 32767)
+    e = 32767;
+  x.i.h = e << 16;
+  x.i.j = 0;
+  x.i.k = 0;
+  x.i.l = 0;
+  return *q * x.q;
 }
 
 __REAL4_T

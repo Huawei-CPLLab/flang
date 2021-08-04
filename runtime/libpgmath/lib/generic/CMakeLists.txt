@@ -60,6 +60,9 @@ set(GENERIC_SRCS
   fabs.c
   log10.c
   log.c
+  qabs.c
+  qremainder.c
+  qround.c
   remainder.c
   round.c
   rpowr.c

@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 
-#define RTEMPS 11
+#define RTEMPS 10
 
 #define LST_AREA 6
 #define AR_AREA 7

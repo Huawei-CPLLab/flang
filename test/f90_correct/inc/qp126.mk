@@ -5,12 +5,12 @@
 build:
 	@echo ------------------------------------- building test $@
 	$(FC) $(FFLAGS) $(SRC)/$(TEST).f08 -o $(TEST).$(EXE)
-	 
+
 run:
 	@echo ------------------------------------ executing test $@
 	./$(TEST).$(EXE)
-	 
-verify: 
+
+verify:
 	@echo ------------------------------------ verifying
 	@echo test should have printed verification above
 

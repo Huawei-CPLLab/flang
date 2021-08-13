@@ -4,10 +4,10 @@
 !
 program test
   use check_mod
-  integer, parameter :: k = 16 
+  integer, parameter :: k = 16
   real(kind = k) :: a = 1.1_16 ** 1.2_16, ea
 
-  ea = 1.12116936414060228271727326177460416_16 
+  ea = 1.12116936414060228271727326177460416_16
 
   call checkr16(a, ea, 1)
 end program

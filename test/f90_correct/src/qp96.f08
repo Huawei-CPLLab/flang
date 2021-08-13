@@ -6,7 +6,7 @@ program main
   character(len=32) :: str1
   x = 1.0_16 + 2.0_16**(-105)
   write (str1,'(z0)') 'X'
-  
+
   write(*,*) 'PASS'
 
 end program main

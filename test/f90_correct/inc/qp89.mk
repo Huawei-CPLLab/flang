@@ -8,7 +8,7 @@
 
 
 qp89: run
-	
+
 
 build:  $(SRC)/qp89.f08
 	-$(RM) qp89.$(EXESUFFIX) core *.d *.mod FOR*.DAT FTN* ftn* fort.*
@@ -18,8 +18,8 @@ build:  $(SRC)/qp89.f08
 	-$(FC) $(FFLAGS) $(LDFLAGS) qp89.$(OBJX) check_mod.$(OBJX) $(LIBS) -o qp89.$(EXESUFFIX)
 
 
-run: 
-	@echo ------------------------------------ executing test qp89 
+run:
+	@echo ------------------------------------ executing test qp89
 	qp89.$(EXESUFFIX)
 
 verify: ;

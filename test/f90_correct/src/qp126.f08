@@ -7,12 +7,12 @@ module m
   implicit none
 
 contains
-  subroutine test(q) 
+  subroutine test(q)
     real(16),value :: q
     q = -1.0_16
   end subroutine test
-    
-end module m 
+
+end module m
 
 program p
   use m

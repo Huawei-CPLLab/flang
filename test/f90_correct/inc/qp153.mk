@@ -5,7 +5,7 @@
 #
 
 $(TEST): run
-	
+
 
 build:  $(SRC)/$(TEST).f08
 	-$(RM) $(TEST).$(EXESUFFIX) core *.d *.mod FOR*.DAT FTN* ftn* fort.*
@@ -15,7 +15,7 @@ build:  $(SRC)/$(TEST).f08
 	-$(FC) $(FFLAGS) $(LDFLAGS) $(TEST).$(OBJX) check.$(OBJX) $(LIBS) -o $(TEST).$(EXESUFFIX)
 
 
-run: 
+run:
 	@echo ------------------------------------ executing test $(TEST)
 	$(TEST).$(EXESUFFIX)
 

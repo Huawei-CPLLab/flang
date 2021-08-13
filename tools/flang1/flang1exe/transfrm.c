@@ -2045,11 +2045,6 @@ collapse_assignment(int asn, int std)
       case 8:
         rtlRtn = RTE_mzero8;
         break;
-#ifdef TARGET_SUPPORTS_QUADFP
-      case 16:
-        rtlRtn = RTE_mzero16;
-        break;
-#endif
       }
     }
     nm = mkRteRtnNm(rtlRtn);
@@ -2085,11 +2080,6 @@ collapse_assignment(int asn, int std)
       case 8:
         rtlRtn = RTE_mcopy8;
         break;
-#ifdef TARGET_SUPPORTS_QUADFP
-      case 16:
-        rtlRtn = RTE_mcopy16;
-        break;
-#endif
       }
     }
     nm = mkRteRtnNm(rtlRtn);
@@ -2126,11 +2116,6 @@ collapse_assignment(int asn, int std)
       case 8:
         rtlRtn = RTE_mset8;
         break;
-#ifdef TARGET_SUPPORTS_QUADFP
-      case 16:
-        rtlRtn = RTE_mset16;
-        break;
-#endif
       }
     }
     nm = mkRteRtnNm(rtlRtn);

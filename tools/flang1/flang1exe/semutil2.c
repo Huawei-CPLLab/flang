@@ -4095,7 +4095,6 @@ get_ac_op(int ast)
 #ifdef TARGET_SUPPORTS_QUADFP
     case DT_QUAD:
     case DT_CMPLX8:
-    case DT_CMPLX16:
 #endif
       ac_op = AC_EXPX;
       break;
@@ -8479,9 +8478,7 @@ eval_scale(ACL *arg, DTYPE dtype)
   INT i, conval1, conval2, conval;
   DBLINT64 inum1, inum2;
   INT e;
-  INT qnum1[4], qnum2[4];
   DBLE dconval;
-  QUAD qconval;
 
   rslt = arg = eval_init_expr(arg);
   conval1 = arg->conval;
@@ -8524,29 +8521,6 @@ eval_scale(ACL *arg, DTYPE dtype)
     xdmul(inum1, inum2, dconval);
     rslt->conval = getcon(dconval, DT_REAL8);
     break;
-
-#ifdef TARGET_SUPPORTS_QUADFP
-  case 16:
-    e = 16383 + i;
-    if (e < 0)
-      e = 0;
-    else if (e > 32767)
-      e = 32767;
-
-    qnum1[0] = CONVAL1G(conval1);
-    qnum1[1] = CONVAL2G(conval1);
-    qnum1[2] = CONVAL3G(conval1);
-    qnum1[3] = CONVAL4G(conval1);
-
-    qnum2[0] = e << 16;
-    qnum2[1] = 0;
-    qnum2[2] = 0;
-    qnum2[3] = 0;
-    xqmul(qnum1, qnum2, qconval);
-    rslt->conval = getcon(qconval, DT_QUAD);
-    break;
-#endif
-
   }
 
   return rslt;
@@ -9486,15 +9460,11 @@ eval_selected_real_kind(ACL *arg)
     r = 4;
   else if (con <= 15)
     r = 8;
-#ifdef TARGET_SUPPORTS_QUADFP
-  else if (con <= MAX_EXP_OF_QMANTISSA)
-    r = REAL_16;
-#endif
   else
     r = -1;
 
   if (arg->next) {
-    wrkarg = arg = arg->next;
+    wrkarg = arg->next;
     con = get_int_from_init_conval(wrkarg);
     if (con <= 37) {
       if (r > 0 && r < 4)
@@ -9502,26 +9472,10 @@ eval_selected_real_kind(ACL *arg)
     } else if (con <= 307) {
       if (r > 0 && r < 8)
         r = 8;
-#ifdef TARGET_SUPPORTS_QUADFP
-    } else if (con <= MAX_EXP_QVALUE) {
-      if (r > REAL_0 && r < REAL_16)
-        r = REAL_16;
-#endif
     } else {
       if (r > 0)
         r = 0;
       r -= 2;
-    }
-  }
-
-  if (arg->next) {
-    wrkarg = arg->next;
-    con = get_int_from_init_conval(wrkarg);
-    if (con != RADIX2) {
-       if (con == NOT_GET_VAL && !ARG_STK(KEYWD_ARGS2)) {}
-       else {
-        r = NO_REAL;
-       }
     }
   }
 

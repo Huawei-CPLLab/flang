@@ -6774,22 +6774,6 @@ _xtok(INT conval1, BIGINT64 count, int dtype)
     conval = getcon(dresult, DT_REAL8);
     break;
 
-#ifdef TARGET_SUPPORTS_QUADFP
-  case TY_QUAD:
-    qnum1[0] = CONVAL1G(conval1);
-    qnum1[1] = CONVAL2G(conval1);
-    qnum1[2] = CONVAL3G(conval1);
-    qnum1[3] = CONVAL4G(conval1);
-    qresult[0] = CONVAL1G(stb.quad1);
-    qresult[1] = CONVAL2G(stb.quad1);
-    qresult[2] = CONVAL3G(stb.quad1);
-    qresult[3] = CONVAL4G(stb.quad1);
-    while (count--)
-      xqmul(qnum1, qresult, qresult);
-    conval = getcon(qresult, DT_QUAD);
-    break;
-#endif
-
   case TY_CMPLX:
     real1 = CONVAL1G(conval1);
     imag1 = CONVAL2G(conval1);
@@ -6809,6 +6793,22 @@ _xtok(INT conval1, BIGINT64 count, int dtype)
     num1[1] = imagrs;
     conval = getcon(num1, DT_CMPLX8);
     break;
+
+#ifdef TARGET_SUPPORTS_QUADFP
+  case TY_QUAD:
+    qnum1[0] = CONVAL1G(conval1);
+    qnum1[1] = CONVAL2G(conval1);
+    qnum1[2] = CONVAL3G(conval1);
+    qnum1[3] = CONVAL4G(conval1);
+    qresult[0] = CONVAL1G(stb.quad1);
+    qresult[1] = CONVAL2G(stb.quad1);
+    qresult[2] = CONVAL3G(stb.quad1);
+    qresult[3] = CONVAL4G(stb.quad1);
+    while (count--)
+      xqmul(qnum1, qresult, qresult);
+    conval = getcon(qresult, DT_QUAD);
+    break;
+#endif
 
   case TY_DCMPLX:
     dreal1[0] = CONVAL1G(CONVAL1G(conval1));

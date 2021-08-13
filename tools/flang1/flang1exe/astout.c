@@ -975,10 +975,6 @@ print_ast(int ast)
     case I_SCALE:
       if (DTY(DDTG(A_DTYPEG(ast))) == TY_REAL)
         rtlRtn = RTE_scale;
-#ifdef TARGET_SUPPORTS_QUADFP
-      else if (DTY(DDTG(A_DTYPEG(ast))) == TY_QUAD)
-        rtlRtn = RTE_scaleq;
-#endif
       else
         rtlRtn = RTE_scaled;
       goto make_func_name;

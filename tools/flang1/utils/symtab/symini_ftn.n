@@ -1206,7 +1206,7 @@ of its single-precision (double-precision) argument.
 .PD SELECTED_INT_KIND - -
 .AT transformational r
 .PD SELECTED_REAL_KIND - -
-.AT transformational *p *r *radix
+.AT transformational *p *r
 .PD .DLBOUND - -
 CM Fortran's version of LBOUND.
 .AT inquiry array *dim

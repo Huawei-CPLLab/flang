@@ -4766,6 +4766,10 @@ ENTF90(SETEXPX, setexpx)(__REAL4_T f, __INT_T i)
   y.f = f;
   if (y.f == 0.0)
     return y.f;
+  if ((y.i & 0x7FFFFFFF) == 0x7F800000) {
+    y.i = 0x7FC00000;
+    return y.f;
+  }
   y.i &= ~0x7F800000;
   y.i |= 0x3F800000;
   e = 126 + i;
@@ -4789,6 +4793,10 @@ ENTF90(SETEXP, setexp)(__REAL4_T *f, void *i, __INT_T *size)
   y.f = *f;
   if (y.f == 0.0)
     return y.f;
+  if ((y.i & 0x7FFFFFFF) == 0x7F800000) {
+    y.i = 0x7FC00000;
+    return y.f;
+  }
   y.i &= ~0x7F800000;
   y.i |= 0x3F800000;
   e = 126 + I8(__fort_varying_int)(i, size);
@@ -4809,6 +4817,10 @@ ENTF90(SETEXPDX, setexpdx)(__REAL8_T d, __INT_T i)
   y.d = d;
   if (y.d == 0.0)
     return y.d;
+  if ((y.ll & 0x7FFFFFFFFFFFFFFF) == 0x7FF0000000000000){
+    y.ll = 0x7FF8000000000000;
+    return y.d;
+  }
   y.i.h &= ~0x7FF00000;
   y.i.h |= 0x3FF00000;
   e = 1022 + i;
@@ -4830,6 +4842,10 @@ ENTF90(SETEXPD, setexpd)(__REAL8_T *d, void *i, __INT_T *size)
   y.d = *d;
   if (y.d == 0.0)
     return y.d;
+  if ((y.ll & 0x7FFFFFFFFFFFFFFF) == 0x7FF0000000000000) {
+    y.ll = 0x7FF8000000000000;
+    return y.d;
+  }
   y.i.h &= ~0x7FF00000;
   y.i.h |= 0x3FF00000;
   e = 1022 + I8(__fort_varying_int)(i, size);
@@ -4840,6 +4856,62 @@ ENTF90(SETEXPD, setexpd)(__REAL8_T *d, void *i, __INT_T *size)
   x.i.h = e << 20;
   x.i.l = 0;
   return x.d * y.d;
+}
+
+__REAL16_T
+ENTF90(SETEXPQX, setexpqx)(__REAL16_T q, __INT_T i)
+{
+  int e;
+  __REAL16_SPLIT x, y;
+
+  y.q = q;
+  if (y.q == 0.0)
+    return y.q;
+  if ((y.ll.h & 0x7fffffffffffffff) == 0x7fff000000000000 &&
+          (y.ll.l & ~0x0) == 0x0) {
+    y.ll.h = 0x7FFF800000000000;
+    return y.q;
+  }
+  y.i.h &= ~0x7FFF0000;
+  y.i.h |= 0x3FFF0000;
+  e = 16382 + i;
+  if (e < 0)
+    e = 0;
+  else if (e > 32767)
+    e = 32767;
+  x.i.h = e << 16;
+  x.i.j = 0;
+  x.i.k = 0;
+  x.i.l = 0;
+  return x.q * y.q;
+}
+
+__REAL16_T
+ENTF90(SETEXPQ, setexpq)(__REAL16_T q, void *i, __INT_T *size)
+{
+  int e;
+  __REAL16_SPLIT x, y;
+
+  y.q = q;
+  if (y.q == 0.0)
+    return y.q;
+  if ((y.ll.h & 0x7fffffffffffffff) == 0x7fff000000000000 &&
+          (y.ll.l & ~0x0) == 0x0) {
+    y.ll.h = 0x7fff800000000000;
+    return y.q;
+  }
+  y.i.h &= ~0x7FFF0000;
+  y.i.h |= 0x3FFF0000;
+  e = 16382 + I8(__fort_varying_int)(i, size);
+  if (e < 0)
+    e = 0;
+  else if (e > 32767)
+    e = 32767;
+  x.i.h = e << 16;
+  x.i.j = 0;
+  x.i.k = 0;
+  x.i.l = 0;
+  return x.q * y.q;
 }
 
 __REAL4_T

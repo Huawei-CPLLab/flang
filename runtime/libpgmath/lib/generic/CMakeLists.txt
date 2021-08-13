@@ -26,6 +26,7 @@ set(GENERIC_SRCS
   alog10.c
   alog.c
   anint.c
+  aqanint.c
   around.c
   asin.c
   asinh.c
@@ -49,6 +50,7 @@ set(GENERIC_SRCS
   dlog.c
   dnint.c
   dpowd.c
+  dqanint.c
   dremainder.c
   dround.c
   dsin.c
@@ -61,6 +63,9 @@ set(GENERIC_SRCS
   log10.c
   log.c
   qabs.c
+  qanint.c
+  qexp.c
+  qint.c
   qremainder.c
   qround.c
   remainder.c

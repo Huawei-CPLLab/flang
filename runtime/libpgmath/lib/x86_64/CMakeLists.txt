@@ -52,6 +52,8 @@ set(SRCS
   datanh.c
   dsqrt.c
   fabs.c
+  qremainder.c
+  qround.c
   sqrt.c
   pgcpuid.c
   x86id.c

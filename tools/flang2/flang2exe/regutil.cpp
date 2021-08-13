@@ -866,6 +866,7 @@ static struct {  /* Register temporary information */
     {'x', "xa", DT_CMPLX128, 0, 0, -1}, /*10: float128 complex temps */
 #elif defined(TARGET_SUPPORTS_QUADFP)
     {'X', "Xa", DT_QUAD, 0, 0, -1},   /* 9: quad precision temps  */
+    {'x', "xa", DT_NONE, 0, 0, -1}, /* 9 and 10: filler */
 #else
     {'X', "Xa", DT_NONE, 0, 0, -1}, /* 9 and 10: filler */
     {'x', "xa", DT_NONE, 0, 0, -1}, /* 9 and 10: filler */

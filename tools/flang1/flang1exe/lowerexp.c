@@ -1634,10 +1634,6 @@ lower_un_arith(int ast, char *opname, int ldtype)
   case TY_NCHAR:
     ast_error("character result for arithmetic operation", ast);
     return 0;
-#ifndef TARGET_SUPPORTS_QUADFP
-  case TY_QUAD:
-
-#endif
   default:
     ast_error("unknown result for arithmetic operation", ast);
     return 0;
@@ -3350,16 +3346,16 @@ lower_intrinsic(int ast)
     intrinsic_args[0] = lower_ilm(arg1);
 #ifdef TARGET_SUPPORTS_QUADFP
     if (intr == I_QABS)
-	    ilm = intrin_name("ABS", arg1, in_r_D_Q);
+      ilm = intrin_name("ABS", arg1, in_r_D_Q);
     else
 #endif
-	    ilm = intrin_name("ABS", arg1, in_I_K_r_D_C_CD);
+      ilm = intrin_name("ABS", arg1, in_I_K_r_D_C_CD);
     break;
 
   /* acos family */
   case I_ACOS:
   case I_DACOS:
-    ilm = intrin_name("ACOS", ast, in_r_D_Q);
+    ilm = intrin_name("ACOS", ast, in_r_D);
     break;
   case I_ACOSD:
   case I_DACOSD:
@@ -3404,7 +3400,7 @@ lower_intrinsic(int ast)
     ilm = intrin_name("ERFC", ast, in_r_D);
     break;
   case I_ERFC_SCALED:
-    ilm = intrin_name("ERFC_SCALED", ast, in_r_D_Q);
+    ilm = intrin_name("ERFC_SCALED", ast, in_r_D);
     break;
   case I_GAMMA:
     ilm = intrin_name("GAMMA", ast, in_r_D);
@@ -4401,11 +4397,6 @@ lower_intrinsic(int ast)
     if (DTY(DDTG(A_NDTYPEG(ast))) == TY_REAL) {
       ilm =
           f90_value_function_I2(mkRteRtnNm(RTE_scalex), DT_REAL4, args, nargs);
-#ifdef TARGET_SUPPORTS_QUADFP
-    } else if(DTY(DDTG(A_NDTYPEG(ast))) == TY_QUAD) {
-      ilm =
-          f90_value_function_I2(mkRteRtnNm(RTE_scaleqx), DT_QUAD, args, nargs);
-#endif
     } else {
       ilm =
           f90_value_function_I2(mkRteRtnNm(RTE_scaledx), DT_REAL8, args, nargs);
@@ -4416,8 +4407,8 @@ lower_intrinsic(int ast)
       ilm =
           f90_value_function_I2(mkRteRtnNm(RTE_setexpx), DT_REAL4, args, nargs);
     } else {
-      ilm =
-          f90_value_function_I2(mkRteRtnNm(RTE_setexpdx), DT_REAL8, args, nargs);
+      ilm = f90_value_function_I2(mkRteRtnNm(RTE_setexpdx), DT_REAL8, args,
+                                  nargs);
     }
     break;
   case I_VERIFY:

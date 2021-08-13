@@ -28,10 +28,6 @@
 #include "version.h"
 #include "atomic_common.h"
 
-#define MAX_ARGS_NUMBER 3
-#define ARGS_NUMBER 3
-#define MIN_ARGS_NUMBER 0
-
 static struct {
   int nent;  /* number of arguments specified by user */
   int nargt; /* number actually needed for AST creation */
@@ -5319,11 +5315,6 @@ no_const_fold:
     case DT_REAL8:
       rtlRtn = RTE_dmodulov;
       break;
-#ifdef TARGET_SUPPORTS_QUADFP
-    case DT_QUAD:
-      rtlRtn = RTE_qmodulov;
-      break;
-#endif
     }
     fsptr = sym_mkfunc_nodesc(mkRteRtnNm(rtlRtn), (int)INTTYPG(sptr));
     EXTSYMP(sptr, fsptr);
@@ -8054,15 +8045,15 @@ ref_pd(SST *stktop, ITEM *list)
 #ifdef PD_ieee_selected_real_kind
   case PD_ieee_selected_real_kind:
 #endif
-    if (count > MAX_ARGS_NUMBER || count == MIN_ARGS_NUMBER) {
-      E74_CNT(pdsym, count, 1, 3);
+    if (count > 2 || count == 0) {
+      E74_CNT(pdsym, count, 0, 2);
       goto call_e74_cnt;
     }
-    if (evl_kwd_args(list, MAX_ARGS_NUMBER, KWDARGSTR(pdsym))) 
+    if (evl_kwd_args(list, 2, KWDARGSTR(pdsym)))
       goto exit_;
 
     if (sem.dinit_data) {
-      gen_init_intrin_call(stktop, pdsym, ARGS_NUMBER, stb.user.dt_int, FALSE);
+      gen_init_intrin_call(stktop, pdsym, 2, stb.user.dt_int, FALSE);
       return 0;
     }
 
@@ -8089,7 +8080,7 @@ ref_pd(SST *stktop, ITEM *list)
           conval = 4;
         else if (con1 <= 15)
           conval = 8;
-        else if (con1 <= MAX_EXP_OF_QMANTISSA && !XBIT(57, 4))
+        else if (con1 <= 31 && !XBIT(57, 4))
           conval = 16;
         else
           conval = -1;
@@ -8144,30 +8135,6 @@ ref_pd(SST *stktop, ITEM *list)
         }
       }
     }
-
-    /* add radix argument (f2008) */
-    stkp = ARG_STK(2);
-    if (stkp == NULL) {
-      ARG_AST(2) = astb.ptr0;
-    } else {
-      dtype1 = SST_DTYPEG(stkp);
-      if (!DT_ISINT(dtype1)) {
-        E74_ARG(pdsym, 2, NULL);
-        goto call_e74_arg;
-      }
-      XFR_ARGAST(2);
-      ast = SST_ASTG(stkp);
-      if (!A_ALIASG(ast)) {
-        is_constant = FALSE;
-      } else {
-        ast = A_ALIASG(ast);
-        con1 = A_SPTRG(ast);
-        con1 = CONVAL2G(con1);
-        if (con1 != 2)
-		conval = -5;
-      }
-    }
-
     if (is_constant) {
       goto const_default_int_val; /*return default integer*/
     }
@@ -8176,8 +8143,7 @@ ref_pd(SST *stktop, ITEM *list)
 
     hpf_sym = sym_mkfunc(mkRteRtnNm(RTE_sel_real_kind), stb.user.dt_int);
     dtyper = stb.user.dt_int;
-    /* add radix argument, so the args is 3  (f2008) */
-    argt_count = 3;
+    argt_count = 2;
     break;
 
   case PD_selected_char_kind:
@@ -9438,7 +9404,6 @@ ref_pd(SST *stktop, ITEM *list)
     case TY_INT8:
     case TY_REAL:
     case TY_DBLE:
-    case TY_QUAD:
       conval = 2;
       break;
     default:

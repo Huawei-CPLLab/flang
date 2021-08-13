@@ -276,8 +276,10 @@ set(SRCS
   hypotf.c
   i2powi.c
   idnint.c
+  iqnint.c
   ipowi.c
   knint.c
+  kqnint.c
   kpowi.c
   kpowk.c
   log_gamma.c

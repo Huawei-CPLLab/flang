@@ -504,7 +504,13 @@ double __mth_i_dbessel_yn(int n, double arg);
 double __f90_dbessel_yn(int n1, int n, double d);
 double __mth_i_dceil(double);
 double __mth_i_dfloor(double);
+double __mth_i_dqanint(long double d);
+int  __mth_i_iqnint(long double q);
+long long __mth_i_kiqnint(long double q);
+long double __mth_i_qexp(long double q);
 long double __mth_i_qabs(long double q);
+long double __mth_i_qint(long double q);
+long double __mth_i_qanint(long double q);
 
 #if	! defined (TARGET_X8664) && ! defined(LINUX8664)
 /*

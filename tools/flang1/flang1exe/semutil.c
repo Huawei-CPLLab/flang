@@ -486,6 +486,11 @@ cngtyp2(SST *old, DTYPE newtyp, bool allowPolyExpr)
       FLANG_FALLTHROUGH;
     case TY_DBLE:
       break;
+#ifdef TARGET_SUPPORTS_QUADFP
+    /* fall thru ... */
+    case TY_QUAD:
+      break;
+#endif
     case TY_CHAR:
     case TY_NCHAR:
     case TY_STRUCT:
@@ -520,6 +525,11 @@ cngtyp2(SST *old, DTYPE newtyp, bool allowPolyExpr)
       FLANG_FALLTHROUGH;
     case TY_DBLE:
       break;
+#ifdef TARGET_SUPPORTS_QUADFP
+    /* fall thru ... */
+    case TY_QUAD:
+      break;
+#endif
     case TY_CHAR:
     case TY_NCHAR:
     case TY_STRUCT:
@@ -550,6 +560,11 @@ cngtyp2(SST *old, DTYPE newtyp, bool allowPolyExpr)
       FLANG_FALLTHROUGH;
     case TY_DBLE:
       break;
+#ifdef TARGET_SUPPORTS_QUADFP
+    /* fall thru ... */
+    case TY_QUAD:
+      break;
+#endif
     case TY_CHAR:
     case TY_NCHAR:
     case TY_STRUCT:
@@ -581,6 +596,11 @@ cngtyp2(SST *old, DTYPE newtyp, bool allowPolyExpr)
       FLANG_FALLTHROUGH;
     case TY_REAL:
       break;
+#ifdef TARGET_SUPPORTS_QUADFP
+    /* fall thru to */
+    case TY_QUAD:
+      break;
+#endif
     case TY_CHAR:
     case TY_NCHAR:
     case TY_STRUCT:
@@ -590,6 +610,42 @@ cngtyp2(SST *old, DTYPE newtyp, bool allowPolyExpr)
       goto type_error;
     }
     break;
+
+#ifdef TARGET_SUPPORTS_QUADFP
+  case TY_QUAD:
+    switch (from) {
+    case TY_BLOG:
+    case TY_BINT:
+    case TY_SLOG:
+    case TY_SINT:
+      cngtyp(old, DT_INT);
+      SST_DTYPEP(old, DT_INT);
+    /* fall thru ... */
+    case TY_LOG:
+    case TY_INT:
+    case TY_LOG8:
+    case TY_INT8:
+      break;
+    case TY_DCMPLX:
+      mkexpr1(old);
+    /* fall thru to */
+    case TY_DBLE:
+      break;
+    case TY_CMPLX:
+      mkexpr1(old);
+    /* fall thru to */
+    case TY_REAL:
+      break;
+    case TY_CHAR:
+    case TY_NCHAR:
+    case TY_STRUCT:
+    case TY_DERIVED:
+    /* fall thru ... */
+    default:
+      goto type_error;
+    }
+    break;
+#endif
 
   case TY_CMPLX:
     switch (from) {
@@ -601,6 +657,9 @@ cngtyp2(SST *old, DTYPE newtyp, bool allowPolyExpr)
       SST_DTYPEP(old, DT_INT);
       FLANG_FALLTHROUGH;
     case TY_DBLE:
+#ifdef TARGET_SUPPORTS_QUADFP
+    case TY_QUAD:
+#endif
     case TY_LOG:
     case TY_INT:
     case TY_LOG8:
@@ -640,6 +699,9 @@ cngtyp2(SST *old, DTYPE newtyp, bool allowPolyExpr)
       SST_DTYPEP(old, DT_INT);
       FLANG_FALLTHROUGH;
     case TY_REAL:
+#ifdef TARGET_SUPPORTS_QUADFP
+    case TY_QUAD:
+#endif
     case TY_LOG:
     case TY_INT:
     case TY_LOG8:
@@ -747,12 +809,18 @@ done:
         (from == TY_BINT || from == TY_SINT || from == TY_INT ||
          from == TY_INT8 || from == TY_REAL || from == TY_DCMPLX ||
          from == TY_DBLE || from == TY_CMPLX
+#ifdef TARGET_SUPPORTS_QUADFP
+         || from == TY_QUAD
+#endif
          ))
       goto type_error;
     if ((from == TY_BLOG || from == TY_SLOG || from == TY_LOG ||
          from == TY_LOG8) &&
         (to == TY_BINT || to == TY_SINT || to == TY_INT || to == TY_INT8 ||
          to == TY_REAL || to == TY_DCMPLX || to == TY_DBLE || to == TY_CMPLX
+#ifdef TARGET_SUPPORTS_QUADFP
+         || to == TY_QUAD
+#endif
          ))
       goto type_error;
   }
@@ -1023,6 +1091,10 @@ again:
       break;
     case TY_DBLE:
       break;
+#ifdef TARGET_SUPPORTS_QUADFP
+    case TY_QUAD:
+      break;
+#endif
     case TY_CMPLX:
       break;
     case TY_DCMPLX:
@@ -4808,7 +4880,7 @@ chkopnds(SST *lop, SST *operator, SST *rop)
     } else if (!XBIT(124, 0x40000) && SST_IDG(rop) == S_CONST) {
       int pw, is_int;
       INT conval;
-      INT num[2];
+      INT num[4];
       switch (TY_OF(rop)) {
       case TY_CMPLX:
         conval = SST_CVALG(rop);
@@ -4850,6 +4922,25 @@ chkopnds(SST *lop, SST *operator, SST *rop)
           return;
         }
         break;
+#ifdef TARGET_SUPPORTS_QUADFP
+      case TY_QUAD:
+        conval = SST_CVALG(rop);
+      ck_quad_pw:
+        num[0] = CONVAL1G(conval);
+        num[1] = CONVAL2G(conval);
+        num[2] = CONVAL3G(conval);
+        num[3] = CONVAL4G(conval);
+        is_int = xqisint(num, &pw);
+        if ((!flg.ieee || pw == POW1 || pw == POW2) && is_int) {
+          if (TY_OF(lop) < TY_OF(rop))
+            cngtyp(lop, (int)SST_DTYPEG(rop)); /* Normal rule */
+          SST_CVALP(rop, pw);
+          SST_DTYPEP(rop, DT_INT4);
+          SST_ASTP(rop, mk_cval1(pw, DT_INT4));
+          return;
+        }
+        break;
+#endif
       default:
         break;
       }
@@ -6702,6 +6793,22 @@ _xtok(INT conval1, BIGINT64 count, int dtype)
     num1[1] = imagrs;
     conval = getcon(num1, DT_CMPLX8);
     break;
+
+#ifdef TARGET_SUPPORTS_QUADFP
+  case TY_QUAD:
+    qnum1[0] = CONVAL1G(conval1);
+    qnum1[1] = CONVAL2G(conval1);
+    qnum1[2] = CONVAL3G(conval1);
+    qnum1[3] = CONVAL4G(conval1);
+    qresult[0] = CONVAL1G(stb.quad1);
+    qresult[1] = CONVAL2G(stb.quad1);
+    qresult[2] = CONVAL3G(stb.quad1);
+    qresult[3] = CONVAL4G(stb.quad1);
+    while (count--)
+      xqmul(qnum1, qresult, qresult);
+    conval = getcon(qresult, DT_QUAD);
+    break;
+#endif
 
   case TY_DCMPLX:
     dreal1[0] = CONVAL1G(CONVAL1G(conval1));

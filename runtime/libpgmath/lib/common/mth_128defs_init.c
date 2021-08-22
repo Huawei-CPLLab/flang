@@ -2084,6 +2084,36 @@ MTH_DISPATCH_FUNC(__pd_exp_2m)(vrd2_t x, vid2_t m)
   return (fptr(x, m));
 }
 
+vrq1_t
+MTH_DISPATCH_FUNC(__fq_exp_1)(vrq1_t x)
+{
+  vrq1_t (*fptr)(vrq1_t);
+  _MTH_I_INIT();
+  _MTH_I_STATS_INC(func_exp, sv_qs, frp_f);
+  fptr = (vrq1_t(*)(vrq1_t))MTH_DISPATCH_TBL[func_exp][sv_qs][frp_f];
+  return (fptr(x));
+}
+
+vrq1_t
+MTH_DISPATCH_FUNC(__rq_exp_1)(vrq1_t x)
+{
+  vrq1_t (*fptr)(vrq1_t);
+  _MTH_I_INIT();
+  _MTH_I_STATS_INC(func_exp, sv_qs, frp_r);
+  fptr = (vrq1_t(*)(vrq1_t))MTH_DISPATCH_TBL[func_exp][sv_qs][frp_r];
+  return (fptr(x));
+}
+
+vrq1_t
+MTH_DISPATCH_FUNC(__pq_exp_1)(vrq1_t x)
+{
+  vrq1_t (*fptr)(vrq1_t);
+  _MTH_I_INIT();
+  _MTH_I_STATS_INC(func_exp, sv_qs, frp_p);
+  fptr = (vrq1_t(*)(vrq1_t))MTH_DISPATCH_TBL[func_exp][sv_qs][frp_p];
+  return (fptr(x));
+}
+
 vrs1_t
 MTH_DISPATCH_FUNC(__fs_log_1)(vrs1_t x)
 {
@@ -3891,6 +3921,36 @@ MTH_DISPATCH_FUNC(__pd_aint_2m)(vrd2_t x, vid2_t m)
   _MTH_I_STATS_INC(func_aint,sv_dv2m,frp_p);
   fptr = (vrd2_t(*)())MTH_DISPATCH_TBL[func_aint][sv_dv2m][frp_p];
   return (fptr(x, m));
+}
+
+vrq1_t
+MTH_DISPATCH_FUNC(__fq_aint_1)(vrq1_t x)
+{
+  vrq1_t (*fptr)(vrq1_t);
+  _MTH_I_INIT();
+  _MTH_I_STATS_INC(func_aint, sv_qs, frp_f);
+  fptr = (vrq1_t(*)(vrq1_t))MTH_DISPATCH_TBL[func_aint][sv_qs][frp_f];
+  return (fptr(x));
+}
+
+vrq1_t
+MTH_DISPATCH_FUNC(__rq_aint_1)(vrq1_t x)
+{
+  vrq1_t (*fptr)(vrq1_t);
+  _MTH_I_INIT();
+  _MTH_I_STATS_INC(func_aint, sv_qs, frp_r);
+  fptr = (vrq1_t(*)(vrq1_t))MTH_DISPATCH_TBL[func_aint][sv_qs][frp_r];
+  return (fptr(x));
+}
+
+vrq1_t
+MTH_DISPATCH_FUNC(__pq_aint_1)(vrq1_t x)
+{
+  vrq1_t (*fptr)(vrq1_t);
+  _MTH_I_INIT();
+  _MTH_I_STATS_INC(func_aint, sv_qs, frp_p);
+  fptr = (vrq1_t(*)(vrq1_t))MTH_DISPATCH_TBL[func_aint][sv_qs][frp_p];
+  return (fptr(x));
 }
 
 vrs1_t

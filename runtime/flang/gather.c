@@ -122,7 +122,7 @@ local_gather_CPLX32(int n, __CPLX32_T *dst, __CPLX32_T *src, int *gv)
     dst[i] = src[gv[i]];
 }
 
-void (*__fort_local_gather[__NTYPES])() = {
+static void (*__fort_local_gather[__NTYPES])(int, void *, void *, int *) = {
     NULL,                /*     no type (absent optional argument) */
     NULL,                /* C   signed short */
     NULL,                /* C   unsigned short */
@@ -158,3 +158,9 @@ void (*__fort_local_gather[__NTYPES])() = {
     local_gather_INT1,   /*   F integer*1 */
     NULL                 /*   F derived type */
 };
+
+void
+local_gather_WRAPPER(int n, void *dst, void *src, int *gv, __INT_T kind)
+{
+  __fort_local_gather[kind](n, dst, src, gv);
+}

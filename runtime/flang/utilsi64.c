@@ -18,12 +18,14 @@ int __ftn_32in64_;
 
 extern void __utl_i_add64(), __utl_i_sub64();
 extern void __utl_i_div64(), __utl_i_mul64();
-static void neg64(), shf64();
-static int toi64(), ucmp64();
+static void neg64(DBLINT64, DBLINT64);
+static void shf64(DBLINT64, INT, DBLINT64);
+static int toi64(char *, DBLINT64, char *, int);
+static int ucmp64(DBLUINT64, DBLUINT64);
 
-extern int __fort_atoxi32();
-extern int __fort_atoxi64();
-extern void __fort_i64toax();
+extern int __fort_atoxi32(char *, INT *, int, int);
+extern int __fort_atoxi64(char *, DBLINT64, int, int);
+extern void __fort_i64toax(DBLINT64, char *, int, int, int);
 
 /* has native support for 8-byte integers*/
 #if !defined(WIN64)
@@ -410,7 +412,7 @@ static int toi64(char *s, DBLINT64 toi, char *end, int radix)
 {
   DBLINT64 base; /* 64 bit integer equal to radix */
   DBLINT64 num;  /* numerical value of a particular digit */
-  DBLINT64 to;
+  DBLUINT64 to;
   int negate;
   int ch;
 
@@ -581,8 +583,11 @@ static int ucmp64(DBLUINT64 arg1, DBLUINT64 arg2)
 }
 
 #ifdef MTHI64
-static void __utl_i_mul128();
-static void neg128(), uneg64(), ushf64(), shf128();
+static void __utl_i_mul128(DBLINT64, DBLINT64, INT[4]);
+static void neg128(INT[4], INT[4]);
+static void uneg64(DBLUINT64, DBLUINT64);
+static void ushf64(DBLUINT64, int, DBLINT64);
+static void shf128(INT[4], int, INT[4]);
 
 /*
  *  Add 2 64-bit integers
@@ -846,8 +851,6 @@ static void uneg64(DBLUINT64 arg, DBLUINT64 result)
 }
 
 static void ushf64(DBLUINT64 arg, int count, DBLINT64 result)
-int count;
-DBLINT64 result;
 {
   DBLUINT64 u_arg; /* 'copy-in' unsigned value of arg */
 

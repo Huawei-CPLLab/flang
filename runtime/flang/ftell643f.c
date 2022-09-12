@@ -13,10 +13,9 @@
 /* must include ent3f.h AFTER io3f.h */
 #include "io3f.h"
 #include "ent3f.h"
+#include "utils3f.h"
 
-extern FILE *__getfile3f();
-
-long long ENT3F(FTELL64, ftell64)(lu) int *lu;
+long long ENT3F(FTELL64, ftell64)(int *lu)
 {
   FILE *f;
 

@@ -7,18 +7,9 @@
 
 #include "stdioInterf.h"
 #include "fioMacros.h"
-
-extern void (*__fort_local_scatter[__NTYPES])();
-extern void (*__fort_local_gathscat[__NTYPES])();
+#include "scatter.h"
 
 /* local scatter functions */
-
-void
-local_scatter_WRAPPER(int n, void *dst, int *sv, void *src, __INT_T kind)
-{
-
-  __fort_local_scatter[kind](n, dst, sv, src);
-}
 
 static void
 local_scatter_INT1(int n, __INT1_T *dst, int *sv, __INT1_T *src)
@@ -132,7 +123,7 @@ local_scatter_CPLX32(int n, __CPLX32_T *dst, int *sv, __CPLX32_T *src)
     dst[sv[i]] = src[i];
 }
 
-void (*__fort_local_scatter[__NTYPES])() = {
+static void (*__fort_local_scatter[__NTYPES])(int, void *, int *, void *) = {
     NULL,                 /*     no type (absent optional argument) */
     NULL,                 /* C   signed short */
     NULL,                 /* C   unsigned short */
@@ -169,15 +160,13 @@ void (*__fort_local_scatter[__NTYPES])() = {
     NULL                  /*   F derived type */
 };
 
-/* local gather-scatter functions */
-
 void
-local_gathscat_WRAPPER(int n, void *dst, int *sv, void *src, int *gv,
-                       __INT_T kind)
+local_scatter_WRAPPER(int n, void *dst, int *sv, void *src, __INT_T kind)
 {
-
-  __fort_local_gathscat[kind](n, dst, sv, src, gv);
+  __fort_local_scatter[kind](n, dst, sv, src);
 }
+
+/* local gather-scatter functions */
 
 static void
 local_gathscat_INT1(int n, __INT1_T *dst, int *sv, __INT1_T *src, int *gv)
@@ -291,7 +280,8 @@ local_gathscat_CPLX32(int n, __CPLX32_T *dst, int *sv, __CPLX32_T *src, int *gv)
     dst[sv[i]] = src[gv[i]];
 }
 
-void (*__fort_local_gathscat[__NTYPES])() = {
+static void (*__fort_local_gathscat[__NTYPES])(int, void *, int *, void *,
+                                               int *) = {
     NULL,                  /*     no type (absent optional argument) */
     NULL,                  /* C   signed short */
     NULL,                  /* C   unsigned short */
@@ -327,3 +317,10 @@ void (*__fort_local_gathscat[__NTYPES])() = {
     local_gathscat_INT1,   /*   F integer*1 */
     NULL                   /*   F derived type */
 };
+
+void
+local_gathscat_WRAPPER(int n, void *dst, int *sv, void *src, int *gv,
+                       __INT_T kind)
+{
+  __fort_local_gathscat[kind](n, dst, sv, src, gv);
+}

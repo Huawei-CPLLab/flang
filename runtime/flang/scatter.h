@@ -42,15 +42,18 @@ struct gathscat_dim {
   __INT_T *xmap;     /* map index axis -> unvectored axis */
 };
 
+typedef void (*gathscatfn_t)(int, void *, int *, void *, int *);
+typedef void (*scatterfn_t)(int, void *, int *, void *);
+
 struct gathscat_parm {
   const char *what;           /* "GATHER"/"XXX_SCATTER" */
   void (*xfer_request)(struct chdr *, int, void *, long, long, int,
                        long); /* scatter: __fort_sendl; gather: __fort_recvl */
   void (*xfer_respond)(struct chdr *, int, void *, long, long, int,
                        long); /* scatter: __fort_recvl; gather: __fort_sendl */
-  void (*gathscatfn)();       /* local gather-scatter-reduction function */
-  void (*scatterfn)();        /* local scatter-reduction function */
-  char *rb, *ab, *mb;         /* base addresses */
+  gathscatfn_t gathscatfn; /* local gather-scatter-reduction function */
+  scatterfn_t scatterfn;   /* local scatter-reduction function */
+  char *rb, *ab, *mb;      /* base addresses */
   char *ub, *vb;
   DECL_HDR_PTRS(rd);
   DECL_HDR_PTRS(ad);
@@ -97,9 +100,9 @@ void __fort_gathscat_abort(char *what, char *msg);
 
 sked *I8(__fort_gathscat)(gathscat_parm *z);
 
-void *ENTFTN(COMM_START, comm_start)();
-void ENTFTN(COMM_FINISH, comm_finish)();
-void ENTFTN(COMM_FREE, comm_free)();
+void *ENTFTN(COMM_START, comm_start)(sked **, void *, F90_Desc *, void *, F90_Desc *);
+void ENTFTN(COMM_FINISH, comm_finish)(void *);
+void ENTFTN(COMM_FREE, comm_free)(__INT_T *ns, ...);
 
 void *I8(__fort_adjust_index_array)(const char *what, char *idx_array,
                                     char *src, int dim, F90_Desc *is,
@@ -108,3 +111,9 @@ void *I8(__fort_adjust_index_array)(const char *what, char *idx_array,
 void *I8(__fort_create_conforming_index_array)(const char *what, char *ab,
                                                void *ib, F90_Desc *as,
                                                F90_Desc *is, F90_Desc *new_is);
+
+void local_gathscat_WRAPPER(int n, void *dst, int *sv, void *src, int *gv, __INT_T kind);
+
+void local_gather_WRAPPER(int n, void *dst, void *src, int *gv, __INT_T kind);
+
+void local_scatter_WRAPPER(int n, void *dst, int *sv, void *src, __INT_T kind);

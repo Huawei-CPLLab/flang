@@ -12,13 +12,10 @@
 /* must include ent3f.h AFTER io3f.h */
 #include "io3f.h"
 #include "ent3f.h"
+#include "utils3f.h"
 #include "stdioInterf.h"
 
-extern FILE *__getfile3f();
-
-void ENT3F(PXFFILENO, pxffileno)(lu, fd, err) int *lu;
-int *fd;
-int *err;
+void ENT3F(PXFFILENO, pxffileno)(int *lu, int *fd, int *err)
 {
   FILE *f;
 

@@ -45,16 +45,10 @@
 
 #include "stdioInterf.h"
 #include "fioMacros.h"
+#include "fort_vars.h"
 #include "scatter.h"
 
 extern double __fort_second();
-#include "fort_vars.h"
-extern void (*__fort_local_gather[__NTYPES])();
-extern void (*__fort_local_gathscat[__NTYPES])();
-extern void (*__fort_local_scatter[__NTYPES])();
-
-extern void local_gathscat_WRAPPER();
-extern void local_scatter_WRAPPER();
 
 /* un-permuted axis map */
 
@@ -73,8 +67,8 @@ gathscat_abort(const char *what, const char *msg)
 typedef struct {
   sked sked;            /* schedule header */
   const char *what;     /* "GATHER"/"XXX_SCATTER" */
-  void (*gathscatfn)(); /* local gather-scatter-reduction function */
-  void (*scatterfn)();  /* local scatter-reduction function */
+  gathscatfn_t gathscatfn; /* local gather-scatter-reduction function */
+  scatterfn_t scatterfn;   /* local scatter-reduction function */
   chdr *repchn;         /* replication channel */
   int *countbuf, *offsetbuf;
   int *countr; /* incoming counts per target */
@@ -87,9 +81,10 @@ typedef struct {
 
 /* ENTFTN(comm_start) function: gather, transfer, scatter */
 
-static void I8(gathscat_start)(gathscat_sked *sk, char *rb, char *sb,
+static void I8(gathscat_start)(void *p, char *rb, char *sb,
                                F90_Desc *rd, F90_Desc *sd)
 {
+  gathscat_sked *sk = (gathscat_sked *)p;
   char *rp, *sp, *bufr, *bufs;
   int cpu, j, k, lcpu, m, nr, ns, tcpus;
 
@@ -109,8 +104,10 @@ static void I8(gathscat_start)(gathscat_sked *sk, char *rb, char *sb,
      * make sure base type of object hasn't changed for local gather...
      * This can occur when we share schedules across objects ...
      */
-
-    if (sk->gathscatfn == local_gathscat_WRAPPER) {
+    /* Couldn't find where gathscatfn is set to local_gathscat_WRAPPER.
+       Possible dead code? Work around the compiler warning with an
+       explicit cast for now. */
+    if (sk->gathscatfn == (gathscatfn_t)local_gathscat_WRAPPER) {
 
       local_gathscat_WRAPPER(k, rp, sk->soff, sp, sk->goff, F90_KIND_G(rd));
 
@@ -148,7 +145,7 @@ static void I8(gathscat_start)(gathscat_sked *sk, char *rb, char *sb,
       /* exchange elements */
 
       if (ns > 0)
-        __fort_local_gather[F90_KIND_G(sd)](ns, bufs, sp, sk->goff + j);
+        local_gather_WRAPPER(ns, bufs, sp, sk->goff + j, F90_KIND_G(sd));
 
       if (cpu < lcpu) {
         if (nr > 0)
@@ -169,8 +166,10 @@ static void I8(gathscat_start)(gathscat_sked *sk, char *rb, char *sb,
          * in order to handle cases where the schedule is
          * shared between objects of different types...
          */
-
-        if (sk->scatterfn == local_scatter_WRAPPER) {
+        /* Couldn't find where gathscatfn is set to local_gathscat_WRAPPER.
+           Possible dead code? Work around the compiler warning with an
+           explicit cast for now. */
+        if (sk->scatterfn == (scatterfn_t)local_scatter_WRAPPER) {
           local_scatter_WRAPPER(nr, rp, sk->soff + k, bufr, F90_KIND_G(rd));
         } else {
           sk->scatterfn(nr, rp, sk->soff + k, bufr);
@@ -200,8 +199,9 @@ static void I8(gathscat_start)(gathscat_sked *sk, char *rb, char *sb,
 /* ENTFTN(comm_free) function: free channels, vectors, schedule structures */
 
 static void
-gathscat_free(gathscat_sked *sk)
+gathscat_free(void *p)
 {
+  gathscat_sked *sk = (gathscat_sked *)p;
   if (sk->repchn)
     __fort_frechn(sk->repchn);
   if (sk->countbuf)

@@ -15,11 +15,10 @@
 /* must include ent3f.h AFTER io3f.h */
 #include "io3f.h"
 #include "ent3f.h"
-
-extern FILE *__getfile3f();
+#include "utils3f.h"
 
 int
-ENT3F(GETFD, getfd)(lu) int *lu;
+ENT3F(GETFD, getfd)(int *lu)
 {
   FILE *f;
 

@@ -34,7 +34,7 @@ __fort_setarg(void)
 }
 
 // TODO: Implement functions for WIN32
-static void nodename(s) char *s;
+static void nodename(char *s)
 {
 #ifndef _WIN64
   struct utsname u0;
@@ -44,7 +44,7 @@ static void nodename(s) char *s;
 #endif
 }
 
-void __fort_gettb(t) struct tb *t;
+void __fort_gettb(struct tb *t)
 {
 #ifndef _WIN64
   struct timeval tv0;

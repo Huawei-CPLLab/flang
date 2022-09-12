@@ -16,9 +16,7 @@
 
 extern FILE *__getfile3f();
 
-int ENT3F(FSEEK64, fseek64)(lu, offset, from) int *lu;
-long long *offset;
-int *from;
+int ENT3F(FSEEK64, fseek64)(int *lu, long long *offset, int *from)
 {
   FILE *f;
 

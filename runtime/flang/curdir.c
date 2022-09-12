@@ -28,8 +28,7 @@ WIN_MSVCRT_IMP char *WIN_CDECL getenv(const char *);
 
 /* fix pathname for "funny" NFS mount points */
 
-void __fort_fixmnt(new, old) char *new;
-char *old;
+void __fort_fixmnt(char *new, char *old)
 {
   const char *q;
   char s[MAXPATHLEN]; /* substitute patterns */
@@ -69,7 +68,7 @@ char *old;
 
 /* get current working directory */
 
-void __fort_getdir(curdir) char *curdir;
+void __fort_getdir(char *curdir)
 {
   char path[MAXPATHLEN];
   char *p;
@@ -87,7 +86,7 @@ void __fort_getdir(curdir) char *curdir;
 
 /* get current hostname */
 
-void __fort_gethostname(host) char *host;
+void __fort_gethostname(char *host)
 {
 #ifndef _WIN64
   struct utsname un;

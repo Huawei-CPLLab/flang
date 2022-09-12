@@ -14,7 +14,7 @@
 
 extern FILE *__getfile3f();
 
-void ENT3F(FSYNC, fsync)(lu) int *lu;
+void ENT3F(FSYNC, fsync)(int *lu)
 {
   FILE *f;
 

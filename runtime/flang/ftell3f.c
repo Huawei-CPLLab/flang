@@ -16,7 +16,7 @@
 
 extern FILE *__getfile3f();
 
-int ENT3F(FTELL, ftell)(lu) int *lu;
+int ENT3F(FTELL, ftell)(int *lu)
 {
   FILE *f;
 

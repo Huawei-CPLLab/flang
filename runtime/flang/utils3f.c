@@ -83,7 +83,7 @@ extern bool __isatty3f(unit) int unit;
 
 /* --------------------------------------------------------------- */
 
-extern FILE *__getfile3f(unit) int unit;
+FILE *__getfile3f(int unit)
 {
   void *p;
 

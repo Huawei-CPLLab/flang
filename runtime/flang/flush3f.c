@@ -17,7 +17,7 @@
 
 extern FILE *__getfile3f();
 
-void ENT3F(FLUSH, flush)(lu) int *lu;
+void ENT3F(FLUSH, flush)(int *lu)
 {
   FILE *f;
 

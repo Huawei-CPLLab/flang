@@ -15,7 +15,7 @@
 
 extern FILE *__getfile3f();
 
-int ENT3F(COMMITQQ, commitqq)(lu) int *lu;
+int ENT3F(COMMITQQ, commitqq)(int *lu)
 {
   FILE *f;
   int i;

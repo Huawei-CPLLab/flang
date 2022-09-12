@@ -16,9 +16,7 @@
 
 extern FILE *__getfile3f();
 
-int ENT3F(FSEEK, fseek)(lu, offset, from) int *lu;
-int *offset;
-int *from;
+int ENT3F(FSEEK, fseek)(int *lu, int *offset, int *from)
 {
   FILE *f;
 

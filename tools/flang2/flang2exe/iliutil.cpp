@@ -2926,6 +2926,26 @@ addarth(ILI *ilip)
         return ilix;
     }
     break;
+
+  case IL_QCMPLXNEG:
+    if (ncons == 1) {
+      GETVAL128(qnum1, con1v1);
+      GETVAL128(qnum2, con1v2);
+      xqneg(qnum1.numq, qres.numq);
+      cons1 = getcon(qres.numq, DT_QUAD);
+      xqneg(qnum2.numq, qres.numq);
+      cons2 = getcon(qres.numq, DT_QUAD);
+      qres.numi[0] = cons1;
+      qres.numi[1] = cons2;
+      return ad1ili(IL_QCMPLXCON, getcon(qres.numi, DT_QCMPLX));
+    }
+    if (!flg.ieee && ILI_OPC(op1) == IL_QCMPLXSUB) {
+      /* -(a - b) --> b - a */
+      op2 = ILI_OPND(op1, 1);
+      op1 = ILI_OPND(op1, 2);
+      return ad2ili(IL_QCMPLXSUB, op1, op2);
+    }
+    break;
 #endif
   case IL_FIX:
     if (ncons == 1) {
@@ -3530,6 +3550,35 @@ addarth(ILI *ilip)
     }
     break;
 
+#ifdef TARGET_SUPPORTS_QUADFP
+  case IL_QCMPLXADD:
+    if (ncons == 2 && IS_QUAD0(con2v1) && IS_QUAD0(con2v2))
+      return op1;
+    if (!flg.ieee && ncons == 3) {
+      GETVAL128(qnum1, con1v1);
+      GETVAL128(qnum2, con2v1);
+      xqadd(qnum1.numq, qnum2.numq, qres.numq);
+      cons1 = getcon(qres.numq, DT_QUAD);
+      GETVAL128(qnum1, con1v2);
+      GETVAL128(qnum2, con2v2);
+      xqadd(qnum1.numq, qnum2.numq, qres.numq);
+      cons2 = getcon(qres.numq, DT_QUAD);
+      qres.numi[0] = cons1;
+      qres.numi[1] = cons2;
+      return ad1ili(IL_QCMPLXCON, getcon(qres.numi, DT_QCMPLX));
+    }
+    if (ILI_OPC(op1) == IL_QCMPLXNEG) {
+      opc = IL_QCMPLXSUB;
+      tmp = op2;
+      op2 = ILI_OPND(op1, 1);
+      op1 = tmp;
+    } else if (ILI_OPC(op2) == IL_QCMPLXNEG) {
+      opc = IL_QCMPLXSUB;
+      op2 = ILI_OPND(op2, 1);
+    }
+    break;
+#endif
+
   case IL_AADD:
     newili.opnd[2] = ilip->opnd[2]; /* save away scale factor */
 #define RED_DAMV (!XBIT(15, 0x100))
@@ -3805,6 +3854,33 @@ addarth(ILI *ilip)
     }
     break;
 
+#ifdef TARGET_SUPPORTS_QUADFP
+  case IL_QCMPLXSUB:
+    if (!flg.ieee && ncons == 3) {
+      GETVAL128(qnum1, con1v1);
+      GETVAL128(qnum2, con2v1);
+      xqsub(qnum1.numq, qnum2.numq, qres.numq);
+      cons1 = getcon(qres.numq, DT_QUAD);
+      GETVAL128(qnum1, con1v2);
+      GETVAL128(qnum2, con2v2);
+      xqsub(qnum1.numq, qnum2.numq, qres.numq);
+      cons2 = getcon(qres.numq, DT_QUAD);
+      qres.numi[0] = cons1;
+      qres.numi[1] = cons2;
+      op2 = ad1ili(IL_QCMPLXCON, getcon(qres.numi, DT_QCMPLX));
+      return op2;
+    }
+    if (ncons == 2 && IS_QUAD0(con2v1) && IS_QUAD0(con2v2))
+      return op1;
+    if (ncons == 1 && IS_QUAD0(con1v1) && IS_QUAD0(con1v2))
+      return ad1ili(IL_QCMPLXNEG, op2);
+    if (ILI_OPC(op2) == IL_QCMPLXNEG) {
+      opc = IL_QCMPLXADD;
+      op2 = ILI_OPND(op2, 1);
+    }
+    break;
+#endif
+
   case IL_ASUB:
     /* (p + <x>) - p -> <x> */
     if (ilip->opnd[2] == 0 && ILI_OPC(op1) == IL_AADD &&
@@ -4024,8 +4100,31 @@ addarth(ILI *ilip)
         return ad1ili(IL_DPDP2DCMPLXI0, ilir);
       }
     }
-
     break;
+#ifdef TARGET_SUPPORTS_QUADFP
+  case IL_QCMPLXMUL:
+    /* check if any is of complex is 0  then 0*/
+    if (ncons == 1 && IS_QUAD0(con1v1) && IS_QUAD0(con1v2) && !func_in(op2))
+      return op1;
+    else if (ncons == 2 && IS_QUAD0(con2v1) && IS_QUAD0(con2v2) && !func_in(op1))
+      return op2;
+    else if (ncons == 3) { /* should be done by front end already */
+      if (IS_QUAD0(con1v1) && IS_QUAD0(con1v2))
+        return op1;
+      if (IS_QUAD0(con2v1) && IS_QUAD0(con2v2))
+        return op2;
+    } else {
+      op1 = ilip->opnd[0];
+      op2 = ilip->opnd[1];
+      if (ILI_OPC(op1) == IL_QPQP2QCMPLXI0 &&
+          ILI_OPC(op2) == IL_QPQP2QCMPLXI0) {
+        int ilir;
+        ilir = ad2ili(IL_QMUL, ILI_OPND(op1, 1), ILI_OPND(op2, 1));
+        return ad1ili(IL_QPQP2QCMPLXI0, ilir);
+      }
+    }
+    break;
+#endif
 
   case IL_FSINCOS:
   case IL_DSINCOS:
@@ -8414,6 +8513,27 @@ addother(ILI *ilip)
     ILI_ALT(ilix) = op1;
     iltb.callfg = 1;
     return ilix;
+#ifdef TARGET_SUPPORTS_QUADFP
+  case IL_QPQP2QCMPLXI0:
+    op1 = ilip->opnd[0];
+    if (ILI_OPC(op1) == IL_QCON) {
+      INT numi[2];
+      numi[0] = ILI_OPND(op1, 1);
+      numi[1] = stb.quad0;
+      return ad1ili(IL_QCMPLXCON, getcon(numi, DT_QCMPLX));
+    }
+    break;
+  case IL_QPQP2QCMPLX:
+    op1 = ilip->opnd[0];
+    op2 = ilip->opnd[1];
+    if (ILI_OPC(op1) == IL_QCON && ILI_OPC(op2) == IL_QCON) {
+      INT numi[2];
+      numi[0] = ILI_OPND(op1, 1);
+      numi[1] = ILI_OPND(op2, 1);
+      return ad1ili(IL_QCMPLXCON, getcon(numi, DT_QCMPLX));
+    }
+    break;
+#endif
   case IL_DPDP2DCMPLXI0:
     op1 = ilip->opnd[0];
     if (ILI_OPC(op1) == IL_DCON) {
@@ -8452,6 +8572,26 @@ addother(ILI *ilip)
       return ad1ili(IL_SCMPLXCON, getcon(numi, DT_CMPLX));
     }
     break;
+#ifdef TARGET_SUPPORTS_QUADFP
+  case IL_QCMPLX2REAL:
+    op1 = ilip->opnd[0];
+    if (ILI_OPC(op1) == IL_QPQP2QCMPLX || ILI_OPC(op1) == IL_QPQP2QCMPLXI0) {
+      return ILI_OPND(op1, 1);
+    } else if (ILI_OPC(op1) == IL_QCMPLXCON) {
+      return ad1ili(IL_QCON, CONVAL1G(ILI_OPND(op1, 1)));
+    }
+    break;
+  case IL_QCMPLX2IMAG:
+    op1 = ilip->opnd[0];
+    if (ILI_OPC(op1) == IL_QPQP2QCMPLX) {
+      return ILI_OPND(op1, 2);
+    } else if (ILI_OPC(op1) == IL_QPQP2QCMPLXI0) {
+      return ad1ili(IL_QCON, stb.quad0);
+    } else if (ILI_OPC(op1) == IL_QCMPLXCON) {
+      return ad1ili(IL_QCON, CONVAL2G(ILI_OPND(op1, 1)));
+    }
+    break;
+#endif
   case IL_DCMPLX2REAL:
     op1 = ilip->opnd[0];
     if (ILI_OPC(op1) == IL_DPDP2DCMPLX || ILI_OPC(op1) == IL_DPDP2DCMPLXI0) {

@@ -21,6 +21,13 @@ jobs:
         cc: [clang, gcc]
         version: [10, 11]
         llvm_branch: [release_14x, release_15x]
+        # Only deploy documentation once per workflow.
+        include:
+          - target: X86
+            cc: clang
+            version: 11
+            llvm_branch: release_15x
+            deploy_doc: true
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
@@ -86,15 +93,18 @@ jobs:
           cd build
           make check-all
 
-      # Archive documentation just once, for the fastest job.
-      - if: matrix.cc == 'clang' && matrix.version == '11'
-        run: |
-          cd build/docs/web
-          cp -r html/ ../../.. # copy to a place where Upload can find it.
-
-      # Upload docs just once, for the fastest job.
-      - if: matrix.cc == 'clang' && matrix.version == '11'
+      - name: Upload artifact
+        if: ${{ matrix.deploy_doc }}
         uses: actions/upload-artifact@v2
         with:
-          name: html_docs_flang
-          path: html
+          name: flang-docs-html
+          path: build/docs/web/html
+
+      - name: Deploy GitHub Pages
+        if: ${{ matrix.deploy_doc }}
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          enable_jekyll: true
+          publish_dir: build/docs/web/html
+          destination_dir: docs

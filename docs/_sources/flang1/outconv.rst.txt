@@ -1,0 +1,103 @@
+
+
+****************
+Output Converter
+****************
+
+
+========
+Overview
+========
+The output converter converts foralls into DO loops, handles allocate
+and deallocate statements, and optimizes array descriptor handling.
+
+
+===============
+Data Structures
+===============
+
+
+----------------------
+Global Data Structures
+----------------------
+.uh "Symbol Table"
+The symbol table is accessed.
+.uh "AST"
+Statements are inserted and deleted.
+
+
+---------------------
+Local Data Structures
+---------------------
+There are no significant local data structures in the Output Converter.
+
+
+==========
+Processing
+==========
+
+
+--------
+Overview
+--------
+The main entry point to the output converter is
+``convert_output()``.
+It calls
+``convert_forall()``
+to convert forall statements and allocate/deallocate statements. It then
+calls
+``transform_wrapup()``
+to output descriptor information.
+
+
+-----------------
+Forall Conversion
+-----------------
+This task is performed by
+``conv_forall()``.
+One DO loop is created for each forall index, and the forall statement
+is converted to a comment.  No dependence checking is done; currently
+it is assumed that earlier phases have removed any dependences that prevent
+simple conversion to DO loops.
+
+Mask expressions are converted to IF statements inside the loop.
+
+Forall conversion will likely be changed in a future release to perform more
+optimal scalarization, loop fusions, etc.
+
+
+-------------------
+Allocate/Deallocate
+-------------------
+Allocate and deallocate statements are handled by
+``conv_allocate``
+and
+``conv_deallocate``.
+If necessary,
+descriptors are created and initialized. It may also be necessary to
+initialize the array bounds variables if a deferred-shape array is allocated.
+
+
+-----------
+Descriptors
+-----------
+``transform_wrapup()``
+is contained in the file
+``dpm_out.c``.
+It loops over each entry point in the subprogram, and performs the following
+tasks:
+
+#. Transform arguments to support the Fotran calling convention.
+
+#. Initialize processor and template descriptors.
+
+#. Perform copy_in and copy_out on array arguments.
+
+#. Initialize common blocks.
+
+#. Create alignment and distribution descriptors.
+
+#. Allocate distributed array sections.
+
+The program return statement is preceeded by statements to free the
+descriptors, local arrays, and so forth.

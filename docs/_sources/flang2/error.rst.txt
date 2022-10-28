@@ -1,0 +1,130 @@
+
+
+*********************
+Error Reporting Utils
+*********************
+
+
+========
+Overview
+========
+The Error Reporting Utilities are a set of routines
+used throughout **Flang** to format and write error messages and
+error summary messages to the user's terminal (\c
+``stderr``)
+and to the Listing File.
+
+The text of error messages is stored in a data structure
+which is initialized by C code created by the utility program
+ERRMSG, which uses the error message definition file as input.
+
+Appendix II of this document lists the **Flang** error messages
+and describes them.
+This appendix was created from the error message definition file.
+
+
+=============
+Program Units
+=============
+The following routines belong to the source code module
+*error.c*.
+
+``VOID errini()``
+
+   This routine called at the beginning of processing of each user
+   subprogram unit to initialize various error counts associated
+   with the subprogram to zero.
+
+``VOID error(ecode, sev, eline, op1, op2)``
+   Writes error message (subject to
+   ``-inform``
+   flag) to user's terminal
+   and Listing File.  Aborts compilation if fatal message issued.
+   Maintains error statistics.
+
+``int ecode;``
+   Error message number (see Appendix II).
+
+``int sev;``
+   Error severity.  Allowed values are:
+   .(l1 --- informational
+   2 --- warning
+   3 --- severe
+   4 --- fatal
+   .)l
+
+``int eline;``
+   Source file line number associated with the error, possibly 0.
+
+``char \*op1;``
+   Specifies text string to be incorporated into the message in place of
+   "$".
+   If
+   ``NULL``,
+   no text need be inserted.
+
+``char \*op2;``
+   Same as
+   ``op1``
+   for second string, if any.
+
+``VOID interr(txt, val, sev)``
+   Issue internal compiler error.
+
+``char \*txt;``
+   Text string which will be incorporated into the error message.
+   To make it easier to track down the problem, the name of the function
+   issuing the internal error should appear at the beginning of the string,
+   followed by
+   ":".
+
+``int val;``
+   Integer value to be included in the error message to assist debugging.
+
+``int sev;``
+   Severity of message, in range 1 to 4.
+
+``VOID summary()``
+   Write compilation summary message
+   to
+   ``stderr.``
+
+
+==============
+ERRMSG Utility
+==============
+This utility creates C code which initializes the error message
+text structure.
+It must be run whenever a message is deleted, added, or modified.
+Once run, the module
+*error.c*
+must be recompiled.
+
+Note that the severity level of each message is specified in this
+file, but is ignored by ERRMSG.
+
+
+------
+Inputs
+------
+The single input to ERRMSG is the error message definition file
+(\c
+*errmsg.n*).
+For the proper format of messages added to this file, just
+refer to the existing file as an example.
+
+Note that an informal description of each message, its causes
+and proper interpretation, is included in this file (see Appendix II).
+Care should be taken to keep this information up to date.
+Messages should be deleted when they are no longer used.
+
+
+-------
+Outputs
+-------
+The ERRMSG output is the file
+*errmsgdf.h*
+which is
+included into the module
+*error.c*
+to initialize the error message text.

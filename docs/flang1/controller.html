@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Program Controller &#8212; Flang 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Scanner" href="scanner.html" />
+    <link rel="prev" title="Communication Analyzer" href="comms.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
+          <span>Flang 1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Program Controller</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="comms.html">Communication Analyzer</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="scanner.html">Scanner</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="program-controller">
+<h1>Program Controller<a class="headerlink" href="#program-controller" title="Permalink to this headline">¶</a></h1>
+<p>The Program Controller controls invocation of the initialization
+routines, the other major compiler modules, and the finish routine.</p>
+<p>Initialization is performed by the routine
+<em>init</em>
+at the
+very beginning of execution.</p>
+<div class="section" id="id1">
+<h2>Program Controller<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>See figure 2-1 for a pseudo-code description of the Program Controller processing.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>init();
+
+for (each subprogram) {
+    reinit();   /\* init for subprogram \*/
+    parser();   /\* Scan, parse and semantically analyze \*/
+
+    if (no severe errors) {
+        transform();
+        convert_output();
+        output();
+    }
+}
+
+finish();
+</pre></div>
+</div>
+<p>Figure 2-1 Program Controller Operation</p>
+<p>Note that each subprogram is completely processed and output before the
+next subprogram is processed. Conceptually, it is as if each subprogram
+were in a separate file.</p>
+<p>Also, note that invocation of the Scanner and Semantic Analyzer are
+controlled by the Parser in a traditional bottom-up
+syntax directed translation.</p>
+</div>
+<div class="section" id="init">
+<h2>Init<a class="headerlink" href="#init" title="Permalink to this headline">¶</a></h2>
+<p>The
+<code class="docutils literal notranslate"><span class="pre">init</span></code>
+module performs the following five major tasks:</p>
+<ol class="arabic simple">
+<li>Processes command line and sets values of internal variables
+depending on the flags specified by the user.</li>
+<li>Opens input and output files.</li>
+<li>If a listing file is being generated, writes the Listing
+Header.</li>
+<li>Initializes the Error message module, Symbol table module,
+Scanner, and Semantic Analyzer by calling the appropriate
+init routine for each.</li>
+<li>If the user requested that the source file be run through the
+C preprocessor, invoke the internal preprocessor (c
+<code class="docutils literal notranslate"><span class="pre">fpp</span></code>)
+and write its output to a temporary file, which becomes the input
+file to the parser.</li>
+</ol>
+<div class="section" id="adding-command-line-flags">
+<h3>Adding Command Line Flags<a class="headerlink" href="#adding-command-line-flags" title="Permalink to this headline">¶</a></h3>
+<p>The command line processor searches the structure
+<code class="docutils literal notranslate"><span class="pre">swtchtab[]</span></code>
+(defined in
+<em>main.c</em>
+)
+to
+find valid flags or flag prefixes.
+To add a flag, add the new flag (without
+the preceeding
+“(mi”)
+to
+<code class="docutils literal notranslate"><span class="pre">swtchtab[]</span></code>’s
+initialization, keeping the flags in lexicographic order.
+Also add a case constant to the initialization.
+Switch case constants are
+<code class="docutils literal notranslate"><span class="pre">#define</span></code>’d
+constants of the form
+<code class="docutils literal notranslate"><span class="pre">SW_&lt;flag</span> <span class="pre">name</span> <span class="pre">in</span> <span class="pre">caps&gt;</span></code>,
+and appear
+above the definition
+of
+<code class="docutils literal notranslate"><span class="pre">swtchtab</span></code>.
+The case constant must be unique but numerical order is not necessary.
+(i.e., you don’t have to change existing constants, just use the next
+biggest unused integer.)</p>
+<p>Add the case label
+<code class="docutils literal notranslate"><span class="pre">SW_&lt;flag</span> <span class="pre">name</span> <span class="pre">in</span> <span class="pre">caps&gt;:</span></code>
+to
+<code class="docutils literal notranslate"><span class="pre">init()</span></code>
+(also defined in
+<em>main.c</em>
+).
+Also, add code to process flag and any values that follow the flag.
+See existing code in
+<code class="docutils literal notranslate"><span class="pre">init()</span></code>
+for examples.</p>
+</div>
+</div>
+<div class="section" id="finish">
+<h2>Finish<a class="headerlink" href="#finish" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">finish</span></code>
+is called at the end of compiler execution to
+close files, write a compilation summary line to the
+user’s terminal, and exit.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="comms.html">Communication Analyzer</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="scanner.html">Scanner</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

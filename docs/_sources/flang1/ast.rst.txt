@@ -1,0 +1,5843 @@
+
+
+********************
+Abstract Syntax Tree
+********************
+
+
+========
+Overview
+========
+
+The Abstract Syntax Tree is used through out the front-end
+to represent the source file.
+
+The Abstract Syntax Tree is maintained as a table
+in dynamic storage space which is extended
+if necessary.
+Each AST node consists of 16 32-bit words which are divided into fields
+of various lengths.
+The layout of the AST structure is strict;
+overlaying fields with fields of other types is not allowed.
+AST pointers are integers (greater than zero) which are stored as ints
+and used as relative pointers from a base pointer.
+
+AST nodes are added to the table using a set of access
+routines which are described later on in this section.
+
+AST fields are accessed via a set of C macros.  These macros are
+upper case and consist of the name of the field followed by either
+"P"
+for the put macro or
+"G"
+for the get macro.  The put macros take two arguments,
+AST pointer and the value to be inserted.  The get macros take
+a single argument which is a AST pointer, and return the value
+of the field.
+All macros used to access AST nodes including the names of the
+node types are prefixed with A\_.
+For example:
+
+.. code-block:: none
+
+       A_TYPEP(aptr, A_ID);     atype = A_TYPEG(aptr);
+
+
+The macro definitions and the necessary C data declaration statements
+required to access the AST are in the include file
+*ast.h*.
+
+
+
+
+==========
+AST Fields
+==========
+
+
+-------------
+Shared Fields
+-------------
+Each type of AST entry (see TYPE below) has
+a different set of fields associated with it.
+This section describes those fields which are used by all or most
+of the AST types.
+
+
+
+``TYPE``
+   This field defines the type of an AST entry.
+   C manifest constants are used to represent the ``TYPE`` values;
+   the ``TYPE`` values are:
+
+
+
+
+
+
+   ``NULL``
+      *null* leaf node.
+
+
+
+   ``ID``
+      Identifier leaf node.
+
+
+
+   ``CNST``
+      Constant leaf node.
+
+
+
+   ``LABEL``
+      Label leaf node.
+
+
+
+   ``BINOP``
+      Binary operator.
+
+
+
+   ``UNOP``
+      Unary operator.
+
+
+
+   ``CMPLXC``
+      Complex constant constructor.
+
+
+
+   ``CONV``
+      Conversion operator.
+
+
+
+   ``PAREN``
+      Parenthesized expression.
+
+
+
+   ``MEM``
+      Member reference.
+
+
+
+   ``SUBSCR``
+      Subscript reference.
+
+
+
+   ``SUBSTR``
+      Substring reference.
+
+
+
+   ``TRIPLE``
+      Triplet expression.
+
+
+
+   ``FUNC``
+      Function call.
+
+
+
+   ``INTR``
+      Intrinsic function call.
+
+
+
+   ``INIT``
+      Data structure initialization.
+
+
+
+   ``ENTRY``
+      Entry statement.
+
+
+
+   ``ASN``
+      Assignment statement.
+
+
+
+   ``IF``
+      if statement.
+
+
+
+   ``IFTHEN``
+      Block if statement.
+
+
+
+   ``ELSE``
+      else statement.
+
+
+
+   ``ELSEIF``
+      elseif statement.
+
+
+
+   ``ENDIF``
+      endif statement.
+
+
+
+   ``AIF``
+      Arithmetic if statement.
+
+
+
+   ``GOTO``
+      goto statement.
+
+
+
+   ``CGOTO``
+      Computed goto statement.
+
+
+
+   ``AGOTO``
+      Assigned goto statement.
+
+
+
+   ``ASNGOTO``
+      Assign statement.
+
+
+
+   ``DO``
+      do statement.
+
+
+
+   ``DOWHILE``
+      dowhile statement.
+
+
+
+   ``ENDDO``
+      enddo statement.
+
+
+
+   ``CONTINUE``
+      continue statement.
+
+
+
+   ``END``
+      end statement.
+
+
+
+   ``CALL``
+      Call statement.
+
+
+
+   ``ICALL``
+      Intrinsic statement.
+
+
+
+   ``STOP``
+      stop statement.
+
+
+
+   ``PAUSE``
+      pause statement.
+
+
+
+   ``RETURN``
+      return statement.
+
+
+
+   ``ALLOC``
+      allocate statement.
+
+
+
+   ``WHERE``
+      where statement.
+
+
+
+   ``ELSEWHERE``
+      elsewhere statement.
+
+
+
+   ``ENDWHERE``
+      endwhere statement.
+
+
+
+   ``FORALL``
+      forall statement.
+
+
+
+   ``ENDFORALL``
+      endforall statement.
+
+
+
+   ``ELSEFORALL``
+      elseforall statement.
+
+
+
+   ``REDIM``
+      redimension statement.
+
+
+
+   ``COMMENT``
+      AST to comment.
+
+
+
+   ``COMSTR``
+      Comment string.
+
+
+
+
+
+
+
+   ``flags``
+      Flags per node.
+
+
+
+   ``hw2``
+
+
+
+   ``HSHLK``
+      Hash link.
+      This field is used to link together those nodes
+      which hash to the same value, and is used only by the
+      node look-up routines.
+      Not all of the nodes are hashed.
+      As a general rule, the nodes which may appear as an expression
+      are hashed.
+      If a node can be hashed, the inputs to the hash functions depend on the
+      AST type.
+      For statement ASTs, the ``HSHLK`` field is used to contain the pointer
+      to the AST's ``STD``;
+      the macros, ``A_STDG`` and ``A_STDP``, are provided to
+      access the ``HSHLK`` field as the ``STD`` field.
+
+
+
+   ``hw21``
+      Always an unsigned halfword.
+      Used when it's known (or there's a practical limit)
+      that its value does not exceed 65335.
+
+
+
+   ``hw22``
+      Always an unsigned halfword.
+      Used where it's known (or there's a practical limit)
+      that its value does not exceed 65335.
+
+
+
+   ``OPT1``
+      Optimizer-/vectorizer-/communication optimizer- dependent field.
+
+
+
+   ``OPT2``
+      Optimizer-/vectorizer-/communication optimizer- dependent field.
+
+
+
+   ``REPL``
+      For a rewrite algorithm, this field contains the pointer to the ast
+      which replaces the ast.
+
+
+
+   ``VISIT``
+      A traversal-temporary field, initially zero,
+      to mark an AST during a traversal as
+      *visited*.
+      The value actually used to mark the field is dependent on the
+      purpose of the traversal; it could be a non-zero value, a link field
+      to created a threaded list of visted nodes, etc.
+      Each traversal using this field must also clean up (reinitialize the field
+      to zero).
+
+
+
+   ``SHAPE``
+      Shape descriptor.
+      For those nodes which may have shape,
+      this field is locates the shape descriptor
+      (see *Shape Descriptors*
+      in the section *Auxiliary Data Structures*).
+      This field is zero if the node represents a scalar value.
+
+
+      ``NDTYPE``
+         Used in the lower phase to insert ILM conversion operators.
+
+
+
+
+--------------------
+Expression AST Types
+--------------------
+
+Expression nodes are created when an expression is parsed and
+semantically analyzed.
+During semantic analysis, a node may be constant folded, and if so,
+a constant AST is created and associated with the expression node.
+If an expression can also be represented as a constant, its ``ALIAS``
+field locates a ``CNST`` AST; if it does not evaluate to a constant,
+this field is zero.
+
+
+^^^^
+NULL
+^^^^
+*null*
+
+This AST type represents the AST at location 0 in the AST table.
+Generally, the pointer (index) value of zero will not appear in
+a field of an AST which is represents a pointer to another AST.
+An AST pointer of zero may appear in the ARG table indicating that
+the corresponding argument was omitted (see the description
+of the ARG table in the section *Auxiliary Data Structures*).
+
+*Flags*
+
+*Other Fields*
+
+
+
+^^
+ID
+^^
+*ident* LVAL EXPR
+
+This node is a leaf node in the AST and represents an
+identifer which is fully resolved (declared).
+
+*Flags*
+
+``CNG``
+   Change flag; ``TRUE`` if changes occurred.
+
+``IDSTR``
+   Used only the save and restore of CONTAIN'd functions.  The AST saved by
+   restore_internal_subprograms contains the ID name rather than the SPTR.
+
+``CALLFG``
+   May be referenced, though is never set for an ID
+
+``PTRREF``
+   Set when this is a pointer actual argument that is passed by reference
+   (e.g., the dummy argument is a pointer to pointer argument such as char\*\*).
+   This is currently used for the element argument in the RTE_poly_element_addr
+   runtime routines.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the identifier (see
+   the DTYPE discussion in the SYMBOL TABLE chapter)
+
+``SPTR``
+   Symbol table pointer of the identifer (see the SYMBOL TABLE chapter).
+
+``ALIAS``
+   If node evaluates to a constant, this field locates
+   the ``CNST`` node representing the value.
+
+``NME``
+   Names information (see nme.h).
+
+``ORIG_EXPR``
+   When set, this represents the original expression of this ast. For example,
+   we use this field when we replace a subscripted expression with a pointer. We
+   may have to go back to the original expression if the subscripted expression is
+   used in a type bound procedure call.
+
+
+
+^^^^
+CNST
+^^^^
+*constant* EXPR
+
+
+Leaf node representing a constant.
+
+*Flags*
+
+``CALLFG``
+   May be referenced, though is never set for an CNST
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the constant.
+
+``SPTR``
+   Symbol table pointer of the constant
+
+``ALIAS``
+   This field locates itself.
+
+
+
+^^^^^
+LABEL
+^^^^^
+*label*
+
+
+Leaf node representing a label.
+Created when a label appears (e.g., ``GOTO`` statement).
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   may be accessed
+
+``SPTR``
+   Symbol table pointer of the label.
+
+``ALIAS``
+   May be accessed
+
+
+
+^^^^^
+BINOP
+^^^^^
+*binop* EXPR
+
+
+Binary Operator node.
+
+*Flags*
+
+``CALLFG``
+   Set if a function reference appears in the left and/or right operand.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the operation
+
+``LOP``
+   AST pointer to left (first) operand
+
+
+   ``OPTYPE (hw21)``
+      Type of operator (see OP\_ macros in ast.h)
+
+
+
+   ``ROP``
+      AST pointer to right (second) operand
+
+
+
+   ``ALIAS``
+      If node evaluates to a constant, this field locates
+      the ``CNST`` node representing the value.
+
+
+
+
+^^^^
+UNOP
+^^^^
+*unaryop* EXPR
+
+
+Unary Operator node.
+
+*Flags*
+
+``CALLFG``
+   Set if the operand contains a reference to a function.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result.
+
+``LOP``
+   AST pointer to
+
+
+   ``OPTYPE (hw21)``
+      Type of operator (see ``OP_`` macros in ast.h);
+      may be ``OP_ADD``,
+      ``OP_SUB``,
+      ``OP_LNOT``,
+      ``OP_LOC``,
+      ``OP_REF``, or
+      ``OP_VAL``.
+
+
+
+   ``ALIAS``
+      If node evaluates to a constant, this field locates
+      the ``CNST`` node representing the value.
+
+
+
+
+^^^^^^
+CMPLXC
+^^^^^^
+*formed-cmplx-constant* EXPR
+
+
+Formed complex constant node.
+Created when semant creates a complex constant by
+parsing ``(<const expr>, <const expr>)``.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the complex constant
+
+``LOP``
+   AST pointer to real operand
+
+``ROP``
+   AST pointer to imaginary
+
+``ALIAS``
+   Since the node evaluates to a constant, this field locates
+   the ``CNST`` node representing the value.
+
+
+
+^^^^
+CONV
+^^^^
+*convert* EXPR
+
+
+Conversion node.
+Created when implicit conversions are created during semantic analysis
+
+*Flags*
+
+``CALLFG``
+   Set if operand contains a reference to a function.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the conversion.
+
+``LOP``
+   AST pointer to operand being converted.
+
+``ALIAS``
+   If node evaluates to a constant, this field locates
+   the ``CNST`` node representing the value.
+
+
+
+^^^^^
+PAREN
+^^^^^
+*parens* EXPR
+
+
+Parentheses node. Used when an expression is enclosed in
+parentheses.
+
+*Flags*
+
+``CALLFG``
+   Set if operand contains a reference to a function.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result.
+
+``LOP``
+   AST pointer to node enclosed in parentheses.
+
+``ALIAS``
+   If node evaluates to a constant, this field locates
+   the ``CNST`` node representing the value.
+
+
+
+^^^
+MEM
+^^^
+*member* LVAL EXPR
+
+
+Record member reference operator.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the reference.
+
+``PARENT``
+   AST pointer to node representing the record.
+
+``MEM``
+   AST pointer to node representing the member of the record.
+
+``NME``
+   Names information (see nme.h).
+
+``ALIAS``
+   If node evaluates to a constant, this field locates
+   the ``CNST`` node representing the value.
+
+
+
+^^^^^^
+SUBSCR
+^^^^^^
+*subscript* LVAL EXPR
+
+
+Subscript reference operator.
+
+*Flags*
+
+``CALLFG``
+   Set if a function reference appears in the array reference or in any of
+   the subscript expressions.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the reference.
+
+``LOP``
+   AST pointer to node representing the array.
+
+``ASD``
+   Pointer (index) to array subscript auxiliary descriptor (ASD)
+   representing the subscripts.
+
+``RFPTR``
+   Reference pointer (used by transformer).
+
+``ALIAS``
+   If this is determined to be constant
+
+``SECSHP``
+   If this subscript ast is created by the transformer while
+   scalarizing array sections, this field is the SHAPE of
+   the array section ast from which this ast was derived.
+
+``NME``
+   Names information (see nme.h).
+
+
+
+^^^^^^
+SUBSTR
+^^^^^^
+*substring* LVAL EXPR
+
+
+Character substring reference operator.
+
+*Flags*
+
+``CALLFG``
+   Set if a function reference appears in the character reference
+   or substring expressions.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the substring.
+
+``LOP``
+   AST pointer to the  node representing a character reference.
+
+``LEFT``
+   AST pointer to node representing the index of the leftmost character
+   of the substring (zero, if not specified).
+
+``RIGHT``
+   AST pointer to node representing the index of the rightmost character
+   of the substring (zero, if not specified).
+
+``ALIAS``
+   If node evaluates to a constant, this field locates
+   the ``CNST`` node representing the value.
+
+``NME``
+   Names information (see nme.h).
+
+
+
+^^^^^^
+TRIPLE
+^^^^^^
+*triple*
+
+
+Array triple expression.
+This node is referenced by the array subscript descriptors (ASD)
+and the list items created for any forall-triplets.
+
+*Flags*
+
+``CALLFG``
+   Set if a function reference appears in any of the triple expressions.
+
+*Other Fields*
+
+``LBD``
+   AST pointer to node representing the lower bound (the first expression)
+   of the triple expression (zero, if not specified).
+
+``UPBD``
+   AST pointer to node representing the upper bound (the second expression)
+   of the triple expression (zero, if not specified).
+
+``STRIDE``
+   AST pointer to node representing the stride (the third expression)
+   of the triple expression (zero, if not specified)
+
+``ALIAS``
+   will be zero
+
+``MASK``
+   Holds a mask containing which dimensions were left empty by the programmer.The compiler automatically adds bounds to empty dimensions.
+
+
+
+^^^^
+FUNC
+^^^^
+*func-call* EXPR
+
+
+Function call reference.
+
+*Flags*
+
+``CALLFG``
+   Set to 1.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the function.
+
+``LOP``
+   AST pointer to the node representing the function.
+
+
+   ``ARGCNT (hw22)``
+      Number of arguments passed to the function.
+
+
+
+   ``ALIAS``
+      If node evaluates to a constant, this field locates
+      the ``CNST`` node representing the value.
+
+
+
+   ``ARGS``
+      Pointer to the table of arguments for the function
+      stored in the ARG Table (see the description
+      of the ARG table in the section *Auxiliary Data Structures*).
+      If there aren't any arguments, this field is zero.
+
+
+
+   ``INVOKING_DESC``
+      Used for a type bound procedure call. This is the invoking descriptor. It's
+      usually set when the descriptor is a temporary variable. It's also used with type bound procedure calls with the NOPASS attribute and when the declared type of
+      the invoking object is abstract.
+
+
+
+
+^^^^
+INTR
+^^^^
+*intr-func-call* EXPR
+
+
+Intrinsic function reference.
+
+*Flags*
+
+``CALLFG``
+   Set if a reference to a function appears in any of the arguments
+   to the intrinisc.
+
+
+``ISASSIGNLHS``
+   Set if this is a "allocated(x)" check generated for the LHS of an allocatable
+   assignment in an OpenACC compute region or an OpenACC routine.
+
+
+``ISASSIGNLHS2``
+   Idential to ISASSIGNLHS except RHS is constant.
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the function.
+
+``LOP``
+   AST pointer to the node representing the function.
+
+
+   ``OPTYPE (hw21)``
+      Type of intrinsic (see ``_<intrinsic name>`` macros in ast.h).
+
+
+
+   ``ARGS``
+      Pointer to the table of arguments for the function
+      stored in the ARG Table (see the description
+      of the ARG table in the section *Auxiliary Data Structures*).
+      If there aren't any arguments, this field is zero.
+
+
+      ``ARGCNT (hw22)``
+         Number of arguments passed to the function.
+
+
+
+      ``ALIAS``
+         If node evaluates to a constant, this field locates
+         the ``CNST`` node representing the value.
+
+
+
+
+
+^^^^
+INIT
+^^^^
+*initialization* EXPR
+
+
+Data structure initialization.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the initialization.
+
+
+   ``OPTYPE (hw21)``
+      Type of constructor (see OP\_ macros: OP_SCALAR, OP_ARRAY, OP_DERIVED)
+
+
+
+   ``LEFT``
+      AST pointer to the initialization tree.
+
+
+
+   ``RIGHT``
+      AST pointer to the rightmost branch of the initialization tree
+
+
+
+   ``SPTR``
+      Symbol table pointer of the symbol being initialized
+
+
+
+   ``ARGS``
+      Pointer to a table of arguments for the constructor
+      stored in the ARG Table (see the description
+      of the ARG table in the section *Auxiliary Data Structures*).
+      If there aren't any arguments, this field is zero, but this will only
+      occur in case of an error.
+
+
+      ``ARGCNT (hw22)``
+         Number of arguments passed to the constructor.
+
+
+
+
+
+-------------------
+Statement AST Types
+-------------------
+
+Statement AST nodes are created for those statements which
+represent the execution of a subprogram beginning with the
+first executable statement.
+Declarations including the subprogram statements ``SUBROUTINE``,
+``FUNCTION``, ``PROGRAM``, and ``BLOCKDATA``,
+are not represented as ASTs.
+For generating the source of these statements, the symbol table is processed.
+ASTs are created for ``ENTRY`` statements.
+
+A statement AST does not contain explicit fields which represents information
+such as its previous and next statements, the presence of a label, and
+its line number.
+This information is contained in the statement's statement descriptor
+(``STD``, see *Statement Lists*
+in the section *Auxiliary Data Structures*).
+Each ``STD`` contains a pointer to the statement AST;
+also, each statement AST contains a pointer to its ``STD``.
+Since statement ASTs are not hashed,
+the ``HSHLK`` field is used to contain the pointer to the
+AST's ``STD``;
+the macros, ``A_STDG`` and ``A_STDP``, are provided to access
+the ``STD`` field.
+
+
+^^^^^
+ENTRY
+^^^^^
+*entry*
+
+AST node for an entry statement.
+An AST is not created
+for the program, subroutine, function, and blockdata statements;
+the symbol table is used for generate the source for these
+statements.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+   Pointer to the statement's ``STD``.
+
+
+   ``SPTR``
+      Symbol table pointer of entry subprogram
+
+
+
+
+^^^
+ASN
+^^^
+*assign*
+
+AST node for an assignment statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      Data type of the assignment.
+
+
+
+   ``DEST``
+      AST pointer of the left hand side of =.
+
+
+
+   ``SRC``
+      AST pointer of the right hand side of =.
+
+
+
+
+^^
+IF
+^^
+*if-stmt*
+
+if (expr) stmt.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFSTMT``
+      AST pointer to the statement whose execution is controlled
+      by the if expression.
+      The ``STD`` field of
+      the statement located by ``IFSTMT`` has a value of zero.
+
+
+
+   ``IFEXPR``
+      AST pointer of the logical expression
+
+
+
+
+^^^^^^
+IFTHEN
+^^^^^^
+*if-then*
+
+Block if statement.
+The next statement AST is the statement which begins the statement
+list of the then clause.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFEXPR``
+      AST pointer of the logical expression
+
+
+
+
+^^^^
+ELSE
+^^^^
+*else*
+
+else AST of a A_IFTHEN or A_ELSEIF AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFEXPR``
+      AST pointer of the logical expression
+
+
+
+
+^^^^^^
+ELSEIF
+^^^^^^
+*elseif*
+
+elseif AST of a A_IFTHEN or A_ELSEIF AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFEXPR``
+      AST pointer of the logical expression
+
+
+
+
+^^^^^
+ENDIF
+^^^^^
+*endif*
+
+endif AST of a A_IFTHEN, A_ELSE, or A_ELSEIF AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^
+AIF
+^^^
+*arithmetic-if*
+
+Arithmetic if AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFEXPR``
+      AST pointer of the arithmetic if expression.
+      The data type of this expression is one of the allowed data types
+      which may appear in an arithmetic if.
+
+
+
+   ``L1``
+      Label (AST pointer) of statement to be executed if the expression is negative.
+
+
+
+   ``L2``
+      Label (AST pointer) of statement to be executed if the expression is zero.
+
+
+
+   ``L3``
+      Label (AST pointer) of statement to be executed if the expression is positive.
+
+
+
+
+^^^^
+GOTO
+^^^^
+*goto*
+
+goto AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``L1``
+      Label (AST pointer) of statement to be executed.
+
+
+
+
+^^^^^
+CGOTO
+^^^^^
+*computed-goto*
+
+computed goto AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST of the computed-goto expression.
+
+
+
+   ``LIST``
+      Pointer to the list in the AST list area of the labels which
+      appear in the statement (see the description
+      of the AST list items in the section *Auxiliary Data Structures*).
+
+
+
+
+^^^^^
+AGOTO
+^^^^^
+*assigned-goto*
+
+assigned goto AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST of the identifier of the GOTO variable.
+
+
+
+   ``LIST``
+      Pointer to the list in the AST list area of the labels which
+      appear in the statement (see the description
+      of the AST list items in the section *Auxiliary Data Structures*).
+      If the list does not appear in the statement, this field is zero.
+
+
+
+
+^^^^^^^
+ASNGOTO
+^^^^^^^
+*goto-asn*
+
+goto assignment
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DEST``
+      AST pointer of the variable being assigned a value.
+
+
+
+   ``SRC``
+      AST pointer of the assigned label.
+
+
+
+
+^^
+DO
+^^
+*do*
+
+do statement: ``do [label] i = m1, m2, m3``.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DOLAB``
+      If label is present, this field is the AST pointer of the label.
+      If zero, the do statement is terminated with an ENDDO.
+
+
+
+   ``DOVAR``
+      AST pointer to the do index variable.
+
+
+
+   ``M1``
+      AST pointer to the initial expression
+
+
+
+   ``M2``
+      AST pointer to the limit expression
+
+
+
+   ``M3``
+      AST pointer to the skip expression; this field is zero if the
+      skip is not present.
+
+
+
+   ``M4``
+      AST pointer to the zero-size expression; this field is zero if it is
+      not a transformed array assignment to do loop.
+
+
+
+
+^^^^^^^
+DOWHILE
+^^^^^^^
+*dowhile*
+
+``dowhile [label] ( expr )``.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DOLAB``
+      If label is present, this field is the AST pointer of the label.
+      If zero, the do statement is terminated with an ENDDO.
+
+
+
+   ``IFEXPR``
+      AST pointer of the logical expression
+
+
+
+
+^^^^^
+ENDDO
+^^^^^
+*enddo*
+
+enddo AST: terminates a DO or DOWHILE.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^
+CONTINUE
+^^^^^^^^
+*continue*
+
+continue AST.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^
+END
+^^^
+*end*
+
+END statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^
+CALL
+^^^^
+*subr-call*
+
+
+Subroutine call.
+
+*Flags*
+
+``CALLFG``
+   Usually set
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``ALIAS``
+      If node evaluates to a constant, this field locates
+      the ``CNST`` node representing the value.
+
+
+
+   ``LOP``
+      AST pointer to the node representing the subroutine.
+
+
+
+   ``ARGS``
+      Pointer to the table of arguments for the subroutine
+      stored in the ARG Table (see the description
+      of the ARG table in the section *Auxiliary Data Structures*).
+      If there aren't any arguments, this field is zero.
+
+
+
+   ``ARGCNT (hw22)``
+      Number of arguments passed to the subroutine.
+
+
+
+
+^^^^^
+ICALL
+^^^^^
+*intrinsic-call*
+
+
+Intrinsic or predeclared call.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the node representing the subroutine.
+
+
+
+   ``OPTYPE (hw21)``
+      Type of intrinsic/predeclared (see ``_<intrinsic name>`` macros in ast.h).
+
+
+      ``ARGS``
+         Pointer to the table of arguments for the subroutine
+         stored in the ARG Table (see the description
+         of the ARG table in the section *Auxiliary Data Structures*).
+         If there aren't any arguments, this field is zero.
+
+
+
+      ``ARGCNT (hw22)``
+         Number of arguments passed to the subroutine.
+
+
+         ``DTYPE``
+            Data type of the icall.
+
+
+
+         ``ALIAS``
+            May be set
+
+
+
+
+
+
+^^^^
+STOP
+^^^^
+*stop*
+
+
+Stop statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the node representing the stop expression; zero
+      if not present.
+
+
+
+
+^^^^^
+PAUSE
+^^^^^
+*pause*
+
+
+Pause statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the node representing the pause expression; zero
+      if not present.
+
+
+
+
+^^^^^^
+RETURN
+^^^^^^
+*return*
+
+
+Return statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the node representing the return expression; zero
+      if not present.
+
+
+
+
+^^^^^
+ALLOC
+^^^^^
+*allocate/deallocate*
+
+
+Allocate/deallocate statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+
+``DALLOCMEM``
+   Set if the deallocate was generated by the compiler
+   to deallocate an allocatable derived type member.
+
+
+``FIRSTALLOC``
+   Set if the ALLOC ast is the first generated for an
+   allocate or deallocate statement.
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer of the ``STAT`` specifier; if this specifier is not
+      present, this field is zero.
+
+
+
+   ``TKN (hw21)``
+      Scanner token value (``TK_ALLOCATE`` or ``TK_DEALLOCATE``)
+      indicating the type of statement.
+
+
+      ``SRC``
+         AST pointer of the object being (de-)allocated.
+         If an allocatable (deferred shape) array is being allocated,
+         the AST is a subscript ast
+         whose subscripts are triple ASTs which describe the shape of the array.
+         An ``ALLOCATE`` or ``DEALLOCATE`` statement which contains
+         multiple objects is transformed into a sequence of ``ALLOCATE``
+         or ``DEALLOCATE`` statements, one for each object.
+
+
+
+      ``DEST``
+         AST pointer of the ``PINNED`` specifier; if this specifier is not
+         present, this field is zero.
+
+
+
+      ``M3``
+         AST pointer of the ``ERRMSG`` specifier; if this specifier is not
+         present, this field is zero.
+
+
+
+      ``START``
+         AST pointer of the ``SOURCE`` specifier; if this specifier is not
+         present, this field is zero.
+
+
+
+      ``DEVSRC``
+         If this is a device mirrored symbol being allocated or deallocated,
+         the DEVSRC field will point to the variable to hold the device address
+         for the mirrored copy.
+
+
+
+      ``ALIGN``
+         AST pointer of the ``ALIGN`` specifier; if this specifier is not
+         present, this field is zero.
+
+
+
+
+
+^^^^^
+WHERE
+^^^^^
+*where*
+
+
+Single statement where or where-construct (block where).
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFSTMT``
+      If non-zero, AST pointer of the assignment statement controlled
+      by the mask expression.
+      If zero, this node is the AST of a where-construct.
+
+
+
+   ``IFEXPR``
+      Ast of the mask expression
+
+
+
+
+^^^^^^^^^
+ELSEWHERE
+^^^^^^^^^
+*elsewhere*
+
+
+elsewhere statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^
+ENDWHERE
+^^^^^^^^
+*endwhere*
+
+
+Ends a where-construct (block where).
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^
+FORALL
+^^^^^^
+*forall*
+
+
+Single statement forall or forall-construct (block forall).
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+``ARRASN``
+   If set, the forall was generated by the compiler from an
+   array assignment.
+
+``CONSTBND``
+   If set, the forall was generated by the compiler from an
+   array assignment and the loop bound is that from one of the
+   rhs array that have constant bounds.
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFSTMT``
+      If non-zero, AST pointer of the assignment statement controlled
+      by the forall.
+      If zero, this node is the AST of a forall-construct.
+
+
+
+   ``IFEXPR``
+      Ast of the mask expression; zero if not present.
+
+
+
+   ``LIST``
+      Pointer to the list in the AST list area of the forall triplets
+      (see the description of the AST list items in the
+      section *Auxiliary Data Structures*).
+
+
+
+   ``NTRIPLE (hw21)``
+      Number of forall triplets.
+
+
+      ``SRC``
+         Locates the first STD which was generated due to parsing the FORALL
+         header.
+         Processing by the semantic analyzer of
+         the FORALL triplets and mask expression
+         may result in the creation of STDs before the FORALL AST
+         is actually created.
+         If an STD was not generated, this field is zero.
+
+
+
+      ``START``
+         Start of the AST table information (``FINFO``) created by the
+         transformer.
+
+
+
+      ``NCOUNT (hw22)``
+         Number of entries in AST table information.
+
+
+
+
+
+^^^^^^^^^
+ENDFORALL
+^^^^^^^^^
+*endforall*
+
+
+Ends a forall-construct (block forall).
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^
+ELSEFORALL
+^^^^^^^^^^
+*elseforall*
+
+
+else of a forall-construct (block forall); for internal use only.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^
+REDIM
+^^^^^
+*redimension*
+
+
+Redimension statement.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``SRC``
+      AST pointer to the array object to be redimensioned.
+      Each object is an array; the AST describes the shape of the
+      array (a subscript ast).
+
+
+
+
+
+^^^^^^^
+COMMENT
+^^^^^^^
+*comment*
+
+
+Comment derived from an ast.
+Generally, the ast is a statement ast which was transformed (rewritten)
+into a sequence of one or more asts.
+A comment AST can be used to *comment* a transformation.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST.
+
+
+
+
+^^^^^^
+COMSTR
+^^^^^^
+*commentstr*
+
+
+Comment derived from a string.
+Comments appearing in the original file are represented as
+``COMSTR`` ASTs.
+Also, during compilation, comment string ASTs may be added to
+the statement lists.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``COMPTR``
+      Pointer (index) into the comment strings area representing
+      one or more comment lines.
+
+
+
+
+^^^^^^^
+REALIGN
+^^^^^^^
+*realign*
+
+
+Realign statement.
+For each
+*alignee*
+in the statement, one
+``A_REALIGN``
+ast is generated.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      Pointer to the align target
+      descriptor (see the section *Auxiliary Data Structures* of the
+      SYMBOL TABLE chapter).
+
+
+
+   ``LOP``
+      Identifier ast of the
+      *alignee*.
+
+
+
+
+^^^^^^^^^^^^
+REDISTRIBUTE
+^^^^^^^^^^^^
+*redistribute*
+
+
+Redistribute statement.
+For each
+*distributee*
+in the statement, one
+``A_REDISTRIBUTE``
+ast is generated.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      Pointer to the distribution
+      descriptor (see the section *Auxiliary Data Structures* of the
+      SYMBOL TABLE chapter).
+
+
+
+   ``LOP``
+      Identifier ast of the
+      *distributee*.
+
+
+
+-------------
+HPF AST Types
+-------------
+
+
+^^^^
+HALB
+^^^^
+*alb* EXPR
+
+
+Return the allocated lower bound of a distributed array in a particular
+dimension. Runtime call:
+
+.. code-block:: none
+
+   int pghpf_alb(section \*c, int \*dim)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the operation
+
+``LOP``
+   AST giving the distributed array.
+
+``ROP``
+   AST giving the dimension desired.
+
+
+
+^^^^
+HAUB
+^^^^
+*aub* EXPR
+
+
+Return the allocated upper bound of a distributed array in a particular
+dimension. Runtime call:
+
+.. code-block:: none
+
+   int pghpf_aub(section \*c, int \*dim)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the operation
+
+``LOP``
+   AST giving the distributed array.
+
+``ROP``
+   AST giving the dimension desired.
+
+
+
+^^^^
+HGLB
+^^^^
+*glb* EXPR
+
+
+Return the global lower bound of a distributed array in a particular
+dimension. Runtime call:
+
+.. code-block:: none
+
+   int pghpf_glb(section \*c, int \*dim)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the operation
+
+``LOP``
+   AST giving the distributed array.
+
+``ROP``
+   AST giving the dimension desired.
+
+
+
+^^^^
+HGUB
+^^^^
+*gub* EXPR
+
+
+Return the global upper bound of a distributed array in a particular
+dimension. Runtime call:
+
+.. code-block:: none
+
+   int pghpf_gub(section \*c, int \*dim)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the operation
+
+``LOP``
+   AST giving the distributed array.
+
+``ROP``
+   AST giving the dimension desired.
+
+
+
+^^^^^^^
+HEXTENT
+^^^^^^^
+*extent* EXPR
+
+
+Return the extent of an array section in a particular
+dimension. Runtime call:
+
+.. code-block:: none
+
+   int pghpf_extent(section \*c, int \*dim)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Data type of the result of the operation
+   Should be DT_INT.
+
+``LOP``
+   AST giving the distributed array.
+
+``ROP``
+   AST giving the dimension desired.
+
+
+
+^^^^^^^^^
+HALLOBNDS
+^^^^^^^^^
+*allobnds*
+
+
+This is currently a subroutine call that is equivalent to A_HALB/A_HAUB
+in each dimension of the array. It is used in two contexts:
+
+.. line-block::
+            1. For redimensioning of arguments
+            2. For allocation of allocated arrays
+
+
+In the first case, the call is immediately followed by a REDIMENSION;
+in the second case, the call is immediately followed by an ALLOCATE.
+It might be worthwhile to combine these two calls. Otherwise, this is
+difficult to represent as an AST.
+
+.. code-block:: none
+
+   void
+   pghpf_allobnds(section \*c, ... /\* [alb,aub],... \*/)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      Subscript AST of an array with section descriptor
+      ``c``
+      and where each subscript is a triple representing
+      ``alb:aub``
+      for the respective dimension.
+
+
+
+
+^^^^^
+HSECT
+^^^^^
+*sect* EXPR
+
+Create a section descriptor for an array section.
+Runtime call:
+
+.. code-block:: none
+
+   section \*
+   pghpf_sect_(section \*c, ...)    /\* ... = {lower, upper, stride,}\* mask \*/
+
+mask needs to be set to a bit mask indicating which dimensions are scalar.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Should be INT (actually pointer).
+
+``LOP``
+   Subscript AST of an array with section descriptor
+   ``c``
+   and where each subscript is a triple representing
+   ``lower:upper:stride``
+   for the respective dimension.
+
+``BVECT``
+   AST of the bit mask indicating with dimensions are scalar.
+
+
+
+^^^^^^
+HARRAY
+^^^^^^
+*arraydesc* EXPR
+
+
+Create the array and section descriptor for an array.
+Runtime call:
+
+.. code-block:: none
+
+   section \*
+   pghpf_array(int \*r, distr \*d, _pghpf_type \*kind, int \*size, int \*flags,
+           ...        /\* [ glb, gub, no, po ], ... \*/
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Should be INT (actually pointer).
+
+``LOP``
+   AST of the array.
+
+
+
+^^^^^^
+HDISTR
+^^^^^^
+*distdesc* EXPR
+
+
+Create the distribution descriptor for a template.
+Runtime call:
+
+.. code-block:: none
+
+   distr \*
+   pghpf_distr_(int \*r, proc \*p, ...)
+       /\* ... = {axis, [stride, offset, tlb, shape, blocks,]}\* \*/
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      Should be INT (actually pointer).
+
+
+
+   ``LOP``
+      AST of the template.
+
+
+
+
+^^^^^^^^
+HNEWPROC
+^^^^^^^^
+*newproc* EXPR
+
+
+Create the distribution descriptor for a processors arrangement. The call
+is:
+
+.. code-block:: none
+
+   proc \*
+   pghpf_newproc_(int \*r, ...)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Should be INT (actually pointer).
+
+``LOP``
+   AST of the processors.
+
+
+
+^^^^^^^^^^^^^
+HLOCALIZEBNDS
+^^^^^^^^^^^^^
+*localize_bounds*
+
+This AST initializes the loop parameters for a loop over a block
+distribution. The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_localize_bounds(section \*c, int \*dim, int \*l, int \*u, int \*s,
+                         int \*nl, int \*nu)
+
+The return values are nl, and nu. The input values are c, dim, l, u, and s.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST of the array.
+
+
+
+   ``ITRIPLE``
+      AST for triple representing the input bounds l, u, s.
+
+
+
+   ``OTRIPLE``
+      AST for triple representing the output bounds nl and nu.
+
+
+
+   ``DIM``
+      Dimension AST.
+
+
+
+
+^^^^^^^^^^
+HBLOCKLOOP
+^^^^^^^^^^
+*blockloop*
+
+
+This AST initializes the inner loop parameters for a loop over a block-cyclic
+distribution. The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_block_loop_(section \*c, int \*dim, int \*gl, int \*gu, int \*gs, int \*ci,
+                     int \*bl, int \*bu)
+
+The return values are bl, and bu. The input values are c, dim, gl, gu,
+gs, and ci.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      Should be INT (actually pointer).
+
+
+
+   ``LOP``
+      AST of the array.
+
+
+
+   ``CYCVAR``
+      AST for ci (which is the do variable for the loop over the cycles.
+
+
+
+   ``ITRIPLE``
+      AST for triple representing the input strides gl,gu,gs.
+
+
+
+   ``OLBD``
+      AST for lower bound output variable.
+
+
+
+   ``OUBD``
+      AST for upper bound output variable.
+
+
+
+   ``DIM``
+      Dimension AST.
+
+
+
+
+^^^^^^^^^
+HCYCLICLP
+^^^^^^^^^
+*cyclicloop*
+
+
+This AST initializes the outer loop parameters for a loop over a block-cyclic
+distribution. The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_cyclic_loop_(section \*c, int \*dim, int \*l, int \*u, int \*s,
+                      int \*cl, int \*cu, int \*cs, int \*lof, int \*los)
+
+The return values are cl,cu,cs,lof, and los
+The input values are c, dim, l,u, and s.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+``CBLK``
+   If set, distribution is cyclic block; otherwise, the distribution is
+   just cyclic.
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      Should be INT (actually pointer).
+
+
+
+   ``LOP``
+      AST of the array.
+
+
+
+   ``ITRIPLE``
+      AST for triple representing the input bounds l, u, s.
+
+
+
+   ``OTRIPLE``
+      AST for triple representing the output bounds cl, cu, cs.
+
+
+
+   ``OTRIPLE1``
+      AST for triple representing the output values lof and los.
+
+
+
+   ``DIM``
+      Dimension AST.
+
+
+
+
+^^^^^^^
+HOFFSET
+^^^^^^^
+*offset*
+
+
+This AST creates the ptr_offset call to adjust pointers when Cray pointers
+aren't being used.  The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_ptr_offset_(char \*\*offset, char \*\*ptr, char \*base, __INT4_T \*kind)
+
+\*ptr is the address of an array. offset is set to the value that will allow
+the array expression base(offset) to be the same as \*ptr. This is the
+non-cray pointer translation that handles constructs like:
+
+.. code-block:: none
+
+       real a(1)
+       pointer (p,a)
+       p = address
+       ... a(expr) ...
+
+The code in the above case would be:
+
+.. code-block:: none
+
+       real a(1)
+       integer p
+       call pghpf_ptr_offset(p, p, a, real_kind)
+       ... a(p+expr) ...
+
+
+If a is a ``DYNAMIC`` array, two integer variables are created, one for
+the pointer and one for the offset:
+
+.. code-block:: none
+
+       real a(1)
+       integer o, p
+       call pghpf_ptr_offset(o, p, a, real_kind)
+       ... a(p+expr) ...
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      none
+
+
+
+   ``DEST``
+      AST of the offset variable (the first argument) for the array
+      (a in the above example).
+      This AST may be same as the AST in LOP.
+
+
+
+   ``LOP``
+      AST of the pointer-based array (a in the above example). The third
+      and fourth arguments are derived from this.
+
+
+
+   ``ROP``
+      AST of the integer containing the true pointer (second argument).
+
+
+
+
+^^^^^^^
+HCOPYIN
+^^^^^^^
+*copyin* EXPR
+
+
+This AST creates the copyin call for
+a dummy array. The call is:
+
+.. code-block:: none
+
+   void \*
+   pghpf_copy_in_(void \*sb, section \*dc, section \*sc,
+                  _pghpf_intent intent)
+
+The return values is the address of the local
+array. The section dc is the local section descriptor; the section sc is
+the passed section descriptor.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Should be INT (actually pointer).
+
+``LOP``
+   AST of the dummy array. The intent and destination section should be derived
+   from this.
+
+``ROP``
+   AST for the argument section descriptor.
+
+
+
+^^^^^^^^
+HCOPYOUT
+^^^^^^^^
+*copyout*
+
+
+This AST creates the copyout call for
+a dummy array. The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_copy_out_(void \*db, void \*sb, section \*dc, section \*sc,
+                   _pghpf_intent intent)
+
+The base db is the passed array base; the section dc is the passed section
+descriptor.
+The base sb is the local array base; the section sc is the local section
+descriptor.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DTYPE``
+      Should be INT (actually pointer).
+
+
+
+   ``LOP``
+      AST of the dummy array. The intent, source base, and
+      and source section should be derived
+      from this.
+
+
+
+   ``ROP``
+      AST for the argument section descriptor.
+
+
+
+   ``SBASE``
+      AST for the argument base address.
+
+
+
+
+^^^^^^^^^
+HCOPYSCLR
+^^^^^^^^^
+*copysclr*
+
+
+This AST copies a scalar from one processor to another.
+The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_copy_scalar_(void \*tmp, section \*lc, ...)
+           /\* ... = {lhs_index, rb, rc, {rhs_index} \*/
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST for tmp, the copied scalar.
+
+
+
+   ``ROP``
+      AST for subscripted array reference for RHS, from which is derived rb,
+      rc and rhs_index.
+
+
+
+   ``LHS``
+      AST for subscripted array reference for LHS.
+
+
+
+
+^^^^^^^^
+HGETSCLR
+^^^^^^^^
+*getsclr*
+
+
+This AST broadcasts a scalar from one processor to all processors.
+The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_get_scalar_(void \*tmp, void \*base, section \*c, ...)
+           /\* ... = index \*/
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DEST``
+      AST for tmp, the broadcast scalar.
+
+
+
+   ``SRC``
+      AST for subscripted array reference for RHS, from which is derived base,
+      c, and index.
+
+
+
+
+^^^^^^^
+HNPROCS
+^^^^^^^
+*nprocs* EXPR
+
+
+This AST returns the number of processors available to the program.
+The call is:
+
+.. code-block:: none
+
+   int
+   pghpf_nprocs()
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Should be INT.
+
+
+
+^^^^^
+HFREE
+^^^^^
+*free*
+
+
+This AST frees storage.
+The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_free(void \*\*ptr)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST to free.
+
+
+
+
+^^^^^^
+HFREEN
+^^^^^^
+*freen*
+
+
+This AST frees multiple storage.
+The call is:
+
+.. code-block:: none
+
+   void
+   pghpf_freen(int \*cnt, ... /\* = void \*,... \*/)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``ARGS``
+      Pointer to the table of arguments for the function
+      containing the ASTs to free.
+
+
+
+   ``ARGCNT (hw22)``
+      Number of ASTs to free.
+
+
+
+
+^^^^^^^^
+HISLOCAL
+^^^^^^^^
+*islocal* EXPR
+
+
+This AST determines if an index is local to the current processor. The
+call is:
+
+.. code-block:: none
+
+   int
+   pghpf_islocal_(section \*c, ... /\* = index1,...indexN \*/)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Should be LOGICAL
+
+``LOP``
+   Subscript AST of array to check. Index must be all scalar.
+
+
+
+^^^^^^^^^^^^
+HLOCALOFFSET
+^^^^^^^^^^^^
+*local_offset* EXPR
+
+This AST returns the local offset in elements of an array element on the
+current processor, or zero if it is not local. The call is:
+
+.. code-block:: none
+
+   int
+   pghpf_local_offset_(section \*c, ... /\* = index1,...,indexN \*/)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   Should be INTEGER (pointer).
+
+``LOP``
+   AST of subscripted array whose local offset is to be determined.
+
+
+
+^^^^^^^^^
+HCOPYSECT
+^^^^^^^^^
+*copysection* EXPR
+
+
+This AST copies a regular section of one array to a regular section of another
+array. The call is:
+
+.. code-block:: none
+
+   CP \*
+   pghpf_copy_section_(void \*db, void \*sb, section \*dc, section \*sc)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   DT_INT (should be pointer).
+
+``DEST``
+   AST of the destination array
+   ``db``.
+
+``SRC``
+   AST of the source array
+   ``sb``.
+
+``DDESC``
+   AST of the destination section descriptor
+   ``dc``.
+
+``SDESC``
+   AST of the source section descriptor
+   ``sc``.
+
+
+
+^^^^^^^^^^^^
+HPERMUTESECT
+^^^^^^^^^^^^
+*permutesection* EXPR
+
+
+This AST copies a regular section of one array to a regular section of another
+array, permuting the dimensions according to a variable argument
+list. The call is:
+
+.. code-block:: none
+
+   CP \*
+   pghpf_permute_section(void \*db, void \*sb, section \*dc, section \*sc, ...)
+           /\* ... = permutation of 1..rank \*/
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   DT_INT (should be pointer).
+
+``DEST``
+   AST of the destination array.
+   ``db``.
+
+``SRC``
+   AST of the source array.
+   ``sb``.
+
+``DDESC``
+   AST of the destination section descriptor.
+   ``dc``.
+
+``SDESC``
+   AST of the source section descriptor.
+   ``sc``.
+
+``BVECT``
+   AST of the bit mask representing the permutation of the dimensions.
+
+
+
+^^^^^^^^^^
+HOVLPSHIFT
+^^^^^^^^^^
+*overlapshift* EXPR
+
+
+This AST performs an overlap shift communication on an array with
+overlap areas.  The call is:
+
+.. code-block:: none
+
+   CP \*
+   pghpf_overlap_shift_(void \*b, section \*g, ...)
+           /\* ... = negative and postive shift amts in each dim \*/
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   DT_INT (should be pointer).
+
+``SRC``
+   Subscript AST representing the array being shifted where each subscript
+   is a triple AST whose LBD and UPBD fiels are the negative and positive
+   shift amounts, respectively, for the corresponding dimension.
+
+``SDESC``
+   AST of the source section descriptor.
+
+``BVECT``
+   AST of the boundary argument.
+
+
+
+^^^^^^^
+HGATHER
+^^^^^^^
+*gather* EXPR
+
+
+This AST copies a array indexed by vector subscripts into a regular
+section of another array.
+
+.. code-block:: none
+
+   CP \*
+   pghpf_vsub_gather_(void \*rb, section \*rs, void \*sb, section \*ss,
+                      int flags, ...)
+
+      flags = bit 1<<(i-1) set if vector subscript in i'th dimension
+      (passed by value)
+
+      ... = { vb, vs, }\* = base address and section descriptors for the
+      vector subscripts (only for dimensions where the corresponding flag
+      bit is set).
+
+   CP \*
+   pghpf_vsub_gather_mask_(void \*rb, section \*rs, void \*sb, section \*ss,
+                           int \*mb, section \*ms, int flags, ...)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   DT_INT (should be pointer).
+
+``VSUB``
+   A subscript AST whose subscripts are the ASTs for the section descriptors
+   for the corresponding dimension of the source.
+
+``DEST``
+   AST of the destination array.
+
+``SRC``
+   Subscript AST for the source array.
+
+``DDESC``
+   AST of the destination section descriptor.
+
+``SDESC``
+   AST of the source section descriptor.
+
+``BVECT``
+   AST of the bit mask indicating which dimensions contain a vector subscript.
+
+``MASK``
+   Subscripted expression of the mask arrray; if zero, a mask array is not
+   present.
+
+``MDESC``
+   AST of the mask section descriptor.
+
+
+
+^^^^^^^^
+HSCATTER
+^^^^^^^^
+*scatter* EXPR
+
+
+This AST copies a regular section of an array
+into an array indexed by vector subscripts.
+
+.. code-block:: none
+
+   CP \*
+   pghpf_vsub_scatter(void \*rb, section \*rs, void \*sb, section \*ss,
+                      int flags, ...)
+   void
+   pghpf_vsub_scatter_mask(void \*rb, section \*rs, void \*sb, section \*ss,
+                      int flags, ...)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   DT_INT (should be pointer).
+
+``VSUB``
+   A subscript AST whose subscripts are the ASTs for the section descriptors
+   for the corresponding dimension of the source.
+
+``DEST``
+   AST of the destination array.
+
+``SRC``
+   Subscript AST for the source array.
+
+``DDESC``
+   AST of the destination section descriptor.
+
+``SDESC``
+   AST of the source section descriptor.
+
+``BVECT``
+   AST of the bit mask indicating which dimensions contain a vector subscript.
+
+``MASK``
+   Subscripted expression of the mask arrray; if zero, a mask array is not
+   present.
+
+``MDESC``
+   AST of the mask section descriptor.
+
+
+
+^^^^^^^
+HCSTART
+^^^^^^^
+*comm start* EXPR
+
+
+Start a communication schedule.
+Runtime call:
+
+.. code-block:: none
+
+   XFER \*
+   pghpf_comm_start(CP \*cp, void \*dest, void \*src)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+   DT_INT (should be pointer).
+
+``LOP``
+   AST of the channel pointer,
+
+``SRC``
+   AST of the source array.
+
+``DEST``
+   AST of the destination array.
+
+
+
+^^^^^^^^
+HCFINISH
+^^^^^^^^
+*comm finish*
+
+
+Finish a communication schedule.
+Runtime call:
+
+.. code-block:: none
+
+   void
+   pghpf_comm_finish(CP \*cp)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST of the channel pointer,
+
+
+
+
+^^^^^^
+HCFREE
+^^^^^^
+*comm free*
+
+
+Free a communication channel pointer.
+Runtime call:
+
+.. code-block:: none
+
+   void
+   pghpf_comm_free(CP \*cp)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``LOP``
+   AST of the channel pointer,
+
+
+
+^^^^^^^^^^
+HOWNERPROC
+^^^^^^^^^^
+*owner's_processor*
+
+This AST returns the processor number and remote index of
+a subscript of an array element.
+Computation for this AST may be inlined. If not inlined,
+pghpf_localize_dim() will be called.
+Runtime call:
+
+.. code-block:: none
+
+   pghpf_localize_dim(secdesc \*, int dim, int index, int \*pcoord, int \*rmtindex)
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``DTYPE``
+
+``LOP``
+   AST of subscripted array whose processor number and remote index
+   is to be determined.
+
+``DIM``
+   Dimension of the array reference to compute processor number and
+   remote index.
+
+``M1``
+   The scalar variable that will hold the processor number.
+   Type of this variable will be DT_INT.
+
+``M2``
+   The scalar variable that will hold the remote index.
+   Type of this variable will be DT_INT.
+
+
+
+^^^^^^
+MASTER
+^^^^^^
+*master*
+
+
+Begin a serial region.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_ENDMASTER``.
+
+
+
+
+^^^^^^^^^
+ENDMASTER
+^^^^^^^^^
+*endmaster*
+
+
+End a serial region.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MASTER``.
+
+
+
+   ``ARGCNT (hw22)``
+      Number of ``COPY`` variables.
+
+
+      ``ARGS``
+         Pointer to an ARG table containing the ``COPY`` variables.
+         If the ``COPY`` clause is not present, this field is 0.
+
+
+
+
+
+^^^^^^^^
+CRITICAL
+^^^^^^^^
+*critical*
+
+
+Begin a critical section.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``ISOMPREDUCTION``
+      set if it openmp's reduction
+
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_ENDCRITICAL``.
+
+
+
+
+^^^^^^^^^^^
+ENDCRITICAL
+^^^^^^^^^^^
+*endcritical*
+
+
+End of a critical section.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_CRITICAL``.
+
+
+
+   ``ISOMPREDUCTION``
+      set if it openmp's reduction
+
+
+
+
+^^^^^^
+ATOMIC
+^^^^^^
+*atomic update*
+
+
+Begin an atomic region (the STDs created for an assignment statement
+immediately following the ATOMIC UPDATE directive).
+
+*Flags*
+
+
+
+^^^^^^^^^^
+ATOMICREAD
+^^^^^^^^^^
+*atomic read*
+
+
+Begin an atomic read region.
+
+*Flags*
+
+
+
+^^^^^^^^^^^
+ATOMICWRITE
+^^^^^^^^^^^
+*atomic write*
+
+
+Begin an atomic write region.
+
+*Flags*
+
+
+
+^^^^^^^^^^^^^
+ATOMICCAPTURE
+^^^^^^^^^^^^^
+*atomic capture*
+
+
+Begin an atomic capture region.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^
+ENDATOMIC
+^^^^^^^^^
+*end atomic update*
+
+
+End an atomic region (the STDs created for an assignment statement
+immediately following the ATOMIC UPDATE directive).
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^
+BARRIER
+^^^^^^^
+*barrier*
+
+
+Barrier directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^
+NOBARRIER
+^^^^^^^^^
+*barrier*
+
+
+No barrier directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+^^^^^^^^^^^
+MP_BMPSCOPE
+^^^^^^^^^^^
+*bmpscope*
+
+
+OpenMP begin scope.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``STBLK``
+      Ast of ST_BLOCK symbol which can be used to locate a set of shared variables
+      in parallel region in auxiliary data structure; zero if not used.
+
+
+
+
+^^^^^^^^^^^
+MP_EMPSCOPE
+^^^^^^^^^^^
+*empscope*
+
+
+OpenMP end scope.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^
+MP_PARALLEL
+^^^^^^^^^^^
+*parallel*
+
+
+OpenMP parallel directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      Ast of the logical expression appearing in the if clause; zero if not present.
+
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDPARALLEL``.
+
+
+
+   ``NPAR``
+      Ast of the integer expression appearing in the num_threads clause; zero if
+      not present.
+
+
+
+   ``PROCBIND``
+      If present, this field represent constant AST with value that reflects
+
+
+
+   ``ENDLAB``
+      If present, this field represent AST pointer of label where cancel or
+      cancellation point jump to normally at the end of parallel region.
+      master, close, or spread.
+
+
+
+
+^^^^^^^^^^^^^^
+MP_ENDPARALLEL
+^^^^^^^^^^^^^^
+*endparallel*
+
+
+OpenMP endparallel directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_PARALLEL``.
+
+
+
+
+^^^^^^^^^^^
+MP_CRITICAL
+^^^^^^^^^^^
+*critical*
+
+
+OpenMP critical section directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDCRITICAL``.
+
+
+
+
+^^^^^^^^^^^^^^
+MP_ENDCRITICAL
+^^^^^^^^^^^^^^
+*endcritical*
+
+
+OpenMP end critical section directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_CRITICAL``.
+
+
+
+
+^^^^^^^^^
+MP_MASTER
+^^^^^^^^^
+*master*
+
+
+OpenMP master directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDMASTER``.
+
+
+
+
+^^^^^^^^^^^^
+MP_ENDMASTER
+^^^^^^^^^^^^
+*endmaster*
+
+
+OpenMP endmaster directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_MASTER``.
+
+
+
+
+^^^^^^^^^
+MP_SINGLE
+^^^^^^^^^
+*single*
+
+
+OpenMP single section directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDSINGLE``.
+
+
+
+
+^^^^^^^^^^^^
+MP_ENDSINGLE
+^^^^^^^^^^^^
+*endsingle*
+
+
+OpenMP end single section directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_SINGLE``.
+
+
+
+
+^^^^^^^^^
+MP_ATOMIC
+^^^^^^^^^
+*atomic*
+
+
+OpenMP atomic directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^
+MP_ENDATOMIC
+^^^^^^^^^^^^
+*end atomic*
+
+
+OpenMP end atomic directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^^
+MP_ATOMICREAD
+^^^^^^^^^^^^^
+*atomicread*
+
+
+OpenMP atomic read directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``SRC``
+      AST pointer to src.
+
+
+
+   ``MEM_ORDER (hw22)``
+      If present, this field represent constant AST represent memory order
+
+
+
+
+^^^^^^^^^^^^^^
+MP_ATOMICWRITE
+^^^^^^^^^^^^^^
+*atomicwrite*
+
+
+OpenMP atomic write directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to left hand side AST.
+
+
+
+   ``ROP``
+      AST pointer to right hand side AST.
+      not present.
+
+
+
+   ``MEM_ORDER (hw22)``
+      If present, this field represent constant AST represent memory order
+
+
+
+
+^^^^^^^^^^^^^^^
+MP_ATOMICUPDATE
+^^^^^^^^^^^^^^^
+*atomicupdate*
+
+
+OpenMP atomic update directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to left hand side AST.
+
+
+
+   ``ROP``
+      AST pointer to right hand side AST.
+
+
+
+   ``OPTYPE (hw21)``
+      Type of operator
+
+
+
+   ``MEM_ORDER (hw22)``
+      If present, this field represent constant AST represent memory order
+
+
+
+^^^^^^^^^^^^^^^^
+MP_ATOMICCAPTURE
+^^^^^^^^^^^^^^^^
+*atomiccapture*
+
+
+OpenMP atomic capture directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``CAPTURETYPE``
+      AST pointer to constant AST represent capture type.
+
+
+
+   ``LOP``
+      AST pointer to left hand side AST.
+
+
+
+   ``ROP``
+      AST pointer to right hand side AST.
+
+
+
+   ``OPTYPE (hw21)``
+      Type of operator
+
+
+
+   ``MEM_ORDER (hw22)``
+      If present, this field represent constant AST represent memory order
+
+
+
+
+^^^^^^^^^^
+MP_BARRIER
+^^^^^^^^^^
+*barrier*
+
+
+OpenMP barrier directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^
+MP_PDO
+^^^^^^
+*pdo*
+
+
+OpenMP do directive.
+
+*Flags*
+
+``DISTRIBUTE``
+   If set,  it is distribute loop
+
+``DISTPARDO``
+   If set, it is distribute parallel loop
+
+``TASKLOOP``
+   If set, it is taskloop
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``DOLAB``
+      If label is present, this field is the AST pointer of the label.
+      If zero, the do statement is terminated with an ENDDO.
+
+
+
+   ``DOVAR``
+      AST pointer to the do index variable.
+
+
+
+   ``M1``
+      AST pointer to the initial expression
+
+
+
+   ``M2``
+      AST pointer to the limit expression
+
+
+
+   ``M3``
+      AST pointer to the skip expression; this field is zero if the
+      skip is not present.
+
+
+
+   ``LASTVAL``
+      AST pointer to the last value variable.
+
+
+
+   ``SCHED_TYPE (hw21)``
+      Schedule type (see DI_SCH macros in semant.h)
+
+
+
+   ``ORDERED (hw22)``
+      If nonzero, loop has the ORDERED attribute.
+
+
+      ``DISTCHUNK``
+         AST pointer to the disribute chunk size; this field is zero if the chunk clause
+         is not present.
+
+
+
+      ``CHUNK``
+         AST pointer to the chunk size; this field is zero if the chunk clause
+         is not present.
+
+
+
+      ``ENDLAB``
+         If present, this field represent AST pointer of label where cancel
+         or cancellation point jump to normally at the end of the loop.
+
+
+
+
+
+^^^^^^^^^
+MP_ENDPDO
+^^^^^^^^^
+*endpdo*
+
+
+OpenMP enddo directive; terminates A_PDO
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^
+MP_SECTIONS
+^^^^^^^^^^^
+*sections*
+
+
+OpenMP sections directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+
+   ``ENDLAB``
+      If present, this field represent AST pointer of label where cancel or
+      cancellation point jump to normally at the end of task region.
+
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDSECTIONS``.
+
+
+
+
+^^^^^^^^^^^^^^
+MP_ENDSECTIONS
+^^^^^^^^^^^^^^
+*endsections*
+
+
+OpenMP endsections directive.
+
+
+
+^^^^^^^^^^
+MP_SECTION
+^^^^^^^^^^
+*section*
+
+
+OpenMP section directive.
+
+
+^^^^^^^^^^^
+MP_LSECTION
+^^^^^^^^^^^
+*lsection*
+
+
+Represent OpenMP end of last section directive.
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+``LOP``
+   AST pointer to the corresponding ``A_MP_SECTIONS``.
+
+
+
+^^^^^^^^^^^^
+MP_WORKSHARE
+^^^^^^^^^^^^
+*workshare*
+
+
+OpenMP workshare directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDWORKSHARE``.
+
+
+
+
+^^^^^^^^^^^^^^^
+MP_ENDWORKSHARE
+^^^^^^^^^^^^^^^
+*endworkshare*
+
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_WORKSHARE``.
+
+
+
+
+^^^^^^^^^^^^^^^
+MP_PRE_TLS_COPY
+^^^^^^^^^^^^^^^
+*pretlscopy*
+
+
+Prepare OpenMP copyin or copyprivate symbols copy when
+using TLS.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``SPTR``
+      Symbol table pointer of the object appearing in the COPYIN or
+      COPYPRIVATE  clause.
+
+
+
+   ``ROP``
+      If the object has the allocatable attribute, this field is the
+      AST pointer to its size; if the object is not allocatable, this
+      field is just the AST pointer to the constant 0 (astb.i0).
+
+
+
+
+^^^^^^^^^^
+MP_BCOPYIN
+^^^^^^^^^^
+*begincopyin*
+
+
+Begin an OpenMP copyin block.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^
+MP_COPYIN
+^^^^^^^^^
+*copyin*
+
+
+OpenMP copyin.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``SPTR``
+      Symbol table pointer of the object appearing in the COPYIN clause.
+
+
+
+   ``ROP``
+      If the object has the allocatable attribute, this field is the
+      AST pointer to its size; if the object is not allocatable, this
+      field is just the AST pointer to the constant 0 (astb.i0).
+
+
+
+
+^^^^^^^^^^
+MP_ECOPYIN
+^^^^^^^^^^
+*endcopyin*
+
+
+End an OpenMP copyin block.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^^^^
+MP_BCOPYPRIVATE
+^^^^^^^^^^^^^^^
+*begincopyprivate*
+
+
+Begin an OpenMP copyprivate block.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^^^
+MP_COPYPRIVATE
+^^^^^^^^^^^^^^
+*copyprivate*
+
+
+OpenMP copyprivate.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``SPTR``
+      Symbol table pointer of the object appearing in the COPYPRIVATE clause.
+
+
+
+   ``ROP``
+      If the object has the allocatable attribute, this field is the
+      AST pointer to its size; if the object is not allocatable, this
+      field is just the AST pointer to the constant 0 (astb.i0).
+
+
+
+
+^^^^^^^^^^^^^^^
+MP_ECOPYPRIVATE
+^^^^^^^^^^^^^^^
+*endcopyprivate*
+
+
+End an OpenMP copyprivate block.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^
+PREFETCH
+^^^^^^^^
+*prefetch*
+
+
+Cache PREFETCH directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the object whose address is prefetched.,
+
+
+
+   ``OPTYPE (hw21)``
+      Type of prefetch (future expansion; currently 0).
+
+
+
+
+^^^^^^
+PRAGMA
+^^^^^^
+*pragma*
+
+
+Describes a pragma
+
+*Other Fields*
+
+``PRAGMATYPE``
+   Pragma type, from the pragma type enumartion.
+
+``PRAGMASCOPE``
+   Pragma scope (line, loop, routine, global, none).
+
+``PRAGMAVAL``
+   Some pragmas have a value instead of ROP
+
+``LOP``
+   If the pragma has an operand, it will appear here.
+
+``ROP``
+   Some pragmas have two operands.
+
+``PRAGMAARG``
+   Some pragmas have an arg.
+
+
+
+^^^^^^^
+MP_BPDO
+^^^^^^^
+*begin_trace_pdo*
+
+
+Begin OpenMP do directive; used for adding a trace call before the
+pdo.
+Currently, lower() generates the BPDO
+
+*Flags*
+
+*Other Fields*
+
+
+
+^^^^^^^
+MP_EPDO
+^^^^^^^
+*end_trace_pdo*
+
+
+End OpenMP do directive; used for adding a trace call after the endpdo.
+
+*Flags*
+
+*Other Fields*
+
+
+
+^^^^^^^
+MP_TASK
+^^^^^^^
+*task*
+
+
+OpenMP task directive.
+
+*Flags*
+
+``EXEIMM``
+   If set, execute immediately
+
+``UNTIED``
+   If set, the untied clause was present.
+
+``MERGEABLE``
+   If set, the mergeable clause was present.
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      Ast of the logical expression appearing in the if clause; zero if not present.
+
+
+
+   ``FINALPAR``
+      Ast of the logical expression appearing in the final clause; zero if not present.
+
+
+
+   ``PRIORITY``
+      Ast of integer expression appearing in the priority clause; zero if not present.
+
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDTASK``.
+
+
+
+
+^^^^^^^^^^^
+MP_TASKLOOP
+^^^^^^^^^^^
+*taskloop*
+
+
+OpenMP taskloop directive.
+
+*Flags*
+
+``NOGROUP``
+   If set, nogroup
+
+``UNTIED``
+   If set, untied clause was present.
+
+``MERGEABLE``
+   If set, mergeable clause was present.
+
+``NUM_TASKS``
+   If set,  num_tasks clause was present.
+
+``GRAINSIZE``
+   If set, grainsize clause was present.
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      Ast of the logical expression appearing in the if clause; zero if not present.
+
+
+
+   ``FINALPAR``
+      Ast of the logical expression appearing in the final clause; zero if not present.
+
+
+
+   ``PRIORITY``
+      Ast of integer expression appearing in the priority clause; zero if not present.
+
+
+
+
+^^^^^^^^^^^^
+MP_TASKGROUP
+^^^^^^^^^^^^
+*taskgroup*
+
+
+OpenMP taskgroup.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^^
+MP_ETASKGROUP
+^^^^^^^^^^^^^
+*endtaskgroup*
+
+
+OpenMP end taskgroup.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^
+MP_TASKREG
+^^^^^^^^^^
+*taskreg*
+
+
+OpenMP task register.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``ENDLAB``
+      If present, this field represent AST pointer of label where cancel
+      or cancellation point jump to normally at the end of task region.
+
+
+
+
+^^^^^^^^^^
+MP_TASKDUP
+^^^^^^^^^^
+*taskdup*
+
+
+OpenMP taskdup.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``ENDLAB``
+      If present, this field represent AST pointer of label where cancel
+      or cancellation point jump to normally at the end of task region.
+
+
+
+
+^^^^^^^^^^^^^^
+MP_TASKLOOPREG
+^^^^^^^^^^^^^^
+*taskloopreg*
+
+
+OpenMP taskloop register.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``ENDLAB``
+      If present, this field represent AST pointer of label where cancel
+      or cancellation point jump to normally at the end of task region.
+
+
+
+
+^^^^^^^^^^^
+MP_ETASKDUP
+^^^^^^^^^^^
+*endtaskdup*
+
+
+OpenMP end taskdup.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^^^^
+MP_ETASKLOOPREG
+^^^^^^^^^^^^^^^
+*endtaskloopreg*
+
+
+OpenMP end taskloop register.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^
+MP_ENDTASK
+^^^^^^^^^^
+*endtask*
+
+
+OpenMP endtask directive.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TASK``.
+
+
+
+
+^^^^^^^^^^^^
+MP_ETASKLOOP
+^^^^^^^^^^^^
+*endtaskloop*
+
+
+OpenMP endtaskloop directive.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^
+MP_TASKWAIT
+^^^^^^^^^^^
+*taskwait*
+
+
+OpenMP taskwait directive.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^
+MP_TASKYIELD
+^^^^^^^^^^^^
+*taskyield*
+
+
+OpenMP task yield.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^^^^^^
+MP_TASKFIRSTPRIV
+^^^^^^^^^^^^^^^^
+*taskfirstprivate*
+
+
+OpenMP task firstprivate.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the host routine variable
+
+
+
+   ``ROP``
+      AST pointer to the task private variable
+
+
+
+
+^^^^^^^^^^^^^^^^^
+MP_ETASKFIRSTPRIV
+^^^^^^^^^^^^^^^^^
+*endtaskfirstprivate*
+
+
+OpenMP end task firstprivate.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^
+MP_BORDERED
+^^^^^^^^^^^
+*bordered*
+
+
+OpenMP begin ordered clause.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^^^
+MP_EORDERED
+^^^^^^^^^^^
+*eordered*
+
+
+OpenMP end ordered clause.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^
+MP_FLUSH
+^^^^^^^^
+*flush*
+
+
+OpenMP end flush construct.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+
+^^^^^^^^^
+MP_CANCEL
+^^^^^^^^^
+*cancel*
+
+
+OpenMP cancel construct.
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+``CANCELKIND (hw22)``
+   Cancel kind
+
+
+   ``IFPAR``
+      AST of the logical expression appearing in the if clause; zero if not present.
+
+
+
+   ``LOP``
+      AST pointer to the corresponding cancel construct.
+
+
+
+   ``ENDLAB``
+      If present, this field represent AST pointer of label where cancel or
+      cancellation point jump to normally at the end of parallel region.
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^
+MP_CANCELLATIONPOINT
+^^^^^^^^^^^^^^^^^^^^
+*cancellationpoint*
+
+
+OpenMP cancellation point construct.
+Other Fields
+
+``STD (HSHLK)``
+
+``CANCELKIND (hw22)``
+   Cancel kind
+
+
+   ``ENDLAB``
+      If present, this field represent AST pointer of label where cancel or
+      cancellation point jump to normally at the end of parallel region.
+
+
+*Flags*
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding cancellation point construct.
+
+
+
+
+^^^^^^^^^^^^^^^^^
+MP_TARGETEXITDATA
+^^^^^^^^^^^^^^^^^
+*targetexitdata*
+
+
+OpenMP target exit data directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      AST of the logical expression appearing in the if clause; zero if not present.
+
+
+
+
+^^^^^^^^^^^^^^^^^^
+MP_TARGETENTERDATA
+^^^^^^^^^^^^^^^^^^
+*targetenterdata*
+
+
+OpenMP target enter data directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      AST of the logical expression appearing in the if clause; zero if not present.
+
+
+
+
+^^^^^^^^^^^^^^^
+MP_TARGETUPDATE
+^^^^^^^^^^^^^^^
+*targetupdate*
+
+
+OpenMP target update directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      AST of the logical expression appearing in the if clause; zero if not present.
+
+
+
+
+^^^^^^^^^^^^^
+MP_TARGETDATA
+^^^^^^^^^^^^^
+*targetdata*
+
+
+OpenMP target data directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      AST of the logical expression appearing in the if clause; zero if not present.
+
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDTARGETDATA``.
+
+
+
+
+^^^^^^^^^^^^^^^^
+MP_ENDTARGETDATA
+^^^^^^^^^^^^^^^^
+*endtargetdata*
+
+
+OpenMP end target data directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TARGETDATA``.
+
+
+
+
+^^^^^^^^^
+MP_TARGET
+^^^^^^^^^
+*target*
+
+
+OpenMP target directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``IFPAR``
+      AST of the logical expression appearing in the if clause; zero if not present.
+
+
+
+   ``COMBINEDTYPE``
+      combined construct mode
+
+
+
+   ``LOOPTRIPCOUNT``
+      AST trip count
+
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDTARGET``.
+
+
+
+
+^^^^^^^^^^^^
+MP_ENDTARGET
+^^^^^^^^^^^^
+*endtarget*
+
+
+OpenMP end target directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TARGET``.
+
+
+
+
+^^^^^^^^
+MP_TEAMS
+^^^^^^^^
+*teams*
+
+
+OpenMP teams directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``NTEAMS``
+      Ast of the num_teams expression; zero if not present.
+
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDTEAMS``.
+
+
+
+   ``THRLIMIT``
+      Ast of the thread_limit expression; zero if not present.
+
+
+
+
+^^^^^^^^^^^
+MP_ENDTEAMS
+^^^^^^^^^^^
+*endteams*
+
+
+OpenMP end teams directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TEAMS``.
+
+
+
+
+^^^^^^^^^^^^^
+MP_BREDUCTION
+^^^^^^^^^^^^^
+*beginreduction*
+
+
+OpenMP reduction begin.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TEAMS``.
+
+
+
+
+^^^^^^^^^^^^^
+MP_EREDUCTION
+^^^^^^^^^^^^^
+*endreduction*
+
+
+OpenMP reduction end.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TEAMS``.
+
+
+
+
+^^^^^^^
+MP_EMAP
+^^^^^^^
+*endmap*
+
+
+OpenMP map clause.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TEAMS``.
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^
+MP_TARGETLOOPTRIPCOUNT
+^^^^^^^^^^^^^^^^^^^^^^
+*target loop trip count*
+
+
+Trip count for distribute or for within target region
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TEAMS``.
+
+
+
+
+^^^^^^
+MP_MAP
+^^^^^^
+*map*
+
+
+OpenMP map clause end.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_TEAMS``.
+
+
+
+
+^^^^^^^^^^^^^^^^
+MP_REDUCTIONITEM
+^^^^^^^^^^^^^^^^
+*reductionitem*
+
+
+OpenMP reduction item.
+
+*Other Fields*
+
+``PRVSYM``
+   reduction private symbol
+
+``SHSYM``
+   reduction shared symbol
+
+``REDOPR``
+   reduction operator
+
+
+
+^^^^^^^^^^^^^
+MP_DISTRIBUTE
+^^^^^^^^^^^^^
+*distribute*
+
+
+OpenMP distribute directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_ENDDISTRIBUTE``.
+
+
+
+
+^^^^^^^^^^^^^^^^
+MP_ENDDISTRIBUTE
+^^^^^^^^^^^^^^^^
+*enddistribute*
+
+
+OpenMP end distribute directive.
+
+*Flags*
+
+``CALLFG``
+   May be referenced
+
+*Other Fields*
+
+``STD (HSHLK)``
+
+
+   ``LOP``
+      AST pointer to the corresponding ``A_MP_DISTRIBUTE``.
+
+
+
+
+=========================
+Auxiliary Data Structures
+=========================
+.rr Sx
+.rr II
+.rr PS
+.rm SF
+.rm ST
+.rm SM
+.rm SI
+.rm FL
+.rm SE
+
+
+-----------------
+Shape Descriptors
+-----------------
+
+A shape descriptor (SHD) is provided to represent the shape of an
+expression AST.
+The descriptor is composed of *n+1* elements of the structure:
+
+.. code-block:: none
+
+       struct {
+           int  lwb;    /\* AST of lower bound \*/
+           int  upb;    /\* AST of upper bound \*/
+           int  stride; /\* AST of stride \*/
+       }
+
+
+The first element's ``lwb`` field is the rank (*n*) of the descriptor.
+The first element's ``upb`` field locates the *next* shape
+descriptor with the same rank.
+The ensuing *n* elements contain the values of the lower bound,
+upper bound, and stride for each dimension.
+
+Macros used to access the fields of an SHD are:
+
+``SHD_NDIM(i)``
+   Number of dimensions for the SHD beginning at index *i*.
+
+``SHD_NEXT(i)``
+   Pointer (index) to the next SHD with the same number of dimensions.
+
+``SHD_LWB(i,s)``
+   AST pointer of the *sth* lower bound (zero relative);
+   ``0<=s<=ndim-1``.
+   If the lower bound is not specified, this is the AST representing
+   the integer value of 1.
+
+``SHD_UPB(i,s)``
+   AST pointer of the *sth* upper bound (zero relative);
+   ``0<=s<=ndim-1``.
+   If the upper bound is not specified, this field is zero.
+
+``SHD_STRIDE(i,s)``
+   AST pointer of the *sth* stride (zero relative);
+   ``0<=s<=ndim-1``.
+   If the stride is not specified, this is the AST representing
+   the integer value of 1.
+
+
+
+-------------
+AST List Item
+-------------
+
+There are cases in the AST representation which require lists, such as
+a dimension list in a ``DIMENSION`` statement
+
+A type (ASTLI) is provided to represent a list item for an AST.
+The structure of the item is:
+
+.. code-block:: none
+
+       struct {
+           int  h1;     /\* info word \*/
+           int  h2;     /\* misc \*/
+           int  flags;
+           int  next;   /\* next ASTLI, zero terminates list \*/
+       }
+
+
+For all uses of the ASTLI, the macro ``ASTLI_NEXT(i)`` returns
+the next ASTLI of the item *i* (0 indicates the end of the list).
+Fields ``h1`` and ``h2`` are overloaded and depend on the use
+of the list.
+The third word, ``flags``, is used for providing 32 1-bit flags.
+The entire bit vector is accessed by the macro ``ASTLI_FLAGS(i)``.
+The flags and their meanings depend on the use of the list.
+
+A list is created by calling routine ``start_astli()`` which
+initializes for a new ast list.
+A list item is
+appended to the end of the list by calling ``add_astli()``,
+which returns the pointer (index) to the item just added.
+When the list is complete, the macro ``ASTLI_HEAD`` is used
+to locate the head of the list.
+
+*Label List*
+
+For a computed goto or assigned goto statement, a list representing the
+labels is created.
+
+``ASTLI_AST(i)``
+   AST pointer of the label.
+
+*Forall Triplet List*
+
+For forall statement, a list representing the
+forall triplets is created.
+
+``ASTLI_SPTR(i)``
+   sym pointer of the forall variable.
+
+``ASTLI_TRIPLE(i)``
+   Pointer to the TRIPLE AST which defines the forall variable's
+   inital, limit, and step values.
+
+
+
+--------------
+ARG Table Area
+--------------
+
+The ASTs of arguments passed to a subroutine or function are organized
+as a table; along with the ASTs of the arguments passed to a given
+subprogram, the number of arguments is stored in the table.
+
+For statement functions, the arguments when the statement function
+is defined and when it's referenced are represented as ARG tables.
+
+Each ARG table is logically represented by the following structure:
+
+.. code-block:: none
+
+       struct {
+           int  cnt;      /\* number of arguments (greater than zero) \*/
+           int  arg[cnt]; /\* one ast for each argument \*/
+       }
+
+
+The *i*-th argument is represented by the AST stored at ``arg[i-1]``.
+Macros used to access the fields are:
+
+``ARGT_CNT(i)``
+   Number of arguments in the table.
+
+``ARGT_ARG(i,j)``
+   AST pointer of the *j*-th argument (zero relative); ``<=j<=cnt-1``.
+   If the argument was omitted, this value is zero.
+
+
+
+--------------------------
+Array Subscript Descriptor
+--------------------------
+
+An array subscript descriptor (ASD) is created when each subscripted
+array reference is processed by the Semantic Analyzer.
+Each descriptor contains all of the subscripts for the array
+reference.
+Each subscript specified in an ASD is a pointer to an AST node
+representing the subscript.
+If the subscript expression is a triple expression
+(array section expression), the AST node is a node of type
+A_TRIPLE.
+
+Each descriptor is organized as variable length data structure
+and is described by the following structure:
+
+.. code-block:: none
+
+       struct {
+           int  ndim;       /\* number of dimensions \*/
+           int  next;       /\* used to link together ASD with the
+                             \* same number of dimensions
+                             \*/
+           int  subs[ndim]; /\* one ast for each dimension \*/
+       }
+
+
+Macros used to access the fields of an ASD are:
+
+``ASD_NDIM(i)``
+   Number of dimensions for the ASD beginning at index *i*.
+
+``ASD_NEXT(i)``
+   Pointer (index) to the next ASD with the same number of dimensions.
+
+``ASD_SUBS(i,s)``
+   AST pointer of the *sth* subscript (zero relative);
+   ``0<=s<=ndim-1``.
+
+
+
+---------------
+Statement Lists
+---------------
+
+A statement descriptor (STD) is created for each statement
+in the source file.
+The memory area for the STD is organized as a table, where the
+first legal STD pointer (index) is one.
+The 0th entry (an index of 0) is reserved to be the head of the list
+of STD which make up the statements in a program unit.
+Each STD contains a pointer to the abstract syntax tree
+for the statement.
+The STD are linked together to form a list of statements and
+contain next and previous links to aid insertion and deletion.
+The fields of an STD are:
+
+``ast``
+   Pointer to the abstract syntax representing the statement.
+   The node located by this field is the *root* of the
+   syntax tree and will be a statement node.
+
+``next``
+   Pointer (index) to the next STD which follows this STD.
+   For entry 0, the next field locates the STD for the first
+   statement in the program unit; this field is initially 0.
+
+``prev``
+   Pointer (index) to the previous STD which precedes this STD.
+   For entry 0, the prev field locates the STD for the last statement
+   in the program unit; this field is initially 0.
+
+``label``
+   For STDs whose indices are non-zero, this field is the
+   symbol table pointer (index) to the label which labels the
+   statement; if no label is present, this
+   field is zero.
+   For the 0th entry; this field is filled by bblock() and
+   is the symbol table pointer of the current subprogram.
+
+``lineno``
+   For STDs whose indices are non-zero, this field is the
+   the line number of this statement.
+   For the 0th entry, this field is filled in by bblock()and
+   is the line number at which the
+   current subprogram is defined (i.e., the ``FUNCLINE`` field).
+
+``findex``
+   For STDs whose indices are non-zero, this field is the
+   the findex of this statement.
+
+``fg``
+   Contains the index of the flowgraph node to which the STD
+   belongs (only used by the communication postoptimizer).
+
+``not_used``
+   Padding.
+
+``flags``
+   Miscellaneous flags (see ast.h).
+
+Macros are provided to access the fields of an STD.
+The macros are formed by prepending ``STD_``
+to the uppercase name of the field.
+The argument to each of these macros is a ``STD`` pointer.
+
+
+=============
+Program Units
+=============
+The following routines make up the C module file, 'ast.c'.
+
+
+.. code-block:: none
+
+   void ast_init()
+
+
+*  Initialize AST:
+   allocate dynamic storage space, etc.
+
+
+.. code-block:: none
+
+   int mk_id(sym)
+
+
+*  Create an identifer (A_ID) ast for a variable represented
+   by its symbol table entry (sym).
+
+
+.. code-block:: none
+
+   int mk_cnst(sym)
+
+
+*  Create a constant  ast for a constant represented
+   by its symbol table entry (sym).
+
+
+.. code-block:: none
+
+   int mk_cval(cval, dtype)
+
+
+*  Create a constant ast for a constant represented
+   by a value and dtype.
+
+
+.. code-block:: none
+
+   int mk_binop(optype, lop, rop, dtype)
+
+
+*  Create a binary operator ast whose operation type is optype,
+   left and right operands are lop and rop, respectively, and whose
+   result data type (and data type of the operands) is dtype.
+
+
+.. code-block:: none
+
+   int mk_unop(optype, lop, dtype)
+
+
+*  Create a unary operator ast whose operation type is optype,
+   operand is lop, and whose
+   result data type (and data type of the operand) is dtype.
+
+
+.. code-block:: none
+
+   void mk_alias(ast, a_cnst)
+
+
+*  Create an alias of ast if it isn't a constant AST;
+   its alias field will be set to the ast 'a_cnst').
+
+
+.. code-block:: none
+
+   int mk_label(lab)
+
+
+*  Create a label ast whose symbol table entry is lab.
+
+
+=======================
+ASTUTIL Utility Program
+=======================
+
+
+--------
+Overview
+--------
+ASTUTIL is a utility program which reads the AST input files
+and writes C files which define the manifest constants, the access
+macros, and the data structures for the ASTs.
+The utility also reads the symbol table utility's ``symini_ftn.n``
+file to define the manifest constants representing the intrinsic
+functions.
+
+
+------
+Inputs
+------
+
+
+-------
+Outputs
+-------

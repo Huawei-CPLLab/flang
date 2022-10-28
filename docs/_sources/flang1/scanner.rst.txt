@@ -1,0 +1,555 @@
+
+
+*******
+Scanner
+*******
+
+
+========
+Overview
+========
+The Scanner reads the source input file and extracts tokens, which
+are passed to the Parser.
+Tokens include identifiers, keywords, numbers, and special characters
+such as "/", "+", "-", etc.
+If the -list flag is specified, the Scanner writes the source listing
+as it reads the source input.
+
+In order to accomplish its basic task, the Scanner must:
+
+*  process either fixed-form or freeform input
+
+*  process statements up to and including 132 columns if the -extend
+   flag is specified.
+
+*  process statements separated by semicolons.
+
+*  recognize and process statements which begin with the tab character
+   (following the VMS conventions).
+
+*  recognize and ignore comment lines and inline comments.
+
+*  recognize continuation cards.
+
+*  recognize and process OpenMP directives
+
+*  recognize ``INCLUDE`` statements and ``$INSERT`` directives and open
+   the specified files.
+
+*  extract labels from the label field of statements and enter them into the
+   symbol table.
+
+*  convert integer and floating point constants including any optional kind values
+   into the target machine's
+   format.
+
+*  look up Fortran keywords in the keyword table.
+
+*  maintain a certain amount of "syntactic awareness" in order to
+   distinguish keywords from identically named identifiers.
+
+*  convert characters to lower case unless the -upcase flag is specified.
+
+*  recognize character strings including any optional kind values
+   and the various C backslash escape sequences which are allowed within them.
+
+*  recognize hollerith constants.
+
+*  issue error messages for the various syntactic errors which it is able
+   to recognize.
+
+
+===============
+Data Structures
+===============
+
+*Token Id's* --- The Scanner returns token id numbers and possibly additional information
+such as a symbol table pointer to the Parser.
+These numbers are defined by the
+*prstab*
+utility (see section 4) and are referenced within the scanner using C
+constant symbols whose names begin with "``TK_``".
+
+*Statement Buffer* --- an array (``stmtb``)
+of char local to the scanner module which holds an entire Fortran
+statement including up to 99 continuation lines, but not including
+the label field.
+The end of the statement is marked by the newline character.
+
+Initially, the statement buffer contains the statement text as it appears
+in the source file.
+After the routine
+*crunch*
+has processed the statement, it contains the
+*crunched*
+statement (see below).
+If the input is in fixed form, blanks and tabs are removed; for freeform
+input, consectutive blanks are collapsed into a single.
+
+*Keyword Tables* --- four tables local to the scanner module are initialized within the scanner.
+Note that if a grammar change uses a new token, not only must the token input
+file be changed, but the token must also be added to one of the tables.
+The keyword tables allow a binary search to be performed in order to
+determine if a given identifier is a keyword and if so, what its
+token id number is.
+The four tables correspond to four classes of keywords:
+
+#. normal keywords, i.e., those which can begin a statement.
+
+#. logical keywords, i.e., those which may appear in logical expressions
+   (beginning and ending with '.').
+
+#. I/O keywords, i.e., those which are used as specifiers within I/O
+   statements.
+
+#. format keywords, i.e., those which appear within FORMAT statements.
+
+Certain keywords may contain optional blanks; for example,
+``DOUBLEPRECISION``,
+``DOUBLE PRECISION``,
+``END DO``,
+and
+``ENDDO``.
+For cases where a blank is optional and the first part of the keyword
+is itself not a keyword, a
+*pseudo*
+keyword representing its name appears in the keyword table.
+This
+*pseudo*
+keyword is associated with a token macro whose name is prefixed with
+``TKF\_``.
+When a
+*pseudo*
+keyword is recognized, the scanner checks if what follows
+matches the name of any of the keyword's second parts.
+If a matching name is not found, an identifier token is returned.
+If the first part of the keyword is itself a keyword,
+the processing is the same to determine if a
+*longer*
+keyword can be recognized;
+however, if a matching name is not found, a keyword token is returned.
+
+
+*Symbol Table* --- The scanner enters identifiers and certain constants into the symbol table
+when it recognizes them (refer to section 11).
+When an identifier is recognized,
+the scanner must check if the symbol table entry represents an
+*alias*
+(e.g., the ``RESULT`` identifier for a function).
+If the identifer is an alias, the aliased identfier is returned.
+
+
+==========
+Processing
+==========
+The Scanner is initialized by calling the routine
+*scan_init*
+at the beginning of processing. From then on, the routine
+*get_token*
+is called to extract and return the next token. The routine
+*scan_reset*
+is called to resume scanning at the next Fortran statement
+(for instance after the Parser or Scanner finds a syntax error).
+
+The form of the input to the compiler may either be fixed-form
+or freeform and is controlled by a compiler option.
+Each type of input has its own set of routines for reading the next
+statement (*get_stmt*), including continuations,
+and for reading the next card or line (*read_card*).
+
+If the current character pointer is ``NULL``, the input-type's
+*get_stmt*
+is called to read the next Fortran statement including any continuations
+into the statement buffer.
+This may involve scanning past comment lines and processing compiler
+directives.
+When a card is read, the position within ``stmtb``
+marking the last character of the card is remembered.
+*get_stmt*
+calls the input-type's
+*read_card*
+to read in a single card or line.
+This routine determines what type of card has been read.
+The card types are described by the following C macros which are local
+to the scanner:
+
+``CT_COMMENT``
+   any card which is considered a comment card.  This includes
+   a "blank" card, a card which begins with '!' except if it is in column
+   6, and a card
+   beginning with 'D' in column 1 and if the -dlines flag is NOT set.
+
+``CT_DIRECTIVE``
+   those beginning with '$' or '%' in column 1.
+
+``CT_END``
+   the ``END`` statement.
+
+``CT_CONTINUATION``
+   continuation card.
+
+``CT_PRAGMA``
+   a C pragma directive card.
+
+``CT_LINE``
+   a '# line' card.
+
+``CT_EOF``
+   end of file.
+
+``CT_INITIAL``
+   any other Fortran statement.
+
+Next the routine
+*crunch*
+is called to prepare the statement for further scanning.
+Crunching involves:
+
+#. eliminating blanks and tab characters ("whitespace" characters,
+   actually, any character whose ASCII value is not greater than the
+   ASCII value of a space is eliminated).
+   If the input form is freeform,
+   consecutive blanks are collapsed into a single
+   blank.
+   Whenever the scanner must examine the
+   *first*
+   character after a token,
+   either that character or the second character (if the first
+   character is a blank) is examined.
+
+#. converting upper case letters to lower case unless the -upcase flag is
+   specified or the letters occur in character strings.
+
+#. recognizing and entering into the symbol table hollerith and character
+   constants.  The resulting symbol table is placed and marked in the
+   statement buffer.  Note that the number of positions in the statement
+   buffer required to encode the symbol table pointer
+   is three (1 for a special marker, and 2 for the 16-bit
+   symbol table pointer).
+
+#. recognizing non-decimal constants and marking them in the statement
+   buffer.
+
+#. stripping in-line comments.
+
+#. balancing parentheses.
+
+#. determining if the statement contains an equals sign, comma, or
+   the lexical entity for attributed declarations (i.e., two consecutive
+   colons)
+   which is not nested within parentheses and does not occur in a hollerith or
+   character constant.
+
+*get_token*
+next performs a switch statement using the current character in the
+statement buffer.
+Subsequent processing depends on the type of the character.
+
+If the character can begin an identifier (alphabetic, '\_', or '$'),
+the routine
+*alpha*
+is called to determine if the token is a keyword or an identifier.
+To do this,
+*alpha*
+is required in many cases to remember what type of statement it is
+scanning, and where it is within that statement.  This information
+is maintained in the following variables:
+
+``par_depth``
+   current nesting level of parentheses (the value is incremented and
+   decremented when
+   *get_token*
+   sees a ')' and a '(', respectively).
+
+``scmode``
+   scan mode - depends on the type of the statement currently being processed
+   and possibly the position within that statement (see the next section,
+   *Scan Modes*).
+
+``exp_equal``
+   exposed equals sign.  An equals sign is in the statement that is not
+   in a nest of parentheses and not in a hollerith or character constant.
+   This variable is set by routine
+   *crunch*.
+
+``exp_comma``
+   exposed comma.  A comma is in the statement that is not
+   in a nest of parentheses and not in a hollerith or character constant.
+   This variable is set by routine
+   *crunch*.
+
+``exp_attr``
+   exposed atttribute.  Two consecutive colons are in the statement that are not
+   in a nest of parentheses and not in a hollerith or character constant.
+   This variable is set by routine
+   *crunch*.
+
+``sem.pgphase``
+   program phase tracked by the Semantic Analyzer. The value of this variable
+   indicates the "phase" of the statements in the current subprogram being
+   scanned.  This value corresponds to the statement ordering accepted by
+   the Fortran compiler.
+
+If the first character is a digit, the routine
+*get_number*
+is called to extract and convert the integer or floating point constant.
+*get_number*
+may also be called when the first character is '(', since this could
+represent the beginning of a complex constant.
+
+If the first character is a period, the routine
+*do_dot*
+is called to perform more analysis on the characters after the period.
+*do_dot*
+returns either a logical keyword, a floating point constant,
+or the token ``TK_DOT``.
+
+*get_token*
+returns two values to the Parser each time it is called:
+
+#. Token id number for the token.
+
+#. Token value. This value depends on the type of token:
+
+
+
+
+      identifier
+         the symbol table pointer to the identifier
+
+
+
+      constant
+         symbol table pointer to the constant, except for integer, real, and logical
+         constants, in which case the actual 32-bit value is returned.
+
+
+
+      letter
+         the ASCII character value.
+
+
+
+
+----------
+Scan Modes
+----------
+In order to distinguish between an identifier and a keyword, several scan
+modes are defined.
+The scanner enters one of the modes when
+the first keyword or identifier of a statement is scanned.
+The following C macros, local to the scanner module,
+indicate the modes:
+
+``SCM_FIRST``
+   the first token of a statement is to be processed.
+   When in this mode, the scanner must watch out for certain cases where there
+   is an exposed equals sign.
+   The equals sign could be part of an assignment statement, a DO statement,
+   an assignment statement following "``IF(...)``",
+   an assignment statement following "``WHERE(...)``",
+   or in the non-parentheses form of the ``PARAMETER`` statement.
+
+``SCM_IDENT``
+   look only for identifiers.
+
+``SCM_FORMAT``
+   current statement is a ``FORMAT`` statement; look for format keywords
+   only if the current position is not in a nest of angle brackets.
+
+``SCM_IMPLICIT``
+   current statement is an ``IMPLICIT`` statement; look for a letter
+   or the keyword ``NONE``.
+
+``SCM_FUNCTION``
+   look for the keyword ``FUNCTION``.
+   The scanner enters this mode when the first keyword
+   of the statement is one of the allowed Fortran data types.
+   If the next token is ``FUNCTION``, then the current statement is
+   a function statement.
+   Upon recognizing the keyword, the scanner enters the mode
+   ``SCM_IDENT``.
+
+``SCM_IO``
+   current statement is an I/O statement; the I/O keyword table must be
+   searched only if the character following the identifier is not an equals
+   sign.
+   Note that when
+   *get_token*
+   sees a ')', the variable ``par_depth``
+   is decremented.
+   If the resulting value is zero and if the scanner is currently in the
+   mode ``SCM_IO``, the scanner enters the mode ``SCM_IDENT``.
+
+``SCM_TO``
+   current statement begins with "``ASSIGN <label>``";
+   the ``TO`` keyword is expected.
+   The scanner enters the mode ``SCM_IDENT``.
+
+``SCM_IF``
+   current statement is an ``IF`` or ``ELSEIF``.
+   Note that once the scanner has processed the corresponding
+   right parenthesis of the left parenthesis following one
+   of these keywords, the scanner enters the mode ``SCM_FIRST``.
+
+``SCM_DOLAB``
+   the scanner has processed the "``DO <label>``" prefix.
+   The scanner enters the mode ``SCM_IDENT``.
+
+``SCM_GOTO``
+   current statement is a ``GOTO``.
+
+``SCM_DOWHILE``
+   current statement begins with the keyword ``DO`` and does not
+   represent the DO-iteration type.
+   The next identifier should be the keyword ``WHILE``; if it's
+   found, the scanner enters the mode ``SCM_IDENT``.
+   Note that the keyword ``DO`` for the DO-iteration statement
+   is found by checking ``exp_equal`` and ``exp_comma`` in
+   routine
+   *alpha*.
+
+``SCM_ALLOC``
+   current statement is an ``ALLOCATE`` or ``DEALLOCATE``
+   statement; the I/O keyword table must be searched (since these statements'
+   specifiers are also I/O specifiers) only if the character following
+   the identifier is not an equals sign.
+
+``SCM_WITH``
+   current statement is an ``ALIGN`` or ``REALIGN`` statement;
+   If
+   ``exp_attr``
+   is set, the next token is the
+   ``WITH``
+   keyword (mode ``SCM_WITH`` is entered); when the
+   ``WITH``
+   keyword is recognized, the scanner enters the mode \(\*cfSCM_ID_ATTR\\*(rf.
+   If
+   ``exp_attr``
+   is not set, the next token is an identifier followed by the
+   keyword
+   ``WITH``
+   (mode ``SCM_ID_WITH`` is entered).
+
+``SCM_ID_WITH``
+   the scanner has processed an identifier and the scanner enters the
+   mode ``SCM_WITH``.
+
+``SCM_ID_ATTR``
+   the next identifer is just an identifier token.
+   This mode is the general case for a statement in
+   *entity*
+   form (i.e.,
+   ``exp_attr``
+   is set.
+   This mode indcates that identifiers are scanned until an
+   exposed comma is seen; when the the exposed comma is seen the
+   scanner enters the mode \(\*cfSCM_FIRST\\*(rf (i.e., the comma precedes
+   a comma).
+   This mode is entered whenever a keyword in an
+   *entity*
+   form of a statement is detected (for this type of statement,
+   ``exp_attr``
+   is set).
+
+``SCM_ONTO``
+   current statement is an ``DISTRIBUTE``
+   or ``REDISTRIBUTE`` statement;
+   If
+   ``exp_attr``
+   is set, the next token is the
+   ``ONTO``
+   keyword (mode ``SCM_ONTO`` is entered);
+   when the
+   ``ONTO``
+   keyword is recognized, the scanner enters the mode \(\*cfSCM_ID_ATTR\\*(rf.
+   If
+   ``exp_attr``
+   is not set, the next token is an identifier followed by the
+   keyword
+   ``ONTO``
+   (mode ``SCM_ID_ONTO`` is entered).
+
+``SCM_ID_ONTO``
+   the scanner has processed an identifier and the scanner enters the
+   mode ``SCM_ONTO``.
+
+``SCM_EXTRINSIC``
+   the next identifier should be enclosed in parenthesis and represents the
+   type of ``EXTRINSIC`` interface.
+
+``SCM_INTERFACE``
+   current statement is an ``INTERFACE`` statement;
+   this keyword may be followed by either the *generic*
+   keyword ``OPERATOR`` or ``ASSIGNMENT``.
+
+``SCM_INDEPENDENT``
+   current statement is an ``INDEPENDENT`` statement;
+   any exposed identifer after ``INDEPENDENT`` is either the ``NEW``
+   or ``ONHOME`` keyword.
+
+
+--------------
+Encoded Tokens
+--------------
+When routine
+*crunch*
+is processing a statement, it is removing whitespace characters, thus
+compressing the statement buffer. Generally, characters are just copied
+from their current positions to positions to their left in ``stmtb``.
+In certain cases,
+*crunch*
+recognizes tokens and places a special marker in ``stmtb``
+to communicate to
+*get_token*
+that what follows is an encoded token.
+These markers are just integer values chosen from the set of
+non-printing characters. The following C macros describe the markers:
+
+``CH_X``
+   hexadecimal constant - the sequence of characters following this value
+   are the digits of the constant.  The sequence is terminated by a single
+   quote.
+   Note that when
+   *get_token*
+   sees this case and the following case, it calls the routine
+   *get_nondec*
+   to extract the constant and returns the constant value as the token value
+   and the non-decimal constant token id.
+
+``CH_O``
+   octal constant - the sequence of characters following this value
+   are the digits of the constant.  The sequence is terminated by a single
+   quote.
+
+``CH_B``
+   binary constant - the sequence of characters following this value
+   are the digits of the constant.  The sequence is terminated by a single
+   quote.
+
+``CH_HOLLERITH``
+   hollerith constant - the following 2 positions contain the symbol table
+   pointer for the constant.
+
+``CH_STRING``
+   character constant - the following 2 positions contain the symbol table
+   pointer for the constant.
+
+``CH_IOLP``
+   this marker is actually stored when the statement is recognized as an
+   I/O statement.
+   The left parenthesis after the I/O keyword is replaced by this marker.
+   When
+   *get_token*
+   sees this marker, the token TK_IOLP is returned.
+   Without this special token, the grammar is ambiguous.
+
+``CH_IMLP``
+   this marker is actually stored when the statement is recognized as
+   an ``IMPLICIT`` statement.
+   The left parenthesis after the IMPLICIT keyword which encloses the
+   implicit specifiers is replaced by this marker.
+   When
+   *get_token*
+   sees this marker, the token TK_IMLP is returned.
+   Without this special token, the grammar is ambiguous.

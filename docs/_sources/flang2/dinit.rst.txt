@@ -1,0 +1,196 @@
+
+
+************************
+Data Initialization File
+************************
+
+The Data Initialization File is an external binary file defining the
+initialization of external and static variables.  It is written by
+the Semantic Analyzer as it processes initializers for external
+and static variables, and is read by the Assembler in order to
+write the necessary ``TXT`` blocks and/or assembler directives
+to initialize the data.
+
+The file consists of one or more
+*records.*
+Each record consists of 2 fields, a ``short int`` (dtype)
+and a 32-bit ``INT`` (conval).
+Records are written to, and read from the file via the routines
+``dinit_put`` and ``dinit_read`` in the module
+*dinitutil.c*.  These routines are also responsible
+for opening and possibly buffering the file.
+
+There are several types of record in the file,
+distinguished by the value of the first field (dtype):
+
+``dtype = DINIT_LOC``
+
+   ``DINIT_LOC``
+   is a special value chosen so as to not conflict
+   with any of the other possible values of this field.
+   ``conval``, the second field of the record, will be a
+   symbol table pointer to a variable, array, pointer, or structure.
+   This record indicates that a new symbol is being initialized.
+   It results in a ``$LOC`` directive being written to
+   the Object Code Listing.  Ensuing records, up to the next
+   ``DINIT_LOC``, will initialize consecutive locations
+   within this variable.
+
+``dtype = DINIT_OFFSET``
+   ``(FORTRAN)``.
+   The value in ``conval`` is added to the base address given by the
+   ``DINIT_LOC`` record to determine the effective address for data
+   initialization.  This is useful for Fortran style structures where fields
+   in a structure can be skipped and individual array elements can be
+   initialized.
+
+``dtype = DINIT_PAD``
+
+   This record indicates that the next ``conval`` bytes are to
+   be zerofilled for padding.
+
+``dtype = DINIT_ZEROES``
+
+   This record indicates that the next ``conval`` bytes are to
+   be zerofilled.
+
+``dtype = DINIT_REPEAT``
+
+   ``(FORTRAN)``.
+   The value of ``conval`` specifies the repeat count for the constant
+   that is specified in the following dinit record.
+
+``dtype = DINIT_LEN``
+
+   ``(C)``.
+   This record follows the record initializing an array of char with a string
+   and is used to provide extra information for the initialization.
+   Its conval field indicates the number of characters to use from the string.
+   This value will either be the length of the string with the null terminating
+   character or the length of the string without the null terminating character.
+
+``dtype = DT_DBLE``
+
+   Indicates that 2 32-bit words are to be initialized with
+   a 64-bit double precision floating point value.
+   ``conval`` is a symbol table pointer to a double precision constant.
+
+``dtype = DT_CMPLX``
+
+   ``(FORTRAN)``.
+   Indicates that 2 32-bit words are to be initialized with
+   two 32-bit floating point values.
+   ``conval`` is a symbol table pointer to a
+   ``complex``
+   constant.
+
+``dtype = DT_DCMPLX``
+
+   ``(FORTRAN)``.
+   Indicates that 2 64-bit words are to be initialized with
+   two 64-bit double precision floating point values.
+   ``conval`` is a symbol table pointer to a
+   ``doublecomplex``
+   constant.
+
+``dtype = pointer to x, conval = address constant``
+
+   Indicates that the next 32-bit word is to be initialized
+   to a variable address plus an optional byte offset.
+   ``conval`` is a symbol table pointer to an address constant.
+
+``dtype = pointer to x, conval = string``
+
+   ``(C)``.
+   Indicates that a sequence of bytes is to be initialized
+   to the characters in the string, possibly including the terminating
+   null character.  This record immediately precedes a record of type
+   ``DINIT_LEN``
+   which indicates the number of characters to use from string
+   for the initialization.
+   ``conval`` is a symbol table pointer to a string.
+
+``dtype = other C types``
+
+   Includes the
+   *integral*
+   and single precision data types.
+   Indicates that the current byte (e.g. ``DT_CHAR``),
+   halfword (e.g. ``DT_SINT``),
+   or word (e.g. ``DT_FLOAT``),
+   is to be initialized
+   to the value in conval.
+   The Assembler must perform word or halfword
+   alignment if necessary.
+
+``dtype = Fortran Hollerith or CHARACTER``
+
+   ``dtype``
+   is actually ``DT_CHAR`` which indicates that
+   a sequence of bytes is to be initialized to the
+   characters in the
+   ``Hollerith``
+   or
+   ``CHARACTER``
+   string.
+   ``conval``
+   is a symbol table pointer to the
+   *string*
+   constant.
+   The length of the initialization is derived from the
+   *string*'s
+   ``DTYPE``,
+   not
+   ``dtype``.
+
+``dtype = other Fortran types``
+
+   Includes the integer, logical, and single precision data
+   types.
+   Indicates that the current byte (e.g. ``DT_BINT``),
+   halfword (e.g. ``DT_SINT``),
+   or word (e.g. ``DT_FLOAT``),
+   is to be initialized
+   to the value in conval.
+   The Assembler must perform word or halfword
+   alignment if necessary.
+
+``dtype = DINIT_LABEL``
+
+   Indicates that the next 64-bit word is to be initialized
+   to the address of a label.  ``conval`` is a symbol
+   table pointer to a label.
+
+``dtype = 0 - alignment record``
+
+   Indicates that byte, halfword, or word alignment is required.
+   The value of conval will be 0, 1, 3, or 7 respectively.
+   Note that in the usual case (e.g. a char followed by an int),
+   alignment is automatic and this record is not written.
+   This record is only required for certain cases where a struct
+   is a member of another struct or is an array element.
+   For example, word alignment is required between the initialization
+   record for c and the one for d in the following code:
+
+   .. code-block:: none
+
+
+          struct {
+              char c;
+              struct {
+                  char d;
+                  int e;
+              } f;
+          } x = { 'c', {'d', 77}};
+
+
+``dtype = DINIT_FIELD``
+
+   ``(C)``.
+   This record is only used for certain implementations where bit fields
+   are initialized in a special way.
+   Normally, bit fields are initialized using "dtype" dinit records
+   whose ``conval`` fields have been filled by the data initalizing
+   process during semantic analysis.
+   If used, this record always precedes the records which initialize a
+   sequence of fields.

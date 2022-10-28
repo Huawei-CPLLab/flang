@@ -1,0 +1,19 @@
+
+
+******
+Output
+******
+
+
+========
+Overview
+========
+The AST transformer performs the following tasks:
+
+*  lower the AST representation to the compiler's ILM intermediate representation.
+
+*  write out the ILMs and symbol information into a temporary (.ilm) file that
+   is read by f90 (the LLVM bridge).
+
+*  If we are generating code for a module, then write ILMs and symbols to a
+   module (.mod) file.

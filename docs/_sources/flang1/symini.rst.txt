@@ -1,0 +1,2400 @@
+
+
+************************************
+Appendix VII - Intrinsics & Generics
+************************************
+
+
+===================
+Intrinsic Functions
+===================
+
+In the following table, the *pname* column is used
+to indicate what intrinsics can be passed as actual
+arguments, the names of the functions when passed as arguments, and
+what names to use when the intrinsics are referenced.
+This information is communicated to the compiler via
+the ``PNMPTR`` field of the intrinsic's symbol table entry.
+If the value of this field is zero, the intrinsic cannot be passed
+as an argument;
+a non-zero value is an index into the compiler's symbol names
+area locating a name (string) which is one of:
+
+#. ``"-<name>"``: The intrinsic cannot be passed as an argument;
+   ``<name>`` is used when the intrinsic is referenced.
+
+#. ``"<name>"``: The intrinsic can be passed as an argument.
+   ``<name>`` is used when passing the intrinsic as an argument; in
+   other contexts, the name of the intrinsic is used.
+
+#. ``"\*"``: The intrinsic can be passed as an argument;
+   use the name of the intrinsic for all contexts.
+
+#. ``"\*<name>"``: The intrinsic can be passed as an argument;
+   ``<name>`` is used for the intrinsic in all contexts.
+
+An empty column entry translates to a ``PNMPTR`` value of zero.
+
+The attributes for the intrinsics, generics, and predeclareds include
+a specification of the keyword forms of the arguments.
+The keyword string is specified as a blank-separated list of names
+in positional order.
+The names of
+optional arguments are prefixed with ``'\*'``.
+Variable arguments are of the form ``#<pos>#<base>#<kwd>``, where,
+
+``<pos>``
+   the digit indicating the positional index, relative to zero, where the
+   variable arguments begin in the argument list.
+
+``<base>``
+   the digit indicating the value to be subtracted from the digit string
+   suffix of the keyword specifier.
+
+``<kwd>``
+   name of the keyword which varies (i.e., the prefix).
+
+If the word 'native' appears, this is an intrinsic that is recognized
+only in 'native-mode' compilers, like pgf90.
+*sptr	name	pcnt	atyp	dtype	ILM	pname	arrayf native?*
+
+``..SQRT`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.SQRT`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DSQRT`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DSQRT`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QSQRT`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CSQRT`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CSQRT`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CDSQRT`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CDSQRT`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CQSQRT`` ``1`` ``CQ`` ``CQ`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``.ALOG`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``ALOG`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DLOG`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DLOG`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QLOG`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CLOG`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CLOG`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CDLOG`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CDLOG`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CQLOG`` ``1`` ``CQ`` ``CQ`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``.ALOG10`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``ALOG10`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DLOG10`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DLOG10`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QLOG10`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..EXP`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.EXP`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DEXP`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DEXP`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QEXP`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CEXP`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CEXP`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CDEXP`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CDEXP`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CQEXP`` ``1`` ``CQ`` ``CQ`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..SIN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.SIN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DSIN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DSIN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QSIN`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CSIN`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CSIN`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CDSIN`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CDSIN`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CQSIN`` ``1`` ``CQ`` ``CQ`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..SIND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.SIND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DSIND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DSIND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QSIND`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..COS`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.COS`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DCOS`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DCOS`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QCOS`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CCOS`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CCOS`` ``1`` ``C`` ``C`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CDCOS`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``CDCOS`` ``1`` ``CD`` ``CD`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.CQCOS`` ``1`` ``CQ`` ``CQ`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..COSD`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.COSD`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DCOSD`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DCOSD`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QCOSD`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..TAN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.TAN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DTAN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DTAN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QTAN`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..TAND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.TAND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DTAND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DTAND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QTAND`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..ASIN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.ASIN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DASIN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DASIN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QASIN`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..ASIND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.ASIND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DASIND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DASIND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QASIND`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..ACOS`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.ACOS`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DACOS`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DACOS`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QACOS`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..ACOSD`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.ACOSD`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DACOSD`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DACOSD`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QACOSD`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..ATAN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.ATAN`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DATAN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DATAN`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QATAN`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..ATAND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.ATAND`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DATAND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DATAND`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QATAND`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..ATAN2`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``.ATAN2`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``.DATAN2`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``DATAN2`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``QATAN2`` ``2`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+
+``..ATAN2D`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``.ATAN2D`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``.DATAN2D`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``DATAN2D`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+``QATAN2D`` ``2`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental y x
+
+
+``..SINH`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.SINH`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DSINH`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DSINH`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QSINH`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..COSH`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.COSH`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DCOSH`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DCOSH`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QCOSH`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..TANH`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.TANH`` ``1`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``.DTANH`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``DTANH`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+``QTANH`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``IIABS`` ``1`` ``SI`` ``SI`` ``IABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``JIABS`` ``1`` ``I`` ``I`` ``IABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``KIABS`` ``1`` ``I8`` ``I8`` ``I8ABS`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental a
+
+``.IABS`` ``1`` ``I`` ``I`` ``IABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``IABS`` ``1`` ``I`` ``I`` ``IABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``..ABS`` ``1`` ``R`` ``R`` ``ABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``.ABS`` ``1`` ``R`` ``R`` ``ABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``.DABS`` ``1`` ``D`` ``D`` ``DABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``DABS`` ``1`` ``D`` ``D`` ``DABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``QABS`` ``1`` ``Q`` ``Q`` ``QABS`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``.CABS`` ``1`` ``C`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``CABS`` ``1`` ``C`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``.CDABS`` ``1`` ``CD`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``CDABS`` ``1`` ``CD`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``.CQABS`` ``1`` ``CQ`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+
+``..AIMAG`` ``1`` ``C`` ``R`` ``IMAG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``.AIMAG`` ``1`` ``C`` ``R`` ``IMAG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``.DIMAG`` ``1`` ``CD`` ``D`` ``DIMAG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``DIMAG`` ``1`` ``CD`` ``D`` ``DIMAG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``.QIMAG`` ``1`` ``CQ`` ``Q`` ``QIMAG`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``..CONJG`` ``1`` ``C`` ``C`` ``CONJG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``.CONJG`` ``1`` ``C`` ``C`` ``CONJG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``.DCONJG`` ``1`` ``CD`` ``CD`` ``DCONJG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``DCONJG`` ``1`` ``CD`` ``CD`` ``DCONJG`` ``\*`` ``V`` 
+   *Attributes*: elemental z
+
+``.QCONJG`` ``1`` ``CQ`` ``CQ`` ``QCONJG`` ``\*`` ``V`` 
+   *Attributes*: elemental x
+
+
+``DPROD`` ``2`` ``R`` ``D`` ``DPROD`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+
+``IMAX0`` ``12`` ``SI`` ``SI`` ``IMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.MAX0`` ``12`` ``I`` ``I`` ``IMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``MAX0`` ``12`` ``I`` ``I`` ``IMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.AMAX1`` ``12`` ``R`` ``R`` ``RMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AMAX1`` ``12`` ``R`` ``R`` ``RMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.DMAX1`` ``12`` ``D`` ``D`` ``DMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``DMAX1`` ``12`` ``D`` ``D`` ``DMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.KMAX`` ``12`` ``I8`` ``I8`` ``I8MAX`` ``\*`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``KMAX0`` ``12`` ``I8`` ``I8`` ``I8MAX`` ``-`` ``V`` ``native`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``QMAX`` ``12`` ``Q`` ``Q`` ``QMAX`` ``\*`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+
+``JMAX0`` ``12`` ``I`` ``I`` ``IMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AIMAX0`` ``13`` ``SI`` ``R`` ``IMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AMAX0`` ``13`` ``I`` ``R`` ``IMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``MAX1`` ``13`` ``R`` ``I`` ``RMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``IMAX1`` ``13`` ``R`` ``SI`` ``RMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``JMAX1`` ``13`` ``R`` ``I`` ``RMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``KMAX1`` ``13`` ``R`` ``I8`` ``RMAX`` ``-`` ``V`` ``native`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AJMAX0`` ``13`` ``I`` ``R`` ``IMAX`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+
+``IMIN0`` ``12`` ``SI`` ``SI`` ``IMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.MIN0`` ``12`` ``I`` ``I`` ``IMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``MIN0`` ``12`` ``I`` ``I`` ``IMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.AMIN1`` ``12`` ``R`` ``R`` ``RMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AMIN1`` ``12`` ``R`` ``R`` ``RMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.DMIN1`` ``12`` ``D`` ``D`` ``DMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``DMIN1`` ``12`` ``D`` ``D`` ``DMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``.KMIN`` ``12`` ``I8`` ``I8`` ``I8MIN`` ``\*`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``KMIN0`` ``12`` ``I8`` ``I8`` ``I8MIN`` ``-`` ``V`` ``native`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``QMIN`` ``12`` ``Q`` ``Q`` ``QMIN`` ``\*`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+
+``JMIN0`` ``12`` ``I`` ``I`` ``IMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AMIN0`` ``13`` ``I`` ``R`` ``IMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AIMIN0`` ``13`` ``SI`` ``R`` ``IMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``MIN1`` ``13`` ``R`` ``I`` ``RMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``IMIN1`` ``13`` ``R`` ``SI`` ``RMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``JMIN1`` ``13`` ``R`` ``I`` ``RMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``KMIN1`` ``13`` ``R`` ``I8`` ``RMIN`` ``-`` ``V`` ``native`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``AJMIN0`` ``13`` ``I`` ``R`` ``IMIN`` ``-`` ``V`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+
+
+``IIDIM`` ``2`` ``SI`` ``SI`` ``IDIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``JIDIM`` ``2`` ``I`` ``I`` ``IDIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``.IDIM`` ``2`` ``I`` ``I`` ``IDIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``IDIM`` ``2`` ``I`` ``I`` ``IDIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``KIDIM`` ``2`` ``I8`` ``I8`` ``I8DIM`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental x y
+
+``..DIM`` ``2`` ``R`` ``R`` ``DIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``.DIM`` ``2`` ``R`` ``R`` ``DIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``.DDIM`` ``2`` ``D`` ``D`` ``DDIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``DDIM`` ``2`` ``D`` ``D`` ``DDIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+``QDIM`` ``2`` ``Q`` ``Q`` ``QDIM`` ``\*`` ``V`` 
+   *Attributes*: elemental x y
+
+
+``IMOD`` ``2`` ``SI`` ``SI`` ``MOD`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``JMOD`` ``2`` ``I`` ``I`` ``MOD`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``..MOD`` ``2`` ``I`` ``I`` ``MOD`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``.MOD`` ``2`` ``I`` ``I`` ``MOD`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``KMOD`` ``2`` ``I8`` ``I8`` ``I8MOD`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental a p
+
+``.AMOD`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``AMOD`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``.DMOD`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``DMOD`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+``QMOD`` ``2`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a p
+
+
+``.IMODULO`` ``2`` ``SI`` ``SI`` ``none`` ``-pgf90_imodulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``..MODULO`` ``2`` ``I`` ``I`` ``none`` ``-pgf90_modulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``.MODULO`` ``2`` ``I`` ``I`` ``none`` ``-pgf90_modulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``.KMODULO`` ``2`` ``I8`` ``I8`` ``none`` ``-pgf90_i8modulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``..AMODULO`` ``2`` ``R`` ``R`` ``none`` ``-pgf90_amodulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``.AMODULO`` ``2`` ``R`` ``R`` ``none`` ``-pgf90_amodulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``..DMODULO`` ``2`` ``D`` ``D`` ``none`` ``-pgf90_dmodulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``.DMODULO`` ``2`` ``D`` ``D`` ``none`` ``-pgf90_dmodulo`` ``V`` 
+   *Attributes*: elemental a p
+
+``.QMODULO`` ``2`` ``Q`` ``Q`` ``none`` ``-pgf90_qmodulo`` ``V`` 
+   *Attributes*: elemental a p
+
+
+``IISIGN`` ``2`` ``SI`` ``SI`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``JISIGN`` ``2`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``.ISIGN`` ``2`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``ISIGN`` ``2`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``KISIGN`` ``2`` ``I8`` ``I8`` ``none`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental a b
+
+``..SIGN`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``.SIGN`` ``2`` ``R`` ``R`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``.DSIGN`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``DSIGN`` ``2`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+``QSIGN`` ``2`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a b
+
+
+``IIAND`` ``2`` ``SI`` ``SI`` ``AND`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``.JIAND`` ``2`` ``I`` ``I`` ``AND`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``JIAND`` ``2`` ``I`` ``I`` ``AND`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``.KIAND`` ``2`` ``I8`` ``I8`` ``AND8`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+
+``IIOR`` ``2`` ``SI`` ``SI`` ``OR`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``.JIOR`` ``2`` ``I`` ``I`` ``OR`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``JIOR`` ``2`` ``I`` ``I`` ``OR`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``.KIOR`` ``2`` ``I8`` ``I8`` ``OR8`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+
+``IIEOR`` ``2`` ``SI`` ``SI`` ``XOR`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``.JIEOR`` ``2`` ``I`` ``I`` ``XOR`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``JIEOR`` ``2`` ``I`` ``I`` ``XOR`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+``.KIEOR`` ``2`` ``I8`` ``I8`` ``XOR8`` ``-`` ``V`` 
+   *Attributes*: elemental i j
+
+
+``INOT`` ``1`` ``SI`` ``SI`` ``NOT`` ``-`` ``V`` 
+   *Attributes*: elemental i
+
+``.JNOT`` ``1`` ``I`` ``I`` ``NOT`` ``-`` ``V`` 
+   *Attributes*: elemental i
+
+``JNOT`` ``1`` ``I`` ``I`` ``NOT`` ``-`` ``V`` 
+   *Attributes*: elemental i
+
+``.KNOT`` ``2`` ``I8`` ``I8`` ``NOT8`` ``-`` ``V`` 
+   *Attributes*: elemental i
+
+
+``IISHFT`` ``2`` ``SI`` ``SI`` ``IISHFT`` ``\*`` ``V`` 
+   *Attributes*: elemental i shift
+
+``.JISHFT`` ``2`` ``I`` ``I`` ``JISHFT`` ``\*`` ``V`` 
+   *Attributes*: elemental i shift
+
+``JISHFT`` ``2`` ``I`` ``I`` ``JISHFT`` ``\*`` ``V`` 
+   *Attributes*: elemental i shift
+
+``KISHFT`` ``2`` ``I8`` ``I8`` ``KISHFT`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental i shift
+
+
+
+``IIBITS`` ``3`` ``SI`` ``SI`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos len
+
+``.JIBITS`` ``3`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos len
+
+``JIBITS`` ``3`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos len
+
+``KIBITS`` ``3`` ``I8`` ``I8`` ``none`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental i pos len
+
+
+``IIBSET`` ``2`` ``SI`` ``SI`` ``IIBSET`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``.JIBSET`` ``2`` ``I`` ``I`` ``JIBSET`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``JIBSET`` ``2`` ``I`` ``I`` ``JIBSET`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``KIBSET`` ``2`` ``I8`` ``I8`` ``KIBSET`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental i pos
+
+
+``BITEST`` ``2`` ``SI`` ``L`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``.BJTEST`` ``2`` ``I`` ``L`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``BJTEST`` ``2`` ``I`` ``L`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``BKTEST`` ``2`` ``I8`` ``L`` ``none`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental i pos
+
+
+``IIBCLR`` ``2`` ``SI`` ``SI`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``.JIBCLR`` ``2`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``JIBCLR`` ``2`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i pos
+
+``KIBCLR`` ``2`` ``I8`` ``I8`` ``none`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental i pos
+
+
+``IISHFTC`` ``3`` ``SI`` ``SI`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i shift \*size
+
+``.JISHFTC`` ``3`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i shift \*size
+
+``JISHFTC`` ``3`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental i shift \*size
+
+``KISHFTC`` ``3`` ``I8`` ``I8`` ``none`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental i shift \*size
+
+
+``.ILSHIFT`` ``2`` ``SI`` ``SI`` ``none`` ``-`` 
+   *Attributes*: elemental i shift
+
+``.JLSHIFT`` ``2`` ``I`` ``I`` ``none`` ``-`` 
+   *Attributes*: elemental i shift
+
+``.KLSHIFT`` ``2`` ``I8`` ``I8`` ``none`` ``-`` 
+   *Attributes*: elemental i shift
+
+
+``.IRSHIFT`` ``2`` ``SI`` ``SI`` ``none`` ``-`` 
+   *Attributes*: elemental i shift
+
+``.JRSHIFT`` ``2`` ``I`` ``I`` ``none`` ``-`` 
+   *Attributes*: elemental i shift
+
+``.KRSHIFT`` ``2`` ``I8`` ``I8`` ``none`` ``-`` 
+   *Attributes*: elemental i shift
+
+
+``.2SCH`` ``1`` ``SI`` ``H`` ``CHAR`` ``-`` 
+   *Attributes*: elemental i
+
+``.CHAR`` ``1`` ``I`` ``H`` ``CHAR`` ``-`` 
+   *Attributes*: elemental i
+
+``.2KCH`` ``1`` ``I8`` ``H`` ``CHAR`` ``-`` 
+   *Attributes*: elemental i
+
+
+``ICHAR`` ``2`` ``H`` ``I`` ``ICHAR`` ``-`` ``ICHAR`` 
+   *Attributes*: elemental c \*kind
+
+``LGE`` ``2`` ``H`` ``L`` ``GE`` ``-`` ``V`` 
+   *Attributes*: elemental string_a string_b
+
+``LGT`` ``2`` ``H`` ``L`` ``GT`` ``-`` ``V`` 
+   *Attributes*: elemental string_a string_b
+
+``LLE`` ``2`` ``H`` ``L`` ``LE`` ``-`` ``V`` 
+   *Attributes*: elemental string_a string_b
+
+``LLT`` ``2`` ``H`` ``L`` ``LT`` ``-`` ``V`` 
+   *Attributes*: elemental string_a string_b
+
+
+``NCHAR`` ``1`` ``I`` ``K`` ``NCHAR`` ``-`` ``V`` Convert integer to Kanji string of length 1.
+
+   *Attributes*: elemental i
+
+``NLEN`` ``1`` ``K`` ``I`` ``NLEN`` ``pghpf_nlen`` Compute length of Kanji string.
+
+   *Attributes*: elemental string
+
+``NINDEX`` ``2`` ``K`` ``I`` ``NINDEX`` ``pghpf_nindex`` 
+   *Attributes*: elemental string substring \*back
+
+
+``LOC`` ``1`` ``A`` ``I`` ``LOC`` ``-`` 
+   *Attributes*: elemental a
+
+
+``IDINT`` ``1`` ``D`` ``I`` ``tc`` 
+   *Attributes*: elemental a
+
+``JIDINT`` ``1`` ``D`` ``I`` ``tc`` 
+   *Attributes*: elemental a
+
+
+``.2I`` ``1`` ``N`` ``I`` ``tc`` Converts any numeric data type to integer.
+
+   *Attributes*: elemental a
+
+
+``IFIX`` ``1`` ``R`` ``I`` ``tc`` Same as the INT intrinsic.
+
+   *Attributes*: elemental a
+
+
+``JIFIX`` ``1`` ``R`` ``I`` ``tc`` 
+   *Attributes*: elemental a
+
+``.JINT`` ``1`` ``R`` ``I`` ``tc`` 
+   *Attributes*: elemental a
+
+``IIFIX`` ``1`` ``R`` ``SI`` ``tc`` 
+   *Attributes*: elemental a
+
+``.IINT`` ``1`` ``R`` ``SI`` ``tc`` 
+   *Attributes*: elemental a
+
+``.2SI`` ``1`` ``N`` ``SI`` ``tc`` Converts any numeric data type to short integer.
+
+   *Attributes*: elemental a
+
+``INT1`` ``1`` ``N`` ``BI`` ``tc`` ``-`` ``-`` ``native`` Converts any numeric data type to integer\*1.
+
+   *Attributes*: elemental a
+
+``INT2`` ``1`` ``N`` ``SI`` ``tc`` ``-`` ``-`` ``native`` Converts any numeric data type to short integer.
+
+   *Attributes*: elemental a
+
+``INT4`` ``1`` ``N`` ``I`` ``tc`` ``-`` ``-`` ``native`` Converts any numeric data type to integer.
+
+   *Attributes*: elemental a
+
+``INT8`` ``1`` ``N`` ``I8`` ``tc`` ``-`` ``-`` ``native`` Converts any numeric data type to integer\*8.
+
+   *Attributes*: elemental a
+
+``IIDINT`` ``1`` ``D`` ``SI`` ``tc`` 
+   *Attributes*: elemental a
+
+``FLOATI`` ``1`` ``SI`` ``R`` ``tc`` Converts integer\*2 to real.
+
+   *Attributes*: elemental a
+
+``FLOATJ`` ``1`` ``I`` ``R`` ``tc`` 
+   *Attributes*: elemental a
+   Converts integer to real.
+
+``FLOAT`` ``1`` ``I`` ``R`` ``tc`` Same as REAL intrinsic.
+
+   *Attributes*: elemental a
+
+``SNGL`` ``1`` ``D`` ``R`` ``tc`` 
+   *Attributes*: elemental a
+
+``.2R`` ``1`` ``N`` ``R`` ``tc`` Converts any numeric data type to real.
+
+   *Attributes*: elemental a
+
+``DFLOTI`` ``1`` ``SI`` ``D`` ``tc`` 
+   *Attributes*: elemental a
+   Converts integer\*2 to double.
+
+``DFLOAT`` ``1`` ``I`` ``D`` ``tc`` 
+   *Attributes*: elemental a
+   Extension to Fortran-77.
+
+``DFLOTJ`` ``1`` ``I`` ``D`` ``tc`` 
+   *Attributes*: elemental a
+
+``DREAL`` ``1`` ``CD`` ``D`` ``tc`` 
+   *Attributes*: elemental a
+   Converts complex\*16 to double.
+
+``.2D`` ``1`` ``N`` ``D`` ``tc`` Convert any numeric data type to double precision.
+
+   *Attributes*: elemental a
+
+``.2C`` ``11`` ``N`` ``C`` ``tc`` Convert any numeric data type to complex.
+
+   *Attributes*: elemental a
+
+``.2CD`` ``11`` ``N`` ``CD`` ``tc`` Convert any numeric data type to double complex.
+
+   *Attributes*: elemental a
+
+``DINT`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``QINT`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``DNINT`` ``1`` ``D`` ``D`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+``QNINT`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+``QANINT`` ``1`` ``Q`` ``Q`` ``none`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+``..ININT`` ``1`` ``R`` ``SI`` ``NINT`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``.ININT`` ``1`` ``R`` ``SI`` ``IDNINT`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+``IIDNNT`` ``1`` ``D`` ``SI`` ``IDNINT`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+``IDNINT`` ``1`` ``D`` ``I`` ``IDNINT`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+``..JNINT`` ``1`` ``R`` ``I`` ``NINT`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``.JNINT`` ``1`` ``R`` ``I`` ``IDNINT`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+``JIDNNT`` ``1`` ``D`` ``I`` ``IDNINT`` ``\*`` ``V`` 
+   *Attributes*: elemental a
+
+
+``KNINT`` ``1`` ``R`` ``I8`` ``none`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental a
+
+``KIDNNT`` ``1`` ``D`` ``I8`` ``none`` ``\*`` ``V`` ``native`` 
+   *Attributes*: elemental a
+
+
+
+=============
+Generic Names
+=============
+*sptr	name	siname	iname	rname	dname	cname	cdname	i8name	qname	cqname*
+
+``IAND`` ``IIAND`` ``JIAND`` ``-`` ``-`` ``-`` ``-`` ``.KIAND`` ``-`` ``-`` 
+   *Attributes*: elemental i j
+
+``IOR`` ``IIOR`` ``JIOR`` ``-`` ``-`` ``-`` ``-`` ``.KIOR`` ``-`` ``-`` 
+   *Attributes*: elemental i j
+
+``IEOR`` ``IIEOR`` ``JIEOR`` ``-`` ``-`` ``-`` ``-`` ``.KIEOR`` ``-`` ``-`` 
+   *Attributes*: elemental i j
+
+``XOR`` ``IIEOR`` ``JIEOR`` ``-`` ``-`` ``-`` ``-`` ``.KIEOR`` ``-`` ``-`` 
+   *Attributes*: elemental i j
+
+``NOT`` ``INOT`` ``JNOT`` ``-`` ``-`` ``-`` ``-`` ``.KNOT`` ``-`` ``-`` 
+   *Attributes*: elemental i
+
+``ISHFT`` ``IISHFT`` ``JISHFT`` ``-`` ``-`` ``-`` ``-`` ``KISHFT`` ``-`` ``-`` 
+   *Attributes*: elemental i shift
+
+``IINT`` ``.2SI`` ``.2SI`` ``.IINT`` ``IIDINT`` ``.2SI`` ``.2SI`` ``.2SI`` ``.2SI`` ``.2SI`` 
+   *Attributes*: elemental a
+
+``JINT`` ``.2I`` ``.2I`` ``.JINT`` ``JIDINT`` ``.2I`` ``.2I`` ``.2I`` ``.2I`` ``.2I`` 
+   *Attributes*: elemental a
+
+``DBLE`` ``DFLOTI`` ``DFLOAT`` ``.2D`` ``.2D`` ``.2D`` ``DREAL`` ``.2D`` ``.2D`` ``.2D`` 
+   *Attributes*: elemental a
+
+``DCMPLX`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` 
+   *Attributes*: elemental x \*y
+
+``IMAG`` ``-`` ``-`` ``-`` ``-`` ``.AIMAG`` ``DIMAG`` ``-`` ``-`` ``.QIMAG`` 
+   *Attributes*: elemental z
+
+``AIMAG`` ``-`` ``-`` ``-`` ``-`` ``.AIMAG`` ``DIMAG`` ``-`` ``-`` ``.QIMAG`` 
+   *Attributes*: elemental z
+
+``CONJG`` ``-`` ``-`` ``-`` ``-`` ``.CONJG`` ``DCONJG`` ``-`` ``.QCONJG`` ``-`` 
+   *Attributes*: elemental z
+
+``ININT`` ``-`` ``-`` ``.ININT`` ``IIDNNT`` ``-`` ``-`` ``-`` ``-`` ``-`` 
+   *Attributes*: elemental a
+
+``JNINT`` ``-`` ``-`` ``.JNINT`` ``JIDNNT`` ``-`` ``-`` ``-`` ``-`` ``-`` 
+   *Attributes*: elemental a
+
+``ABS`` ``IIABS`` ``IABS`` ``.ABS`` ``DABS`` ``CABS`` ``CDABS`` ``KIABS`` ``QABS`` ``.CQABS`` 
+   *Attributes*: elemental a
+
+``MOD`` ``IMOD`` ``.MOD`` ``AMOD`` ``DMOD`` ``-`` ``-`` ``KMOD`` ``QMOD`` ``-`` 
+   *Attributes*: elemental a p
+
+``SIGN`` ``IISIGN`` ``ISIGN`` ``.SIGN`` ``DSIGN`` ``-`` ``-`` ``KISIGN`` ``QSIGN`` ``-`` 
+   *Attributes*: elemental a b
+
+``DIM`` ``IIDIM`` ``IDIM`` ``.DIM`` ``DDIM`` ``-`` ``-`` ``KIDIM`` ``QDIM`` ``-`` 
+   *Attributes*: elemental x y
+
+``MAX`` ``IMAX0`` ``MAX0`` ``AMAX1`` ``DMAX1`` ``-`` ``-`` ``.KMAX`` ``QMAX`` ``-`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``MIN`` ``IMIN0`` ``MIN0`` ``AMIN1`` ``DMIN1`` ``-`` ``-`` ``.KMIN`` ``QMIN`` ``-`` 
+   *Attributes*: elemental a1 a2 #2#3#a
+
+``SQRT`` ``-`` ``-`` ``.SQRT`` ``DSQRT`` ``CSQRT`` ``CDSQRT`` ``-`` ``QSQRT`` ``.CQSQRT`` 
+   *Attributes*: elemental x
+
+``EXP`` ``-`` ``-`` ``.EXP`` ``DEXP`` ``CEXP`` ``CDEXP`` ``-`` ``QEXP`` ``.CQEXP`` 
+   *Attributes*: elemental x
+
+``LOG`` ``-`` ``-`` ``ALOG`` ``DLOG`` ``CLOG`` ``CDLOG`` ``-`` ``QLOG`` ``.CQLOG`` 
+   *Attributes*: elemental x
+
+``LOG10`` ``-`` ``-`` ``ALOG10`` ``DLOG10`` ``-`` ``-`` ``-`` ``QLOG10`` ``-`` 
+   *Attributes*: elemental x
+
+``SIN`` ``-`` ``-`` ``.SIN`` ``DSIN`` ``CSIN`` ``CDSIN`` ``-`` ``QSIN`` ``.CQSIN`` 
+   *Attributes*: elemental x
+
+``SIND`` ``-`` ``-`` ``.SIND`` ``DSIND`` ``-`` ``-`` ``-`` ``QSIND`` 
+   *Attributes*: elemental x
+
+``COS`` ``-`` ``-`` ``.COS`` ``DCOS`` ``CCOS`` ``CDCOS`` ``-`` ``QCOS`` ``.CQCOS`` 
+   *Attributes*: elemental x
+
+``COSD`` ``-`` ``-`` ``.COSD`` ``DCOSD`` ``-`` ``-`` ``-`` ``QCOSD`` ``-`` 
+   *Attributes*: elemental x
+
+``TAN`` ``-`` ``-`` ``.TAN`` ``DTAN`` ``-`` ``-`` ``-`` ``QTAN`` ``-`` 
+   *Attributes*: elemental x
+
+``TAND`` ``-`` ``-`` ``.TAND`` ``DTAND`` ``-`` ``-`` ``-`` ``QTAND`` ``-`` 
+   *Attributes*: elemental x
+
+``ASIN`` ``-`` ``-`` ``.ASIN`` ``DASIN`` ``-`` ``-`` ``-`` ``QASIN`` ``-`` 
+   *Attributes*: elemental x
+
+``ASIND`` ``-`` ``-`` ``.ASIND`` ``DASIND`` ``-`` ``-`` ``-`` ``QASIND`` ``-`` 
+   *Attributes*: elemental x
+
+``ACOS`` ``-`` ``-`` ``.ACOS`` ``DACOS`` ``-`` ``-`` ``-`` ``QACOS`` ``-`` 
+   *Attributes*: elemental x
+
+``ACOSD`` ``-`` ``-`` ``.ACOSD`` ``DACOSD`` ``-`` ``-`` ``-`` ``QACOSD`` ``-`` 
+   *Attributes*: elemental x
+
+``ATAN`` ``-`` ``-`` ``.ATAN`` ``DATAN`` ``-`` ``-`` ``-`` ``QATAN`` ``-`` 
+   *Attributes*: elemental x
+
+``ATAND`` ``-`` ``-`` ``.ATAND`` ``DATAND`` ``-`` ``-`` ``-`` ``QATAND`` ``-`` 
+   *Attributes*: elemental x
+
+``ATAN2`` ``-`` ``-`` ``.ATAN2`` ``DATAN2`` ``-`` ``-`` ``-`` ``QATAN2`` ``-`` 
+   *Attributes*: elemental y x
+
+``ATAN2D`` ``-`` ``-`` ``.ATAN2D`` ``DATAN2D`` ``-`` ``-`` ``-`` ``QATAN2D`` ``-`` 
+   *Attributes*: elemental y x
+
+``SINH`` ``-`` ``-`` ``.SINH`` ``DSINH`` ``-`` ``-`` ``-`` ``QSINH`` ``-`` 
+   *Attributes*: elemental x
+
+``COSH`` ``-`` ``-`` ``.COSH`` ``DCOSH`` ``-`` ``-`` ``-`` ``QCOSH`` ``-`` 
+   *Attributes*: elemental x
+
+``TANH`` ``-`` ``-`` ``.TANH`` ``DTANH`` ``-`` ``-`` ``-`` ``QTANH`` ``-`` 
+   *Attributes*: elemental x
+
+``IBITS`` ``IIBITS`` ``JIBITS`` ``-`` ``-`` ``-`` ``-`` ``KIBITS`` ``-`` ``-`` 
+   *Attributes*: elemental i pos len
+
+``IBSET`` ``IIBSET`` ``JIBSET`` ``-`` ``-`` ``-`` ``-`` ``KIBSET`` ``-`` ``-`` 
+   *Attributes*: elemental i pos
+
+``BTEST`` ``BITEST`` ``BJTEST`` ``-`` ``-`` ``-`` ``-`` ``BKTEST`` ``-`` ``-`` 
+   *Attributes*: elemental i pos
+
+``IBCLR`` ``IIBCLR`` ``JIBCLR`` ``-`` ``-`` ``-`` ``-`` ``KIBCLR`` ``-`` ``-`` 
+   *Attributes*: elemental i pos
+
+``ISHFTC`` ``IISHFTC`` ``JISHFTC`` ``-`` ``-`` ``-`` ``-`` ``KISHFTC`` ``-`` ``-`` 
+   *Attributes*: elemental i shift \*size
+
+``LSHIFT`` ``.ILSHIFT`` ``.JLSHIFT`` ``-`` ``-`` ``-`` ``-`` ``.KLSHIFT`` ``-`` ``-`` 
+   *Attributes*: elemental i shift
+
+``RSHIFT`` ``.IRSHIFT`` ``.JRSHIFT`` ``-`` ``-`` ``-`` ``-`` ``.KRSHIFT`` ``-`` ``-`` 
+   *Attributes*: elemental i shift
+
+``MODULO`` ``.IMODULO`` ``.MODULO`` ``.AMODULO`` ``.DMODULO`` ``-`` ``-`` ``.KMODULO`` ``.QMODULO`` ``-`` 
+   *Attributes*: elemental a p
+
+
+=================
+Predeclared Names
+=================
+
+If the word 'native' appears, this is an intrinsic that is recognized
+*sptr	pd	name	pname	dtype	native*
+
+``DATE`` ``-`` -
+
+   *Attributes*: subroutine --
+
+   .. line-block::
+       .cw "    CALL DATE( buf )"
+
+
+   Returns the current date in ``buf``, which is
+   a 9-byte variable, array, array element, or character substring.
+   The date is returned as a 9-byte ASCII character string in
+   the form ``dd-mmm-yy``.
+
+``EXIT`` ``-`` -
+   The CALL EXIT statement; optional argument is type integer.
+
+   *Attributes*: subroutine --
+
+``IDATE`` ``-`` -
+
+   *Attributes*: subroutine --
+
+   .. line-block::
+       .cw "    CALL IDATE( i, j, k )"
+
+
+   Returns three integer values representing the current month,
+   day, and year in ``i``, ``j``, and ``k``,
+   respectively.
+   All arguments must be integer\*2 variables or array elements or
+   integer\*4 variables or array elements.
+
+``TIME`` ``-`` -
+
+   *Attributes*: subroutine --
+
+   .. line-block::
+       .cw "    CALL TIME( buf )"
+
+
+   Returns the current system time in ``buf``, which is an
+   8-byte variable, array, array element, or character
+   substring.
+   The time is returned as an 8-byte ASCII character string of
+   the form ``hh:mm:ss``.
+
+``MVBITS`` ``-`` -
+
+   *Attributes*: elemental from frompos len to topos
+
+   .. line-block::
+       .cw "    CALL MVBITS(a1, a2, a3, a4, a5)"
+
+
+   Transfers ``a3`` bits beginning at bit ``a2`` of
+   ``a1`` to ``a4`` beginning at bit ``a5``.
+   All arguments are either integer\*2 or integer\*4;
+   ``a4`` must be a variable or array element.
+   Translates to a call to either ``ftn_imvbits`` or
+   ``ftn_jmvbits``.
+
+``REAL`` ``-`` -
+
+   *Attributes*: elemental a \*kind
+
+``CMPLX`` ``-`` -
+
+   *Attributes*: elemental x \*y \*kind
+
+``INT`` ``-`` -
+
+   *Attributes*: elemental a \*kind
+
+``AINT`` ``\*`` R
+
+   *Attributes*: elemental a \*kind
+
+``ANINT`` ``\*`` R
+
+   *Attributes*: elemental a \*kind
+
+``NINT`` ``\*`` I
+
+   *Attributes*: elemental a \*kind
+
+``CHAR`` ``-`` -
+
+   *Attributes*: elemental i \*kind
+
+``ZEXT`` ``-`` -
+
+   *Attributes*: elemental --
+   The ZEXT intrinsic; result is integer\*4, arg is any logical or integer.
+
+``IZEXT`` ``-`` -
+
+   *Attributes*: elemental --
+   The IZEXT intrinsic; result is integer\*2, arg is a logical\*1, logical\*2,
+   or integer\*2.
+
+``JZEXT`` ``-`` -
+
+   *Attributes*: elemental --
+   The JZEXT intrinsic; result is integer\*4, arg is any logical or integer.
+
+``CEILING`` ``-`` -
+
+   *Attributes*: elemental a \*kind
+
+``FLOOR`` ``-`` -
+
+   *Attributes*: elemental a \*kind
+
+``ALL`` ``-`` -
+
+   *Attributes*: transformational mask \*dim
+
+``AND`` ``-`` -
+
+   *Attributes*: elemental --
+
+``ANY`` ``-`` -
+
+   *Attributes*: transformational mask \*dim
+
+``COMPL`` ``-`` -
+
+   *Attributes*: elemental --
+
+``COUNT`` ``-`` -
+
+   *Attributes*: transformational mask \*dim
+
+``DOT_PRODUCT`` ``-`` -
+
+   *Attributes*: transformational vector_a vector_b
+
+``EQV`` ``-`` -
+
+   *Attributes*: elemental --
+
+``MATMUL`` ``-`` -
+
+   *Attributes*: transformational matrix_a matrix_b
+
+``MATMUL_TRANSPOSE`` ``-`` -
+
+   *Attributes*: transformational matrix_a matrix_b
+
+``MAXLOC`` ``-`` -
+
+   *Attributes*: transformational array \*dim \*mask \*kind \*back
+
+``MAXVAL`` ``-`` -
+
+   *Attributes*: transformational array \*dim \*mask
+
+``MINLOC`` ``-`` -
+
+   *Attributes*: transformational array \*dim \*mask \*kind \*back
+
+``MINVAL`` ``-`` -
+
+   *Attributes*: transformational array \*dim \*mask
+
+``MERGE`` ``-`` -
+
+   *Attributes*: elemental tsource fsource mask
+
+``NEQV`` ``-`` -
+
+   *Attributes*: elemental --
+
+``OR`` ``-`` -
+
+   *Attributes*: elemental --
+
+``PACK`` ``-`` -
+
+   *Attributes*: transformational array mask \*vector
+
+``PRODUCT`` ``-`` -
+
+   *Attributes*: transformational array \*dim \*mask
+
+``RAN`` ``-`` -
+
+   *Attributes*: elemental --
+   The ``RAN`` function is a general random number generator
+   which requires a single argument which is either an integer\*4 variable
+   or array element.
+
+``SECNDS`` ``-`` -
+   The ``SECNDS`` function returns the system time in seconds
+   as a single-precision (double-precision) value minus the value
+   of its single-precision (double-precision) argument.
+
+   *Attributes*: subroutine --
+
+``SHIFT`` ``-`` -
+
+   *Attributes*: elemental --
+
+``SUM`` ``-`` -
+
+   *Attributes*: transformational array \*dim \*mask
+
+``SPREAD`` ``-`` -
+
+   *Attributes*: transformational source dim ncopies
+
+``TRANSPOSE`` ``-`` -
+
+   *Attributes*: transformational matrix
+
+``UNPACK`` ``-`` -
+
+   *Attributes*: transformational vector mask field
+
+``NUMBER_OF_PROCESSORS`` ``-`` -
+
+   *Attributes*: inquiry \*dim
+
+``LBOUND`` ``-`` -
+
+   *Attributes*: inquiry array \*dim \*kind
+
+``UBOUND`` ``-`` -
+
+   *Attributes*: inquiry array \*dim \*kind
+
+``CSHIFT`` ``-`` -
+
+   *Attributes*: transformational array shift \*dim
+
+``EOSHIFT`` ``-`` -
+
+   *Attributes*: transformational array shift \*boundary \*dim
+
+``RESHAPE`` ``-`` -
+
+   *Attributes*: transformational source shape \*pad \*order
+
+``SHAPE`` ``-`` -
+
+   *Attributes*: transformational source \*kind
+
+``SIZE`` ``-`` -
+
+   *Attributes*: inquiry array \*dim \*kind
+
+``ALLOCATED`` ``-`` -
+
+   *Attributes*: inquiry array
+
+``DATE_AND_TIME`` ``-`` -
+
+   *Attributes*: subroutine \*date \*time \*zone \*values
+
+``CPU_TIME`` ``-`` -
+
+   *Attributes*: subroutine time
+
+``RANDOM_NUMBER`` ``-`` -
+
+   *Attributes*: subroutine harvest
+
+``RANDOM_SEED`` ``-`` -
+
+   *Attributes*: subroutine \*size \*put \*get
+
+``SYSTEM_CLOCK`` ``-`` -
+
+   *Attributes*: subroutine \*count \*count_rate \*count_max
+
+``PRESENT`` ``-`` -
+
+   *Attributes*: inquiry a
+
+``KIND`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``SELECTED_INT_KIND`` ``-`` -
+
+   *Attributes*: transformational r
+
+``SELECTED_REAL_KIND`` ``-`` -
+
+   *Attributes*: transformational \*p \*r \*radix
+
+``.DLBOUND`` ``-`` -
+   CM Fortran's version of LBOUND.
+
+   *Attributes*: inquiry array \*dim
+
+``.DUBOUND`` ``-`` -
+   CM Fortran UBOUND intrinsic.
+
+   *Attributes*: inquiry array \*dim
+
+``.DSHAPE`` ``-`` -
+   CM Fortran SHAPE intrinsic.
+
+   *Attributes*: transformational source
+
+``.DSIZE`` ``-`` -
+   CM Fortran SIZE intrinsic.
+
+   *Attributes*: inquiry array \*dim
+
+``ACHAR`` ``-`` -
+
+   *Attributes*: elemental i \*kind
+
+``ADJUSTL`` ``-`` -
+
+   *Attributes*: elemental string
+
+``ADJUSTR`` ``-`` -
+
+   *Attributes*: elemental string
+
+``BIT_SIZE`` ``-`` -
+
+   *Attributes*: inquiry i
+
+``DIGITS`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``EPSILON`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``EXPONENT`` ``-`` -
+
+   *Attributes*: elemental x
+
+``FRACTION`` ``-`` -
+
+   *Attributes*: elemental x
+
+``HUGE`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``IACHAR`` ``-`` -
+
+   *Attributes*: elemental c \*kind
+
+``INDEX`` ``pghpf_index`` I
+
+   *Attributes*: elemental string substring \*back \*kind
+
+``KINDEX`` ``pghpf_kindex`` I8 native
+
+   *Attributes*: elemental string substring \*back \*kind
+
+``LOGICAL`` ``-`` -
+
+   *Attributes*: elemental l \*kind
+
+``MAXEXPONENT`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``MINEXPONENT`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``NEAREST`` ``-`` -
+
+   *Attributes*: elemental x s
+
+``PRECISION`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``RADIX`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``RANGE`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``REPEAT`` ``-`` -
+
+   *Attributes*: transformational string ncopies
+
+``RRSPACING`` ``-`` -
+
+   *Attributes*: elemental x
+
+``SCALE`` ``-`` -
+
+   *Attributes*: elemental x i
+
+``SET_EXPONENT`` ``-`` -
+
+   *Attributes*: elemental x i
+
+``SPACING`` ``-`` -
+
+   *Attributes*: elemental x
+
+``TINY`` ``-`` -
+
+   *Attributes*: inquiry x
+
+``TRANSFER`` ``-`` -
+
+   *Attributes*: transformational source mold \*size
+
+``TRIM`` ``-`` -
+
+   *Attributes*: transformational string
+
+``VERIFY`` ``-`` -
+
+   *Attributes*: elemental string set \*back \*kind
+
+``SCAN`` ``-`` -
+
+   *Attributes*: elemental string set \*back \*kind
+
+``LEN`` ``pghpf_len`` I
+
+   *Attributes*: inquiry string \*kind
+
+``KLEN`` ``pghpf_klen`` I8 native
+
+   *Attributes*: inquiry string
+
+``LEN_TRIM`` ``-`` -
+
+   *Attributes*: elemental string \*kind
+
+``DOTPRODUCT`` ``-`` -
+   CM Fortran dotproduct intrinsic.
+
+   *Attributes*: transformational vector_a vector_b
+
+``ILEN`` ``-`` -
+
+   *Attributes*: elemental i
+
+``NULL`` ``-`` -
+
+   *Attributes*: transformational \*mold
+
+``INT_PTR_KIND`` ``-`` -
+
+   *Attributes*: inquiry
+
+``PROCESSORS_SHAPE`` ``-`` -
+
+   *Attributes*: inquiry
+
+``ISNAN`` ``-`` -
+
+   *Attributes*: elemental x
+
+``.LASTVAL`` ``-`` -
+   Internal intrinisic to extract the mask-controlled last value of an array.
+
+   .. line-block::
+       .cw "    CALL .LASTVAL(scalar-result, array, mask)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_SUM`` ``-`` -
+   Internal intrinsic to perform global sum across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_SUM(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_PRODUCT`` ``-`` -
+   Internal intrinsic to perform global product across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_PRODUCT(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_ANY`` ``-`` -
+   Internal intrinsic to perform global logical OR across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_ANY(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_ALL`` ``-`` -
+   Internal intrinsic to perform global logical AND across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_ALL(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_PARITY`` ``-`` -
+   Internal intrinsic to perform global logical XOR across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_PARITY(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_IANY`` ``-`` -
+   Internal intrinsic to perform global bitwise OR across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_IANY(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_IALL`` ``-`` -
+   Internal intrinsic to perform global bitwise AND across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_IALL(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_IPARITY`` ``-`` -
+   Internal intrinsic to perform global bitwise XOR across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_IPARITY(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_MINVAL`` ``-`` -
+   Internal intrinsic to perform global minimum across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_MINVAL(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_MAXVAL`` ``-`` -
+   Internal intrinsic to perform global maximum across all procesors.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_MAXVAL(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_FIRSTMAX`` ``-`` -
+   Internal intrinsic to perform global maximum across all procesors
+   and return the subscript(s) of the first maximum element.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_FIRSTMAX(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_LASTMAX`` ``-`` -
+   Internal intrinsic to perform global maximum across all procesors
+   and return the subscript(s) of the last maximum element.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_LASTMAX(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_FIRSTMIN`` ``-`` -
+   Internal intrinsic to perform global minimum across all procesors
+   and return the subscript(s) of the first minimum element.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_FIRSTMIN(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``.REDUCE_LASTMIN`` ``-`` -
+   Internal intrinsic to perform global minimum across all procesors
+   and return the subscript(s) of the last minimum element.
+
+   .. line-block::
+       .cw "    CALL .REDUCE_LASTMIN(dim-mask, homearray, nreductions, array...)"
+
+
+
+   *Attributes*: subroutine --
+
+``ASSOCIATED`` ``-`` -
+
+   *Attributes*: inquiry pointer \*target
+
+``.PTR2_ASSIGN`` ``-`` -
+   Internal subroutine to perform a pointer assignment statement.
+
+   .. line-block::
+        pv => ar
+        pv => ar(lower:upper:stride,...)
+
+       .cw "CALL .PTR2_ASSIGN(pv, rhs)"
+
+        is translated to:
+
+        call pghpf_ptr2_assign(pv$p, pv$o, pv, pv$dp, pv$do, pv$d, pv$sdsc,
+                               ar, ar$d, sectflag)
+
+        optional: pv$p, pv$o, pv, pv$dp, pv$do, pv$d
+
+        pv$p, pv$o, pv:     pv's cray pointer, offset, and base.
+        pv$dp, pv$do, pv$d: pv's (old) descriptor cray pointer, offset, and base
+        pv$sdsc:            pv's (new) static descriptor
+        ar:                 ar's base address (ar or ar(ar$o))
+        ar$d:               ar's (old) descriptor
+        sectflag:           integer, 0 if whole array, 1 if section
+
+
+   *Attributes*: subroutine --
+
+``.NULLIFY`` ``-`` -
+   Internal subroutine to perform the nullify statement.
+
+   .. line-block::
+        nullify(pv)
+
+       .cw "CALL .NULLIFY(pv)"
+
+       is translated to
+
+        call pghpf_ptr2_nullify(pv$p, pv$o, pv, pv$sdsc)
+
+        optional: pv$p, pv$o, pv
+
+
+   *Attributes*: subroutine --
+
+``.PTR_COPYIN`` ``-`` -
+   Internal subroutine to perform a copy in of a pointer argument.
+
+   *Attributes*: subroutine --
+
+``.PTR_COPYOUT`` ``-`` -
+   Internal subroutine to perform a copy out of a pointer argument.
+
+   *Attributes*: subroutine --
+
+``.COPYIN`` ``-`` -
+   Internal subroutine to perform a copy in of an ordinary argument.
+
+   *Attributes*: subroutine --
+
+``.COPYOUT`` ``-`` -
+   Internal subroutine to perform a copy out of an ordinary argument.
+
+   *Attributes*: subroutine --
+
+``SELECTED_CHAR_KIND`` ``-`` -
+
+   *Attributes*: transformational name
+
+``EXTENDS_TYPE_OF`` ``-`` -
+
+   *Attributes*: inquiry a mold
+
+``NEW_LINE`` ``-`` -
+
+   *Attributes*: inquiry a
+
+``SAME_TYPE_AS`` ``-`` -
+
+   *Attributes*: inquiry a b
+
+``MOVE_ALLOC`` ``-`` -
+
+   *Attributes*: subroutine from to
+
+``GETARG`` ``-`` -
+
+   *Attributes*: subroutine pos \*value
+
+``COMMAND_ARGUMENT_COUNT`` ``-`` -
+
+   *Attributes*: inquiry
+
+``GET_COMMAND`` ``-`` -
+
+   *Attributes*: subroutine \*command \*length \*status
+
+``GET_COMMAND_ARGUMENT`` ``-`` -
+
+   *Attributes*: subroutine number \*value \*length \*status
+
+``GET_ENVIRONMENT_VARIABLE`` ``-`` -
+
+   *Attributes*: subroutine name \*value \*length \*status \*trim_name
+
+``IS_IOSTAT_END`` ``-`` -
+
+   *Attributes*: elemental i
+
+``IS_IOSTAT_EOR`` ``-`` -
+
+   *Attributes*: elemental i
+
+``SIZEOF`` ``-`` -
+
+   *Attributes*: inquiry x
+
+
+========================
+ISO_C_BINDING Intrinsics
+========================
+*sptr    name    pcnt    atyp    dtype   ILM     pname   arrayf native?*
+
+``C_LOC`` ``1`` ``A`` ``A`` ``LOC`` ``\*`` ``V`` 
+   *Attributes*: inquiry x
+
+``C_FUNLOC`` ``1`` ``A`` ``A`` ``LOC`` ``\*`` ``V`` 
+   *Attributes*: inquiry x
+
+``C_ASSOCIATED`` ``2`` ``A`` ``L`` ``C_ASSOC`` ``\*`` ``-`` 
+   *Attributes*: inquiry c_ptr_1 \*c_ptr_2
+
+``C_F_POINTER`` ``3`` ``I`` ``I`` ``none`` ``\*`` ``V`` 
+   *Attributes*: subroutine cptr fptr \*shape
+
+``C_F_PROCPOINTER`` ``2`` ``I`` ``I`` ``none`` ``\*`` ``-`` 
+   *Attributes*: subroutine cptr fptr
+
+
+==========================
+IEEE_ARITHMEITC Procedures
+==========================
+
+``IEEE_SUPPORT_DATATYPE``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_DENORMAL``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_DIVIDE``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_INF``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_IO``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_NAN``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_ROUNDING``
+
+   *Attributes*: inquiry round_value \*x
+
+``IEEE_SUPPORT_SQRT``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_STANDARD``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_SUPPORT_UNDERFLOW_CONTROL``
+
+   *Attributes*: inquiry \*x
+
+``IEEE_CLASS``
+
+   *Attributes*: elemental x
+
+``IEEE_COPY_SIGN``
+
+   *Attributes*: elemental x y
+
+``IEEE_IS_FINITE``
+
+   *Attributes*: elemental x
+
+``IEEE_IS_NAN``
+
+   *Attributes*: elemental x
+
+``IEEE_IS_NORMAL``
+
+   *Attributes*: elemental x
+
+``IEEE_IS_NEGATIVE``
+
+   *Attributes*: elemental x
+
+``IEEE_LOGB``
+
+   *Attributes*: elemental x
+
+``IEEE_NEXT_AFTER``
+
+   *Attributes*: elemental x y
+
+``IEEE_REM``
+
+   *Attributes*: elemental x y
+
+``IEEE_RINT``
+
+   *Attributes*: elemental x
+
+``IEEE_SCALB``
+
+   *Attributes*: elemental x i
+
+``IEEE_UNORDERED``
+
+   *Attributes*: elemental x y
+
+``IEEE_VALUE``
+
+   *Attributes*: elemental x class
+
+``IEEE_SELECTED_REAL_KIND``
+
+   *Attributes*: transformational \*p \*r \*radix
+
+``IEEE_GET_ROUNDING_MODE``
+
+   *Attributes*: subroutine round value
+
+``IEEE_GET_UNDERFLOW_MODE``
+
+   *Attributes*: subroutine gradual
+
+``IEEE_SET_ROUNDING_MODE``
+
+   *Attributes*: subroutine round value
+
+``IEEE_SET_UNDERFLOW_MODE``
+
+   *Attributes*: subroutine gradual
+
+
+==========================
+IEEE_EXCEPTIONS Procedures
+==========================
+
+``IEEE_SUPPORT_FLAG``
+
+   *Attributes*: inquiry flag \*x
+
+``IEEE_SUPPORT_HALTING``
+
+   *Attributes*: inquiry flag
+
+``IEEE_GET_FLAG``
+
+   *Attributes*: elemental flag flag_value
+
+``IEEE_GET_HALTING_MODE``
+
+   *Attributes*: elemental flag halting
+
+``IEEE_GET_STATUS``
+
+   *Attributes*: subroutine status_value
+
+``IEEE_SET_FLAG``
+
+   *Attributes*: subroutine flag flag_value
+
+``IEEE_SET_HALTING_MODE``
+
+   *Attributes*: subroutine flag halting
+
+``IEEE_SET_STATUS``
+
+   *Attributes*: subroutine status_value
+
+
+===============================
+Miscellaneous/f2008  Procedures
+===============================
+
+``LEADZ``
+
+   *Attributes*: elemental i
+
+``POPCNT``
+
+   *Attributes*: elemental i
+
+``POPPAR``
+
+   *Attributes*: elemental i
+
+``TRAILZ``
+
+   *Attributes*: elemental i
+
+``.BGE``
+
+   *Attributes*: elemental i j
+
+``.BGT``
+
+   *Attributes*: elemental i j
+
+``.BLE``
+
+   *Attributes*: elemental i j
+
+``.BLT``
+
+   *Attributes*: elemental i j
+
+``.MASKL``
+
+   *Attributes*: elemental i \*kind
+
+``.MASKR``
+
+   *Attributes*: elemental i \*kind
+
+``.SHIFTA``
+
+   *Attributes*: elemental i shift
+
+``.SHIFTL``
+
+   *Attributes*: elemental i shift
+
+``.SHIFTR``
+
+   *Attributes*: elemental i shift
+
+``.DSHIFTL``
+
+   *Attributes*: elemental i j shift
+
+``.DSHIFTR``
+
+   *Attributes*: elemental i j shift
+
+``.MERGE_BITS``
+
+   *Attributes*: elemental i j mask
+
+``.IALL``
+
+   *Attributes*: transformational array \*dim \*mask
+
+``.IANY``
+
+   *Attributes*: transformational array \*dim \*mask
+
+``.IPARITY``
+
+   *Attributes*: transformational array \*dim \*mask
+
+``STORAGE_SIZE``
+
+   *Attributes*: inquiry a \*kind
+
+``ACOSH``
+
+   *Attributes*: elemental x
+
+``ASINH``
+
+   *Attributes*: elemental x
+
+``ATANH``
+
+   *Attributes*: elemental x
+
+``BESSEL_J0``
+
+   *Attributes*: elemental x
+
+``BESSEL_J1``
+
+   *Attributes*: elemental x
+
+``BESSEL_Y0``
+
+   *Attributes*: elemental x
+
+``BESSEL_Y1``
+
+   *Attributes*: elemental x
+
+``BESSEL_JN``
+
+   *Attributes*: elemental n1 \*n2 x
+
+``BESSEL_YN``
+
+   *Attributes*: elemental n1 n2 x
+
+``ERF``
+
+   *Attributes*: elemental x
+
+``QERF``
+
+   *Attributes*: elemental x
+
+``ERFC``
+
+   *Attributes*: elemental x
+
+``QERFC``
+
+   *Attributes*: elemental x
+
+``ERFC_SCALED``
+
+   *Attributes*: elemental x
+
+``QERFC_SCALED``
+
+   *Attributes*: elemental x
+
+``GAMMA``
+
+   *Attributes*: elemental x
+
+``HYPOT``
+
+   *Attributes*: elemental x y
+
+``LOG_GAMMA``
+
+   *Attributes*: elemental x
+
+``NORM2``
+
+   *Attributes*: transformational x \*dim
+
+``.PARITY``
+
+   *Attributes*: transformational mask \*dim
+
+``EXECUTE_COMMAND_LINE``
+
+   *Attributes*: subroutine command \*wait \*exitstat \*cmdstat \*cmdmsg
+
+``FINDLOC``
+
+   *Attributes*: transformational array value \*dim \*mask \*kind \*back
+
+``IS_CONTIGUOUS``
+
+   *Attributes*: inquiry array
+
+
+   ``COMPILER_OPTIONS``
+
+      *Attributes*: inquiry
+
+
+
+   ``COMPILER_VERSION``
+
+      *Attributes*: inquiry
+
+
+      ``C_SIZEOF``
+
+         *Attributes*: inquiry x
+
+
+

@@ -1,0 +1,8 @@
+
+
+***********************
+Communication Optimizer
+***********************
+
+Currently, there is no "Communication Optimizer" phase in the Fortran
+Front-End. It may be added when we support Fortran 2008 Co-Arrays.

@@ -1,0 +1,706 @@
+
+
+************************************
+Appendix VII - Intrinsics & Generics
+************************************
+
+
+===================
+Intrinsic Functions
+===================
+
+If a specific intrinsic is related to the ``integer\*8``
+data type, its name in the ``.IN`` line is prefixed with
+an ``=`` (equals sign).
+The utility determines whether on not to include this intrinsic
+in the predefined portion of the symbol table.
+
+*sptr	name	pcnt	atyp	dtype	ILM	pname*
+
+``.SQRT`` ``1`` ``R`` ``R`` ``SQRT`` ``ftn_sqrt`` 
+
+``DSQRT`` ``1`` ``D`` ``D`` ``DSQRT`` ``ftn_dsqrt`` 
+
+``CSQRT`` ``1`` ``C`` ``C`` ``CSQRT`` ``ftn_csqrt`` 
+
+``CDSQRT`` ``1`` ``CD`` ``CD`` ``CDSQRT`` ``ftn_cdsqrt`` 
+
+``QSQRT`` ``1`` ``Q`` ``Q`` ``QSQRT`` ``ftn_qsqrt`` 
+
+``ALOG`` ``1`` ``R`` ``R`` ``ALOG`` ``ftn_alog`` 
+
+``DLOG`` ``1`` ``D`` ``D`` ``DLOG`` ``ftn_dlog`` 
+
+``CLOG`` ``1`` ``C`` ``C`` ``CLOG`` ``ftn_clog`` 
+
+``CDLOG`` ``1`` ``CD`` ``CD`` ``CDLOG`` ``ftn_cdlog`` 
+
+``QLOG`` ``1`` ``Q`` ``Q`` ``QLOG`` ``ftn_qlog`` 
+
+``ALOG10`` ``1`` ``R`` ``R`` ``ALOG10`` ``ftn_alog10`` 
+
+``DLOG10`` ``1`` ``D`` ``D`` ``DLOG10`` ``ftn_dlog10`` 
+
+``.EXP`` ``1`` ``R`` ``R`` ``EXP`` ``ftn_exp`` 
+
+``DEXP`` ``1`` ``D`` ``D`` ``DEXP`` ``ftn_dexp`` 
+
+``CEXP`` ``1`` ``C`` ``C`` ``CEXP`` ``ftn_cexp`` 
+
+``CDEXP`` ``1`` ``CD`` ``CD`` ``CDEXP`` ``ftn_cdexp`` 
+
+``QEXP`` ``1`` ``Q`` ``Q`` ``QEXP`` ``ftn_qexp`` 
+
+``.SIN`` ``1`` ``R`` ``R`` ``SIN`` ``ftn_sin`` 
+
+``DSIN`` ``1`` ``D`` ``D`` ``DSIN`` ``ftn_dsin`` 
+
+``CSIN`` ``1`` ``C`` ``C`` ``CSIN`` ``ftn_csin`` 
+
+``CDSIN`` ``1`` ``CD`` ``CD`` ``CDSIN`` ``ftn_cdsin`` 
+
+``QSIN`` ``1`` ``Q`` ``Q`` ``QSIN`` ``ftn_qsin`` 
+
+``.SIND`` ``1`` ``R`` ``R`` ``SIND`` ``ftn_sind`` 
+
+``DSIND`` ``1`` ``D`` ``D`` ``DSIND`` ``ftn_dsind`` 
+
+``QSIND`` ``1`` ``Q`` ``Q`` ``QSIND`` ``ftn_qsind`` 
+
+``.COS`` ``1`` ``R`` ``R`` ``COS`` ``ftn_cos`` 
+
+``DCOS`` ``1`` ``D`` ``D`` ``DCOS`` ``ftn_dcos`` 
+
+``CCOS`` ``1`` ``C`` ``C`` ``CCOS`` ``ftn_ccos`` 
+
+``QCOS`` ``1`` ``Q`` ``Q`` ``QCOS`` ``ftn_qcos`` 
+
+``CDCOS`` ``1`` ``CD`` ``CD`` ``CDCOS`` ``ftn_cdcos`` 
+
+``.COSD`` ``1`` ``R`` ``R`` ``COSD`` ``ftn_cosd`` 
+
+``DCOSD`` ``1`` ``D`` ``D`` ``DCOSD`` ``ftn_dcosd`` 
+
+``QCOSD`` ``1`` ``Q`` ``Q`` ``QCOSD`` ``ftn_qcosd`` 
+
+``.TAN`` ``1`` ``R`` ``R`` ``TAN`` ``ftn_tan`` 
+
+``DTAN`` ``1`` ``D`` ``D`` ``DTAN`` ``ftn_dtan`` 
+
+``QTAN`` ``1`` ``Q`` ``Q`` ``QTAN`` ``ftn_qtan`` 
+
+``.TAND`` ``1`` ``R`` ``R`` ``TAND`` ``ftn_tand`` 
+
+``DTAND`` ``1`` ``D`` ``D`` ``DTAND`` ``ftn_dtand`` 
+
+``QTAND`` ``1`` ``Q`` ``Q`` ``QTAND`` ``ftn_qtand`` 
+
+``.ASIN`` ``1`` ``R`` ``R`` ``ASIN`` ``ftn_asin`` 
+
+``DASIN`` ``1`` ``D`` ``D`` ``DASIN`` ``ftn_dasin`` 
+
+``QASIN`` ``1`` ``Q`` ``Q`` ``QASIN`` ``ftn_qasin`` 
+
+``.ASIND`` ``1`` ``R`` ``R`` ``ASIND`` ``ftn_asind`` 
+
+``DASIND`` ``1`` ``D`` ``D`` ``DASIND`` ``ftn_dasind`` 
+
+``QASIND`` ``1`` ``Q`` ``Q`` ``QASIND`` ``ftn_qasind`` 
+
+``.ACOS`` ``1`` ``R`` ``R`` ``ACOS`` ``ftn_acos`` 
+
+``DACOS`` ``1`` ``D`` ``D`` ``DACOS`` ``ftn_dacos`` 
+
+``QACOS`` ``1`` ``Q`` ``Q`` ``QACOS`` ``ftn_qacos`` 
+
+``.ACOSD`` ``1`` ``R`` ``R`` ``ACOSD`` ``ftn_acosd`` 
+
+``DACOSD`` ``1`` ``D`` ``D`` ``DACOSD`` ``ftn_dacosd`` 
+
+``QACOSD`` ``1`` ``Q`` ``Q`` ``QACOSD`` ``ftn_qacosd`` 
+
+``.ATAN`` ``1`` ``R`` ``R`` ``ATAN`` ``ftn_atan`` 
+
+``DATAN`` ``1`` ``D`` ``D`` ``DATAN`` ``ftn_datan`` 
+
+``QATAN`` ``1`` ``Q`` ``Q`` ``QATAN`` ``ftn_qatan`` 
+
+``.ATAND`` ``1`` ``R`` ``R`` ``ATAND`` ``ftn_atand`` 
+
+``DATAND`` ``1`` ``D`` ``D`` ``DATAND`` ``ftn_datand`` 
+
+``QATAND`` ``1`` ``Q`` ``Q`` ``QATAND`` ``ftn_qatand`` 
+
+``.ATAN2`` ``2`` ``R`` ``R`` ``ATAN2`` ``ftn_atan2`` 
+
+``DATAN2`` ``2`` ``D`` ``D`` ``DATAN2`` ``ftn_datan2`` 
+
+``QATAN2`` ``2`` ``Q`` ``Q`` ``QATAN2`` ``ftn_qatan2`` 
+
+``.ATAN2D`` ``2`` ``R`` ``R`` ``ATAN2D`` ``ftn_atan2d`` 
+
+``DATAN2D`` ``2`` ``D`` ``D`` ``DATAN2D`` ``ftn_datan2d`` 
+
+``QATAN2D`` ``2`` ``Q`` ``Q`` ``QATAN2D`` ``ftn_qatan2d`` 
+
+``.SINH`` ``1`` ``R`` ``R`` ``SINH`` ``ftn_sinh`` 
+
+``DSINH`` ``1`` ``D`` ``D`` ``DSINH`` ``ftn_dsinh`` 
+
+``.COSH`` ``1`` ``R`` ``R`` ``COSH`` ``ftn_cosh`` 
+
+``DCOSH`` ``1`` ``D`` ``D`` ``DCOSH`` ``ftn_dcosh`` 
+
+``.TANH`` ``1`` ``R`` ``R`` ``TANH`` ``ftn_tanh`` 
+
+``DTANH`` ``1`` ``D`` ``D`` ``DTANH`` ``ftn_dtanh`` 
+
+``IABS`` ``1`` ``I`` ``I`` ``IABS`` ``ftn_iabs`` 
+
+``IIABS`` ``1`` ``SI`` ``SI`` ``IABS`` ``ftn_iiabs`` 
+
+``JIABS`` ``1`` ``I`` ``I`` ``IABS`` ``ftn_iabs`` 
+
+``=KIABS`` ``1`` ``I8`` ``I8`` ``KABS`` ``ftn_kabs`` 
+
+``.ABS`` ``1`` ``R`` ``R`` ``ABS`` ``ftn_abs`` 
+
+``DABS`` ``1`` ``D`` ``D`` ``DABS`` ``ftn_dabs`` 
+
+``QABS`` ``1`` ``Q`` ``Q`` ``QABS`` ``ftn_qabs`` 
+
+``CABS`` ``1`` ``C`` ``R`` ``CABS`` ``ftn_cabs`` 
+
+``CDABS`` ``1`` ``CD`` ``D`` ``CDABS`` ``ftn_cdabs`` 
+
+``.INT`` ``1`` ``R`` ``I`` ``tc`` 
+
+``IFIX`` ``1`` ``R`` ``I`` ``tc`` Same as the INT intrinsic.
+
+``IIFIX`` ``1`` ``R`` ``SI`` ``tc`` 
+
+``JIFIX`` ``1`` ``R`` ``I`` ``tc`` 
+
+``=KIFIX`` ``1`` ``R`` ``I8`` ``tc`` 
+
+``IDINT`` ``1`` ``D`` ``I`` ``tc`` 
+
+``.IINT`` ``1`` ``R`` ``SI`` ``tc`` Conversion to short integer.
+
+``IIDINT`` ``1`` ``D`` ``SI`` ``tc`` Conversion to short integer.
+
+``.JINT`` ``1`` ``R`` ``I`` ``tc`` 
+
+``JIDINT`` ``1`` ``D`` ``I`` ``tc`` 
+
+``=.INT8`` ``1`` ``R`` ``I8`` ``tc`` Conversion to integer\*8.
+
+``=.IDINT8`` ``1`` ``D`` ``I8`` ``tc`` Conversion to integer\*8.
+
+``.2I`` ``1`` ``N`` ``I`` ``tc`` Converts any numeric data type to integer.
+
+``.2SI`` ``1`` ``N`` ``SI`` ``tc`` Converts any numeric data type to short integer.
+
+``=.2KI`` ``1`` ``N`` ``I8`` ``tc`` Converts any numeric data type to integer\*8.
+
+``.AINT`` ``1`` ``R`` ``R`` ``AINT`` ``ftn_aint`` 
+
+``DINT`` ``1`` ``D`` ``D`` ``DINT`` ``ftn_dint`` 
+
+``QINT`` ``1`` ``Q`` ``Q`` ``QINT`` ``ftn_qint`` 
+
+``.ANINT`` ``1`` ``R`` ``R`` ``ANINT`` ``ftn_anint`` 
+
+``QQANINT`` ``1`` ``Q`` ``Q`` ``QQANINT`` ``ftn_qanint`` 
+
+``DQANINT`` ``1`` ``D`` ``Q`` ``DQANINT`` ``ftn_dqanint`` 
+
+``AQANINT`` ``1`` ``R`` ``Q`` ``AQANINT`` ``ftn_aqanint`` 
+
+``DNINT`` ``1`` ``D`` ``D`` ``DNINT`` ``ftn_dnint`` 
+
+``.ININT`` ``1`` ``R`` ``SI`` ``NINT`` ``ftn_inint`` 
+
+``.NINT`` ``1`` ``R`` ``I`` ``NINT`` ``ftn_nint`` 
+
+``IDNINT`` ``1`` ``D`` ``I`` ``IDNINT`` ``ftn_idnint`` 
+
+``IQNINT`` ``1`` ``Q`` ``I`` ``IQNINT`` ``ftn_iqnint`` 
+
+``IIDNNT`` ``1`` ``D`` ``SI`` ``IDNINT`` ``ftn_iidnnt`` 
+
+``.JNINT`` ``1`` ``R`` ``I`` ``NINT`` ``ftn_inint`` 
+
+``JIDNNT`` ``1`` ``D`` ``I`` ``IDNINT`` ``ftn_idnint`` 
+
+``=.KNINT`` ``1`` ``R`` ``I8`` ``KNINT`` ``ftn_knint`` 
+
+``=KIDNNT`` ``1`` ``D`` ``I8`` ``KDNINT`` ``ftn_kidnnt`` 
+
+``=KIQNNT`` ``1`` ``Q`` ``I8`` ``KQNINT`` ``ftn_kiqnnt`` 
+
+``FLOATI`` ``1`` ``SI`` ``R`` ``tc`` Converts integer\*2 to real.
+
+``FLOATJ`` ``1`` ``I`` ``R`` ``tc`` 
+
+``=.FLOATK`` ``1`` ``I8`` ``R`` ``tc`` Converts integer\*8 to real.
+
+``.REAL`` ``1`` ``I`` ``R`` ``tc`` Converts integer to real.
+
+``FLOAT`` ``1`` ``I`` ``R`` ``tc`` Same as REAL intrinsic.
+
+``SNGL`` ``1`` ``D`` ``R`` ``tc`` 
+
+``.2R`` ``1`` ``N`` ``R`` ``tc`` Converts any numeric data type to real.
+
+``DFLOTI`` ``1`` ``SI`` ``D`` ``tc`` Converts integer\*2 to double.
+
+``DFLOAT`` ``1`` ``I`` ``D`` ``tc`` Extension to Fortran-77.
+
+``DFLOTJ`` ``1`` ``I`` ``D`` ``tc`` 
+
+``=.DFLOTK`` ``1`` ``I8`` ``D`` ``tc`` Converts integer\*8 to double.
+
+``DREAL`` ``1`` ``CD`` ``D`` ``tc`` Converts complex\*16 to double.
+
+``.2D`` ``1`` ``N`` ``D`` ``tc`` Convert any numeric data type to double precision.
+
+``.2C`` ``11`` ``N`` ``C`` ``tc`` Convert any numeric data type to complex.
+
+``.2CD`` ``11`` ``N`` ``CD`` ``tc`` Convert any numeric data type to double complex.
+
+``.AIMAG`` ``1`` ``C`` ``R`` ``IMAG`` ``ftn_aimag`` 
+
+``DIMAG`` ``1`` ``CD`` ``D`` ``DIMAG`` ``ftn_dimag`` 
+
+``.CONJG`` ``1`` ``C`` ``C`` ``CONJG`` ``ftn_conjg`` 
+
+``DCONJG`` ``1`` ``CD`` ``CD`` ``DCONJG`` ``ftn_dconjg`` 
+
+``DPROD`` ``2`` ``R`` ``D`` ``DPROD`` ``ftn_dprod`` 
+
+``IMAX0`` ``12`` ``SI`` ``SI`` ``IMAX`` ``-`` 
+
+``MAX0`` ``12`` ``I`` ``I`` ``IMAX`` ``-`` 
+
+``=.KMAX0`` ``12`` ``I8`` ``I8`` ``KMAX`` ``-`` 
+
+``AMAX1`` ``12`` ``R`` ``R`` ``RMAX`` ``-`` 
+
+``DMAX1`` ``12`` ``D`` ``D`` ``DMAX`` ``-`` 
+
+``JMAX0`` ``12`` ``I`` ``I`` ``IMAX`` ``-`` ``IMAX`` 
+
+``AIMAX0`` ``13`` ``SI`` ``R`` ``IMAX`` ``-`` 
+
+``AMAX0`` ``13`` ``I`` ``R`` ``IMAX`` ``-`` 
+
+``=AKMAX0`` ``13`` ``I8`` ``R`` ``KMAX`` ``-`` 
+
+``MAX1`` ``13`` ``R`` ``I`` ``RMAX`` ``-`` 
+
+``IMAX1`` ``13`` ``R`` ``SI`` ``RMAX`` ``-`` 
+
+``JMAX1`` ``13`` ``R`` ``I`` ``RMAX`` ``-`` 
+
+``=KMAX1`` ``13`` ``R`` ``I8`` ``RMAX`` ``-`` 
+
+``AJMAX0`` ``13`` ``I`` ``R`` ``IMAX`` ``-`` 
+
+``MIN0`` ``12`` ``I`` ``I`` ``IMIN`` ``-`` 
+
+``IMIN0`` ``12`` ``SI`` ``SI`` ``IMIN`` ``-`` 
+
+``=.KMIN0`` ``12`` ``I8`` ``I8`` ``KMIN`` ``-`` 
+
+``AMIN1`` ``12`` ``R`` ``R`` ``RMIN`` ``-`` 
+
+``DMIN1`` ``12`` ``D`` ``D`` ``DMIN`` ``-`` 
+
+``JMIN0`` ``12`` ``I`` ``I`` ``IMIN`` ``-`` 
+
+``AMIN0`` ``13`` ``I`` ``R`` ``IMIN`` ``-`` 
+
+``AIMIN0`` ``13`` ``SI`` ``R`` ``IMIN`` ``-`` 
+
+``=AKMIN0`` ``13`` ``I8`` ``R`` ``KMIN`` ``-`` 
+
+``MIN1`` ``13`` ``R`` ``I`` ``RMIN`` ``-`` 
+
+``IMIN1`` ``13`` ``R`` ``SI`` ``RMIN`` ``-`` 
+
+``JMIN1`` ``13`` ``R`` ``I`` ``RMIN`` ``-`` 
+
+``=KMIN1`` ``13`` ``R`` ``I8`` ``RMIN`` ``-`` 
+
+``AJMIN0`` ``13`` ``I`` ``R`` ``IMIN`` ``-`` 
+
+``IIDIM`` ``2`` ``SI`` ``SI`` ``IDIM`` ``ftn_iidim`` 
+
+``JIDIM`` ``2`` ``I`` ``I`` ``IDIM`` ``ftn_idim`` 
+
+``=KIDIM`` ``2`` ``I8`` ``I8`` ``KDIM`` ``ftn_kidim`` 
+
+``IDIM`` ``2`` ``I`` ``I`` ``IDIM`` ``ftn_idim`` 
+
+``.DIM`` ``2`` ``R`` ``R`` ``DIM`` ``ftn_dim`` 
+
+``DDIM`` ``2`` ``D`` ``D`` ``DDIM`` ``ftn_ddim`` 
+
+``QDIM`` ``2`` ``Q`` ``Q`` ``QDIM`` ``ftn_qdim`` 
+
+``IMOD`` ``2`` ``SI`` ``SI`` ``MOD`` ``ftn_imod`` 
+
+``JMOD`` ``2`` ``I`` ``I`` ``MOD`` ``ftn_mod`` 
+
+``=KMOD`` ``2`` ``I8`` ``I8`` ``KMOD`` ``ftn_kmod`` 
+
+``.MOD`` ``2`` ``I`` ``I`` ``MOD`` ``ftn_mod`` 
+
+``AMOD`` ``2`` ``R`` ``R`` ``AMOD`` ``ftn_amod`` 
+
+``DMOD`` ``2`` ``D`` ``D`` ``DMOD`` ``ftn_dmod`` 
+
+``IISIGN`` ``2`` ``SI`` ``SI`` ``ISIGN`` ``ftn_iisign`` 
+
+``JISIGN`` ``2`` ``I`` ``I`` ``ISIGN`` ``ftn_isign`` 
+
+``=KISIGN`` ``2`` ``I8`` ``I8`` ``KSIGN`` ``ftn_kisign`` 
+
+``ISIGN`` ``2`` ``I`` ``I`` ``ISIGN`` ``ftn_isign`` 
+
+``.SIGN`` ``2`` ``R`` ``R`` ``SIGN`` ``ftn_sign`` 
+
+``DSIGN`` ``2`` ``D`` ``D`` ``DSIGN`` ``ftn_dsign`` 
+
+``QSIGN`` ``2`` ``Q`` ``Q`` ``QSIGN`` ``ftn_qsign`` 
+
+``IIAND`` ``2`` ``SI`` ``SI`` ``AND`` ``-`` 
+
+``JIAND`` ``2`` ``I`` ``I`` ``AND`` ``-`` 
+
+``=.KIAND`` ``2`` ``I8`` ``I8`` ``KAND`` ``-`` 
+
+``IIOR`` ``2`` ``SI`` ``SI`` ``OR`` ``-`` 
+
+``JIOR`` ``2`` ``I`` ``I`` ``OR`` ``-`` 
+
+``=.KIOR`` ``2`` ``I8`` ``I8`` ``KOR`` ``-`` 
+
+``IIEOR`` ``2`` ``SI`` ``SI`` ``XOR`` ``-`` 
+
+``JIEOR`` ``2`` ``I`` ``I`` ``XOR`` ``-`` 
+
+``=.KIEOR`` ``2`` ``I8`` ``I8`` ``KXOR`` ``-`` 
+
+``INOT`` ``1`` ``SI`` ``SI`` ``NOT`` ``-`` 
+
+``JNOT`` ``1`` ``I`` ``I`` ``NOT`` ``-`` 
+
+``=.KNOT`` ``1`` ``I8`` ``I8`` ``KNOT`` ``-`` 
+
+``IISHFT`` ``2`` ``SI`` ``SI`` ``IISHFT`` ``ftn_iishft`` 
+
+``JISHFT`` ``2`` ``I`` ``I`` ``JISHFT`` ``ftn_jishft`` 
+
+``=KISHFT`` ``2`` ``I8`` ``I8`` ``KISHFT`` ``ftn_kishft`` 
+
+``ICHAR`` ``1`` ``H`` ``I`` ``ICHAR`` 
+
+``LEN`` ``1`` ``H`` ``I`` ``LEN`` ``ftn_str_len`` 
+
+``=KLEN`` ``1`` ``H`` ``I8`` ``KLEN`` ``ftn_str_klen`` 
+
+``INDEX`` ``2`` ``H`` ``I`` ``INDEX`` ``ftn_index`` 
+
+``=KINDEX`` ``2`` ``H`` ``I8`` ``KINDEX`` ``ftn_kindex`` 
+
+``LGE`` ``2`` ``H`` ``L`` ``GE`` 
+
+``LGT`` ``2`` ``H`` ``L`` ``GT`` 
+
+``LLE`` ``2`` ``H`` ``L`` ``LE`` 
+
+``LLT`` ``2`` ``H`` ``L`` ``LT`` 
+
+``LOC`` ``1`` ``A`` ``PI`` ``LOC`` 
+
+``IIBITS`` ``3`` ``SI`` ``SI`` ``IBITS`` ``ftn_iibits`` 
+
+``JIBITS`` ``3`` ``I`` ``I`` ``IBITS`` ``ftn_jibits`` 
+
+``=KIBITS`` ``3`` ``I8`` ``I8`` ``KBITS`` ``ftn_kibits`` 
+
+``IIBSET`` ``2`` ``SI`` ``SI`` ``IBSET`` ``ftn_iibset`` 
+
+``JIBSET`` ``2`` ``I`` ``I`` ``IBSET`` ``ftn_jibset`` 
+
+``=KIBSET`` ``2`` ``I8`` ``I8`` ``KBSET`` ``ftn_kibset`` 
+
+``BITEST`` ``2`` ``SI`` ``SL`` ``BTEST`` ``ftn_bitest`` 
+
+``BJTEST`` ``2`` ``I`` ``L`` ``BTEST`` ``ftn_bjtest`` 
+
+``=BKTEST`` ``2`` ``I8`` ``L8`` ``KBTEST`` ``ftn_bktest`` 
+
+``IIBCLR`` ``2`` ``SI`` ``SI`` ``IBCLR`` ``ftn_iibclr`` 
+
+``JIBCLR`` ``2`` ``I`` ``I`` ``IBCLR`` ``ftn_jibclr`` 
+
+``=KIBCLR`` ``2`` ``I8`` ``I8`` ``KBCLR`` ``ftn_kibclr`` 
+
+``IISHFTC`` ``3`` ``SI`` ``SI`` ``IISHFTC`` ``ftn_iishftc`` 
+
+``JISHFTC`` ``3`` ``I`` ``I`` ``ISHFTC`` ``ftn_jishftc`` 
+
+``=KISHFTC`` ``3`` ``I8`` ``I8`` ``KSHFTC`` ``ftn_kishftc`` 
+
+``.ILSHIFT`` ``2`` ``SI`` ``SI`` ``ULSHIFT`` 
+
+``.JLSHIFT`` ``2`` ``I`` ``I`` ``ULSHIFT`` 
+
+``=.KLSHIFT`` ``2`` ``I8`` ``I8`` ``KULSHIFT`` 
+
+``.IRSHIFT`` ``2`` ``SI`` ``SI`` ``URSHIFT`` 
+
+``.JRSHIFT`` ``2`` ``I`` ``I`` ``URSHIFT`` 
+
+``=.KRSHIFT`` ``2`` ``I8`` ``I8`` ``KURSHIFT`` 
+
+``.2SCH`` ``1`` ``SI`` ``H`` ``CHAR`` 
+
+``.CHAR`` ``1`` ``I`` ``H`` ``CHAR`` 
+
+``=.2KCH`` ``1`` ``I8`` ``H`` ``CHAR`` 
+
+``NCHAR`` ``1`` ``I`` ``K`` ``NCHAR`` Convert integer to Kanji string of length 1.
+
+``NLEN`` ``1`` ``K`` ``I`` ``NLEN`` Compute length of Kanji string.
+
+``NINDEX`` ``2`` ``K`` ``I`` ``NINDEX`` 
+
+``=.LGE8`` ``2`` ``H`` ``L8`` ``GE8`` 
+
+``=.LGT8`` ``2`` ``H`` ``L8`` ``GT8`` 
+
+``=.LLE8`` ``2`` ``H`` ``L8`` ``LE8`` 
+
+``=.LLT8`` ``2`` ``H`` ``L8`` ``LT8`` 
+
+
+=============
+Generic Names
+=============
+
+If a generic intrinsic is related to the ``integer\*8``
+data type, its name in the ``.GN`` line is prefixed with
+an ``=`` (equals sign).
+The utility determines whether on not to include this intrinsic
+in the predefined portion of the symbol table.
+Also, the utility may choose to ignore the entries in the ``i8name``
+fields.
+
+*sptr	name	siname	iname	rname	dname	cname	cdname	i8name	qname   cqname*
+
+``IAND`` ``IIAND`` ``JIAND`` ``-`` ``-`` ``-`` ``-`` ``.KIAND`` 
+
+``IOR`` ``IIOR`` ``JIOR`` ``-`` ``-`` ``-`` ``-`` ``.KIOR`` 
+
+``IEOR`` ``IIEOR`` ``JIEOR`` ``-`` ``-`` ``-`` ``-`` ``.KIEOR`` 
+
+``XOR`` ``IIEOR`` ``JIEOR`` ``-`` ``-`` ``-`` ``-`` ``.KIEOR`` 
+
+``NOT`` ``INOT`` ``JNOT`` ``-`` ``-`` ``-`` ``-`` ``.KNOT`` 
+
+``ISHFT`` ``IISHFT`` ``JISHFT`` ``-`` ``-`` ``-`` ``-`` ``KISHFT`` 
+
+``IINT`` ``.2SI`` ``.2SI`` ``.IINT`` ``IIDINT`` ``.2SI`` ``.2SI`` ``.2SI`` 
+
+``INT`` ``.2I`` ``.2I`` ``.INT`` ``IDINT`` ``.2I`` ``.2I`` ``.2I`` 
+
+``JINT`` ``.2I`` ``.2I`` ``.JINT`` ``JIDINT`` ``.2I`` ``.2I`` ``.2I`` 
+
+``=INT8`` ``.2KI`` ``.2KI`` ``.INT8`` ``.IDINT8`` ``.2KI`` ``.2KI`` ``.2KI`` 
+
+``REAL`` ``FLOATI`` ``.REAL`` ``.2R`` ``SNGL`` ``.2R`` ``.2R`` ``.FLOATK`` 
+
+``DBLE`` ``DFLOTI`` ``DFLOAT`` ``.2D`` ``.2D`` ``.2D`` ``DREAL`` ``.DFLOTK`` 
+
+``CMPLX`` ``.2C`` ``.2C`` ``.2C`` ``.2C`` ``.2C`` ``.2C`` ``.2C`` 
+
+``DCMPLX`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` ``.2CD`` 
+
+``AIMAG`` ``-`` ``-`` ``-`` ``-`` ``.AIMAG`` ``DIMAG`` ``-`` 
+
+``CONJG`` ``-`` ``-`` ``-`` ``-`` ``.CONJG`` ``DCONJG`` ``-`` 
+
+``AINT`` ``-`` ``-`` ``.AINT`` ``DINT`` ``-`` ``-`` ``-`` ``QINT`` 
+
+``ANINT`` ``-`` ``-`` ``.ANINT`` ``DNINT`` ``-`` ``-`` ``-`` ``QANINT`` 
+
+``ININT`` ``-`` ``-`` ``.ININT`` ``IIDNNT`` ``-`` ``-`` ``-`` 
+
+``JNINT`` ``-`` ``-`` ``.JNINT`` ``JIDNNT`` ``-`` ``-`` ``-`` 
+
+``NINT`` ``-`` ``-`` ``.NINT`` ``IDNINT`` ``-`` ``-`` ``-`` ``IQNINT`` 
+
+``=KNINT`` ``-`` ``-`` ``.KNINT`` ``KIDNNT`` ``-`` ``-`` ``-`` ``KIQNNT`` 
+
+``ABS`` ``IIABS`` ``IABS`` ``.ABS`` ``DABS`` ``CABS`` ``CDABS`` ``KIABS`` ``QABS`` ``-`` 
+
+``MOD`` ``IMOD`` ``.MOD`` ``AMOD`` ``DMOD`` ``-`` ``-`` ``KMOD`` 
+
+``SIGN`` ``IISIGN`` ``ISIGN`` ``.SIGN`` ``DSIGN`` ``-`` ``-`` ``KISIGN`` ``QSIGN`` ``-`` 
+
+``DIM`` ``IIDIM`` ``IDIM`` ``.DIM`` ``DDIM`` ``-`` ``-`` ``KIDIM`` ``QDIM`` ``-`` 
+
+``MAX`` ``IMAX0`` ``MAX0`` ``AMAX1`` ``DMAX1`` ``-`` ``-`` ``.KMAX0`` 
+
+``MIN`` ``IMIN0`` ``MIN0`` ``AMIN1`` ``DMIN1`` ``-`` ``-`` ``.KMIN0`` 
+
+``SQRT`` ``-`` ``-`` ``.SQRT`` ``DSQRT`` ``CSQRT`` ``CDSQRT`` ``-`` ``QSQRT`` ``-`` 
+
+``EXP`` ``-`` ``-`` ``.EXP`` ``DEXP`` ``CEXP`` ``CDEXP`` ``-`` ``QEXP`` ``-`` 
+
+``LOG`` ``-`` ``-`` ``ALOG`` ``DLOG`` ``CLOG`` ``CDLOG`` ``-`` ``QLOG`` ``-`` 
+
+``LOG10`` ``-`` ``-`` ``ALOG10`` ``DLOG10`` ``-`` ``-`` ``-`` 
+
+``SIN`` ``-`` ``-`` ``.SIN`` ``DSIN`` ``CSIN`` ``CDSIN`` ``-`` ``QSIN`` ``-`` 
+
+``SIND`` ``-`` ``-`` ``.SIND`` ``DSIND`` ``-`` ``-`` ``-`` ``QSIND`` ``-`` 
+
+``COS`` ``-`` ``-`` ``.COS`` ``DCOS`` ``CCOS`` ``CDCOS`` ``-`` ``QCOS`` ``-`` 
+
+``COSD`` ``-`` ``-`` ``.COSD`` ``DCOSD`` ``-`` ``-`` ``-`` ``QCOSD`` ``-`` 
+
+``TAN`` ``-`` ``-`` ``.TAN`` ``DTAN`` ``-`` ``-`` ``-`` 
+
+``TAND`` ``-`` ``-`` ``.TAND`` ``DTAND`` ``-`` ``-`` ``-`` ``QTAND`` ``-`` 
+
+``ASIN`` ``-`` ``-`` ``.ASIN`` ``DASIN`` ``-`` ``-`` ``-`` 
+
+``ASIND`` ``-`` ``-`` ``.ASIND`` ``DASIND`` ``-`` ``-`` ``-`` ``QASIND`` ``-`` 
+
+``ACOS`` ``-`` ``-`` ``.ACOS`` ``DACOS`` ``-`` ``-`` ``-`` ``QACOS`` ``-`` 
+
+``ACOSD`` ``-`` ``-`` ``.ACOSD`` ``DACOSD`` ``-`` ``-`` ``-`` ``QACOSD`` ``-`` 
+
+``ATAN`` ``-`` ``-`` ``.ATAN`` ``DATAN`` ``-`` ``-`` ``-`` ``QATAN`` ``-`` 
+
+``ATAND`` ``-`` ``-`` ``.ATAND`` ``DATAND`` ``-`` ``-`` ``-`` ``QATAND`` ``-`` 
+
+``ATAN2`` ``-`` ``-`` ``.ATAN2`` ``DATAN2`` ``-`` ``-`` ``-`` ``QATAN2`` ``-`` 
+
+``ATAN2D`` ``-`` ``-`` ``.ATAN2D`` ``DATAN2D`` ``-`` ``-`` ``-`` ``QATAN2D`` ``-`` 
+
+``SINH`` ``-`` ``-`` ``.SINH`` ``DSINH`` ``-`` ``-`` ``-`` 
+
+``COSH`` ``-`` ``-`` ``.COSH`` ``DCOSH`` ``-`` ``-`` ``-`` 
+
+``TANH`` ``-`` ``-`` ``.TANH`` ``DTANH`` ``-`` ``-`` ``-`` 
+
+``IBITS`` ``IIBITS`` ``JIBITS`` ``-`` ``-`` ``-`` ``-`` ``KIBITS`` 
+
+``IBSET`` ``IIBSET`` ``JIBSET`` ``-`` ``-`` ``-`` ``-`` ``KIBSET`` 
+
+``BTEST`` ``BITEST`` ``BJTEST`` ``-`` ``-`` ``-`` ``-`` ``BKTEST`` 
+
+``IBCLR`` ``IIBCLR`` ``JIBCLR`` ``-`` ``-`` ``-`` ``-`` ``KIBCLR`` 
+
+``ISHFTC`` ``IISHFTC`` ``JISHFTC`` ``-`` ``-`` ``-`` ``-`` ``KISHFTC`` 
+
+``LSHIFT`` ``.ILSHIFT`` ``.JLSHIFT`` ``-`` ``-`` ``-`` ``-`` ``.KLSHIFT`` 
+
+``RSHIFT`` ``.IRSHIFT`` ``.JRSHIFT`` ``-`` ``-`` ``-`` ``-`` ``.KRSHIFT`` 
+
+``CHAR`` ``.2SCH`` ``.CHAR`` ``-`` ``-`` ``-`` ``-`` ``.2KCH`` 
+
+
+=================
+Predeclared Names
+=================
+*sptr	pd	name	call	type*
+
+``DATE`` ``subroutine`` -
+
+   .. line-block::
+       .cw "    CALL DATE( buf )"
+
+
+   Returns the current date in ``buf``, which is
+   a 9-byte variable, array, array element, or character substring.
+   The date is returned as a 9-byte ASCII character string in
+   the form ``dd-mmm-yy``.
+
+``EXIT`` ``subroutine`` -
+   The CALL EXIT statement; optional argument is type integer.
+
+``IDATE`` ``subroutine`` -
+
+   .. line-block::
+       .cw "    CALL IDATE( i, j, k )"
+
+
+   Returns three integer values representing the current month,
+   day, and year in ``i``, ``j``, and ``k``,
+   respectively.
+   All arguments must be integer\*2 variables or array elements or
+   integer\*4 variables or array elements.
+
+``TIME`` ``subroutine`` -
+
+   .. line-block::
+       .cw "    CALL TIME( buf )"
+
+
+   Returns the current system time in ``buf``, which is an
+   8-byte variable, array, array element, or character
+   substring.
+   The time is returned as an 8-byte ASCII character string of
+   the form ``hh:mm:ss``.
+
+``MVBITS`` ``subroutine`` -
+
+   .. line-block::
+       .cw "    CALL MVBITS(a1, a2, a3, a4, a5)"
+
+
+   Transfers ``a3`` bits beginning at bit ``a2`` of
+   ``a1`` to ``a4`` beginning at bit ``a5``.
+   All arguments are either integer\*2 or integer\*4;
+   ``a4`` must be a variable or array element.
+   Translates to a call to either ``ftn_imvbits`` or
+   ``ftn_jmvbits``.
+
+``ZEXT`` ``generic`` scalar
+   The ZEXT intrinsic; result is integer\*4, arg is any logical or integer.
+
+``IZEXT`` ``specific`` scalar
+   The IZEXT intrinsic; result is integer\*2, arg is a logical\*1, logical\*2,
+   or integer\*2.
+
+``JZEXT`` ``specific`` scalar
+   The JZEXT intrinsic; result is integer\*4, arg is any logical or integer.
+
+``AND`` ``generic`` scalar
+
+``COMPL`` ``generic`` scalar
+
+``EQV`` ``generic`` scalar
+
+``NEQV`` ``generic`` scalar
+
+``OR`` ``generic`` scalar
+
+``RAN`` ``specific`` scalar
+   The ``RAN`` function is a general random number generator
+   which requires a single argument which is either an integer\*4 variable
+   or array element.
+
+``SECNDS`` ``specific`` scalar
+   The ``SECNDS`` function returns the system time in seconds
+   as a single-precision (double-precision) value minus the value
+   of its single-precision (double-precision) argument.
+
+``SHIFT`` ``specific`` scalar

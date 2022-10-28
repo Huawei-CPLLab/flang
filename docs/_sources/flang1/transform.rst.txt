@@ -1,0 +1,282 @@
+
+
+***********
+Transformer
+***********
+
+
+========
+Overview
+========
+
+The transformer module performs a number of manipulations on the AST
+and on the Symbol Table.  The object of these manipulations is to
+place the internal data structures in a canonical form that is easy
+to process by later phases.
+
+The following transformations are performed on the AST:
+
+*  Canonicalize alignment and distribution directives and create symbols
+   for descriptors.
+
+*  Transform array assignments and WHERE statements into FORALL statements.
+
+*  Canonicalize FORALL statements
+
+*  Rewrite arguments of subroutines, array-valued intrinsics and functions,
+   and various intrinsics.
+
+*  Perform transformations on sequential variables and common blocks.
+
+The Symbol Table and AST are modified by this module. Statements are
+inserted and deleted, and new symbols created.
+
+
+===============
+Data Structures
+===============
+
+
+----------------------
+Global Data Structures
+----------------------
+
+*Symbol Table* --- New symbols are created for the following data items:
+
+*  Alignment descriptors and their pointers.
+
+Each aligned array is assigned
+an alignment descriptor, which is a one-dimensional integer array, with
+a bound of 1. The
+alignment descriptor is created as a based variable, and a pointer for
+the alignment descriptor is created.  The various variables are accessed
+as follows: given a symbol pointer
+``sptr``
+for an aligned array A, the alignment descriptor (array) for A is accessed
+via
+``DESCRG(sptr)``,
+and the pointer to the alignment descriptor (as for any based variable)
+is accessed via
+``MIDNUMG(DESCRG(sptr))``.
+
+*  Section descriptors and their pointers.
+
+A section descriptor is created for each aligned array; the descriptor will
+describe the entire array. The descriptor is pointed to by
+``DESCRG(sptr)``.
+
+*  Processor descriptors and their pointers.
+
+Each
+``ST_PROCESSOR``
+symbol has a descriptor, created in the same way as alignment descriptors,
+and referenced via
+``DESCRG``.
+
+*  Template descriptors and their pointers.
+   ``ST_TEMPLATE``
+   symbols receive descriptors in the same way as
+   ``ST_PROCESSOR``
+   symbols.
+
+*  Internal
+   ``ST_PROCESSOR``
+   and
+   ``ST_TEMPLATE``
+   symbols.
+
+For arrays directly distributed onto processor arrangements,
+templates are created. For distributed arrays and templates with no
+explicit processor arrangement, processor arrangements are created.
+These use internal compiler-created names but are otherwise the same
+as user-defined templates and processors.
+
+*AST* --- 
+The AST is modified by insertion and deletion of statements. The modification
+is described in more detail in the section on processing.
+
+
+---------------------
+Local Data Structures
+---------------------
+
+There are no significant local data structures in the transform module.
+
+
+==========
+Processing
+==========
+
+
+--------
+Overview
+--------
+
+The main processing function is
+``transform()``.
+It performs canonical alignment transformations, rewrites foralls containing
+transformational intrinsics, rewrites block WHERE statements,
+rewrites subroutine and intrinsic calls, converts array assignments
+and WHERE statements into foralls, and
+foralls into canonical form.  Also, descriptor symbols are created.
+
+The processing for the transform module is performed
+in two files:
+``transfrm.c``and
+``func.c``.
+
+
+---------------------------
+Transformational Intrinsics
+---------------------------
+
+``rewrite_forall_intrinsic``
+removes transformational intrinsics from forall statements.
+For example,
+
+.. code-block:: none
+
+   forall (i=1:n, j=1:n)
+       a(i,j) = a(i,j) + sum(b(i,:)\*c(:,j))
+
+is transformed into:
+
+.. code-block:: none
+
+   do i = 1,n
+      do j = 1,n
+         temp(i,j) = sum(b(i,:) \* c(:,j)
+      enddo
+   enddo
+   forall (i=1:n, j=1:n)
+      a(i,j) = a(i,j) + temp(i,j)
+
+
+
+------------
+Block Wheres
+------------
+``rewrite_block_where``
+converts block WHERE constructs into single-statement
+WHEREs.  For example,
+
+.. code-block:: none
+
+   WHERE (a .gt. 0)
+       a = 12
+       b = a / 13
+   ENDWHERE
+
+is transformed into:
+
+.. code-block:: none
+
+   temp = a .gt. 0
+   WHERE (temp) a = 12
+   WHERE (temp) b = a / 13
+
+Note that the temporary is always created; this could be avoided in many
+cases some analysis; for example, if no variable referenced in the mask
+expression is assigned to in the block, then no temporary is required.
+
+
+--------------------
+Subroutine Arguments
+--------------------
+``rewrite_calls()``
+is the most complex part of the transform module. The file
+``func.c``
+contains this function. It is responsible for
+three tasks:
+
+#. Rewrite array expression arguments to functions to use temporaries. For
+   example,
+
+   .. code-block:: none
+
+      call sub(a(1:n:2) + b(1:m:3))
+
+   becomes
+
+   .. code-block:: none
+
+      allocate temp(1:n:2)
+      temp = a(1:n:2) + b(1:m:3)
+
+
+#. Rewrite expressions using array-valued functions, and the calls to those
+   functions. This involves creating a temporary to hold the return value
+   of the function. This is done currently only for intrinsic functions.
+
+#. Rewrite intrinsics. This is the most important part of
+   ``rewrite_calls.``
+
+Intrinsic rewriting is performed on transformational intrinsics, as well
+as a number of Fortran intrinsics. Transformational intrinsics are
+turned into calls to runtime support functions.
+Here is an example:
+
+Consider the statement:
+
+.. code-block:: none
+
+   a = SUM(b \* c, dim=2, mask=a .ne. 0) + d
+
+First, a temporary is created to hold the expression
+``b\*c``.
+This is done as part of the array expression argument processing. A temporary
+is also created for the mask expression. Then, the function
+``rewrite_func_ast``
+is called. It determines that the appropriate runtime call is
+``ftn_sum``.
+A call to this function is generated. Since the result of the intrinsic
+is used in an expression, a temporary to hold the return value is also
+generated.
+
+The generated code looks like:
+
+.. code-block:: none
+
+   allocate temp1
+   temp1 = b\*c
+   allocate temp2
+   temp2 = a .ne. 0
+   allocate temp3
+   call ftn_sum(temp3, temp1, dim, temp2)
+   a = temp3
+   deallocate temp3
+   deallocate temp2
+   deallocate temp1
+
+
+
+--------------------
+Rewrite Into Foralls
+--------------------
+The function
+``rewrite_into_forall()``
+converts array assignments and WHERE statements into forall statements.
+This is relatively straightforward; special care must be taken for
+array-valued subscripts. Also, an attempt is made to generate the forall
+so that later DO-loops will be in column major order.
+
+
+---------------
+Rewrite Foralls
+---------------
+``rewrite_forall``
+creates temporaries for forall statements that would have a dependence
+if directly scalarized (this functionality will be moved to a later
+phase). It also handles vector foralls, such as:
+
+.. code-block:: none
+
+   forall (i=1:n) a(i,:) = b(i,:)
+
+These are converted into foralls with multiple indices:
+
+.. code-block:: none
+
+   forall (i=1:n,j=1:m) a(i,j) = b(i,j)
+
+This should probably be part of an earlier phase.

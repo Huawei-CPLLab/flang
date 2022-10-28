@@ -1,0 +1,963 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Maintenance Info &#8212; Flang 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Other Compiler Switches" href="xflag.html" />
+    <link rel="prev" title="Error Reporting Utils" href="error.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
+          <span>Flang 1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Maintenance Info</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="error.html">Error Reporting Utils</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="xflag.html">Other Compiler Switches</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="maintenance-info">
+<h1>Maintenance Info<a class="headerlink" href="#maintenance-info" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="getitem-areas">
+<h2>Getitem Areas<a class="headerlink" href="#getitem-areas" title="Permalink to this headline">¶</a></h2>
+<p>The functions
+<code class="docutils literal notranslate"><span class="pre">getitem</span></code>
+and
+<code class="docutils literal notranslate"><span class="pre">freearea</span></code>
+(in
+<em>salloc.c</em>)
+are used to allocate
+small pieces of dynamic memory and free them in a single operation.
+There are
+<code class="docutils literal notranslate"><span class="pre">ANUM</span></code>
+(see definition of <code class="docutils literal notranslate"><span class="pre">ANUM</span></code> in salloc.c)
+“areas”,
+numbered 0 thru <code class="docutils literal notranslate"><span class="pre">ANUM-1</span></code>, which can be used.
+They are used within the compilers as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="18%" />
+<col width="77%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Area</td>
+<td>Names</td>
+<td>Use/Lifetime</td>
+</tr>
+<tr class="row-even"><td>0</td>
+<td>none</td>
+<td>item lists (FTN). Semantic analyzer. Freed during semant (FTN).</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>none</td>
+<td>DOINFO records (FTN).  Freed at end of semant.</td>
+</tr>
+<tr class="row-even"><td>^</td>
+<td>none</td>
+<td>Entry/exit argument processing by the expander (FTN).
+Freed at end of expand.</td>
+</tr>
+<tr class="row-odd"><td>^</td>
+<td>none</td>
+<td>Predecessor lists.  Scheduler.  Freed after each block.</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>none</td>
+<td>Statement function, variable format expression, and adjustable array
+info (FTN); freed at end of semant.
+Statement function, [NO]SEQUENCE info, and access info (Fortran);
+freed at end of semant.</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>none</td>
+<td>Constant tree saved until end of program unit (FTN).
+Semantic Analyzer.</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>none</td>
+<td>Constant tree saved and freed at end of semant (FTN).
+Semantic Analyzer.</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>none</td>
+<td>Equivalence group lists (FTN). Freed at end of semant.</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>none</td>
+<td>Temporary filenames and pathnames space. Freed at end of compilation.</td>
+</tr>
+<tr class="row-odd"><td>^</td>
+<td>PERM_AREA</td>
+<td>Permanent area, freed at the end of compilation.</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>TRANS_AREA</td>
+<td>Area used by the Fortran transformer.</td>
+</tr>
+<tr class="row-even"><td>11</td>
+<td>USE_AREA</td>
+<td>Fortran USE statement processing; lifetime is during processing of a block
+of USE statements (semant); freed by semant after immediately after all
+USE statements have been processed.</td>
+</tr>
+<tr class="row-odd"><td>^</td>
+<td>FORALL_AREA</td>
+<td>For converting foralls to do’s during
+the comm and outconv Fortran passes.</td>
+</tr>
+<tr class="row-even"><td>12</td>
+<td>none</td>
+<td>pragma/directives</td>
+</tr>
+<tr class="row-odd"><td>13</td>
+<td>none</td>
+<td>pragma/directives</td>
+</tr>
+<tr class="row-even"><td>14</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-odd"><td>15</td>
+<td>none</td>
+<td>Fortran
+Constant trees and initializer variable lists for dinits,
+based common variables, equivalence group lists, and do loop variables,
+Created during semant and
+saved until end of program unit.</td>
+</tr>
+<tr class="row-even"><td>16</td>
+<td>DEBUG_MODULE_AREA</td>
+<td>F90 backend only, module debug info</td>
+</tr>
+<tr class="row-odd"><td>16</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-even"><td>17</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-odd"><td>18</td>
+<td>MOD_AREA</td>
+<td>Fortran export/import processing: used to collect symbols, etc. to be
+written to the interface file or read from the interface;
+lifetime is an invocation of export() or import().</td>
+</tr>
+<tr class="row-even"><td>19</td>
+<td>APPEND_AREA</td>
+<td>Fortran semantic processing of a module contained subprogram; used to collect
+the information associated with a contained subprogram which is to be appended
+to the module file; lifetime is during between mod_add_subprogram() and
+mod_end_subprogram().</td>
+</tr>
+<tr class="row-odd"><td>20</td>
+<td>DWF_CU_AREA</td>
+<td>Area needed to store dwarf information for an entire compilation unit.</td>
+</tr>
+<tr class="row-even"><td>21</td>
+<td>DWF_FUNC_AREA</td>
+<td>Area needed to store dwarf information for a function.</td>
+</tr>
+<tr class="row-odd"><td>22</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-even"><td>23</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-odd"><td>24</td>
+<td>CCFFAREA</td>
+<td>Area to store CCFF messages before outputting to .CCFF section.</td>
+</tr>
+<tr class="row-even"><td>25</td>
+<td>LLVM_LONGTERM_AREA</td>
+<td>Area for LLVM code generation. Remains active across compilation
+of all routines.</td>
+</tr>
+<tr class="row-odd"><td>26</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-even"><td>27</td>
+<td>none</td>
+<td>reserved</td>
+</tr>
+<tr class="row-odd"><td>28-29</td>
+<td>currently unused</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="compiler-created-symbols">
+<h2>Compiler Created Symbols<a class="headerlink" href="#compiler-created-symbols" title="Permalink to this headline">¶</a></h2>
+<p>Compiler created symbols are generally allocated by calling
+the function
+<code class="docutils literal notranslate"><span class="pre">getccsym</span></code>
+(in
+<em>symtab.c</em>) and
+<code class="docutils literal notranslate"><span class="pre">getccsym_sc</span></code>
+(in
+<em>symtab.c</em>).
+It forms a name of the form
+<code class="docutils literal notranslate"><span class="pre">'.&lt;letter&gt;&lt;4``digits&gt;'</span>
+<span class="pre">and</span> <span class="pre">calls</span>
+<span class="pre">``getsym</span></code>
+to enter the symbol. Below are the prototypes for the
+<code class="docutils literal notranslate"><span class="pre">getccsym</span></code>
+and
+<code class="docutils literal notranslate"><span class="pre">getccsym_sc</span></code>
+functions:</p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getccsym(int</span> <span class="pre">letter,</span> <span class="pre">int</span> <span class="pre">n,</span> <span class="pre">int</span> <span class="pre">stype);</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getccsym_sc(int</span> <span class="pre">letter,</span> <span class="pre">int</span> <span class="pre">n,</span> <span class="pre">int</span> <span class="pre">stype,</span> <span class="pre">int</span> <span class="pre">sc);</span></code></p>
+<p>The following describes the function arguments:</p>
+<p><code class="docutils literal notranslate"><span class="pre">letter</span></code>
+- the character specifying the prefix letter of temporary name</p>
+<p><code class="docutils literal notranslate"><span class="pre">n</span></code>
+- The number (represented as 4 digits) appended onto the temporary name</p>
+<p><code class="docutils literal notranslate"><span class="pre">stype</span></code>
+- the symbol table type (ST type) to assign to the temporary</p>
+<p><code class="docutils literal notranslate"><span class="pre">sc</span></code>
+- (for
+<code class="docutils literal notranslate"><span class="pre">getccsym_sc()</span></code>
+only) the storage class to assign to the temporary</p>
+<p>The following table shows the letters used within the compilers
+for compiler created symbols:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="10%" />
+<col width="16%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Letter</td>
+<td>Language</td>
+<td>Index</td>
+<td>Use</td>
+</tr>
+<tr class="row-even"><td colspan="4">_</td>
+</tr>
+<tr class="row-odd"><td>A</td>
+<td>ftn,fe90</td>
+<td>counter</td>
+<td>array bounds temp</td>
+</tr>
+<tr class="row-even"><td>B</td>
+<td>all</td>
+<td>stb.lbavail</td>
+<td>compiler created label</td>
+</tr>
+<tr class="row-odd"><td>C</td>
+<td>fe90</td>
+<td>counter</td>
+<td>scalar temporary</td>
+</tr>
+<tr class="row-even"><td>D</td>
+<td>fe90</td>
+<td>counter</td>
+<td>descriptor actual argument for intrinsics (semfunc).</td>
+</tr>
+<tr class="row-odd"><td>E</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>F</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>G</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>H</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>I</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>J</td>
+<td>f90</td>
+<td>expb.swtcnt</td>
+<td>switch array (exputil)</td>
+</tr>
+<tr class="row-odd"><td>K</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>L</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>M</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>N</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>O</td>
+<td>fe90</td>
+<td>counter</td>
+<td>type descriptor dummy arguments (semfin)</td>
+</tr>
+<tr class="row-even"><td>P</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>Q</td>
+<td>C,ftn,f90</td>
+<td>expb.gentmps</td>
+<td>Expander miscellaneous temps</td>
+</tr>
+<tr class="row-even"><td>R</td>
+<td>C,ftn,f90</td>
+<td>expb.retcnt</td>
+<td>return label</td>
+</tr>
+<tr class="row-odd"><td>S</td>
+<td>C</td>
+<td>stack_no</td>
+<td>terminal stack</td>
+</tr>
+<tr class="row-even"><td>S</td>
+<td>f90</td>
+<td>gbl.currsub</td>
+<td>display temporary</td>
+</tr>
+<tr class="row-odd"><td>T</td>
+<td>ftn,f90</td>
+<td>expb.chartmps</td>
+<td>char temp</td>
+</tr>
+<tr class="row-even"><td>U</td>
+<td>ftn,f90</td>
+<td>expb.chardtmps</td>
+<td>char desc or char length for CHARACTER*(*) dummy</td>
+</tr>
+<tr class="row-odd"><td>U</td>
+<td>ftn,f90</td>
+<td>arg</td>
+<td>char desc or char length for host CHARACTER*(*) dummy</td>
+</tr>
+<tr class="row-even"><td>V</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>W</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>X</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>Y</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>Z</td>
+<td>ftn,fe90</td>
+<td>sptr</td>
+<td>associated pointer variable for non-POINTER allocatable array</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="11%" />
+<col width="19%" />
+<col width="63%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Letter</td>
+<td>Language</td>
+<td>Index</td>
+<td>Use</td>
+</tr>
+<tr class="row-even"><td colspan="4">_</td>
+</tr>
+<tr class="row-odd"><td>a</td>
+<td>C,ftn,f90</td>
+<td>expb.arglcnt.next</td>
+<td>array temp for an argument list</td>
+</tr>
+<tr class="row-even"><td>b</td>
+<td>C,fe90</td>
+<td>sem.blksymnum</td>
+<td>un-named block name</td>
+</tr>
+<tr class="row-odd"><td>c</td>
+<td>C,ftn,f90</td>
+<td>sptr</td>
+<td>temp representing address of an argument</td>
+</tr>
+<tr class="row-even"><td>d</td>
+<td>fe90</td>
+<td>sem.dtemps</td>
+<td>various misc. temporaries</td>
+</tr>
+<tr class="row-odd"><td>e</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>f</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>g</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>h</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>i</td>
+<td>C,ftn,fe90</td>
+<td>sem.itemps</td>
+<td>semant compiler temporary (not shared across statements)</td>
+</tr>
+<tr class="row-even"><td>j</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>not used</td>
+</tr>
+<tr class="row-odd"><td>k</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>l</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>m</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>n</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>o</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>p</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>not used</td>
+</tr>
+<tr class="row-odd"><td>q</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>r</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>s</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>t</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>u</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>v</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>w</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>x</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-odd"><td>y</td>
+<td>&#160;</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>z</td>
+<td>ftn,f90</td>
+<td>sptr</td>
+<td>base of allocatable common</td>
+</tr>
+</tbody>
+</table>
+<p>Compiler created symbols may also be created by calling
+<code class="docutils literal notranslate"><span class="pre">getccssym</span></code>
+(in
+<em>symtab.c</em>)
+which uses a string instead of a letter as a prefix.
+<code class="docutils literal notranslate"><span class="pre">getccssym</span></code>
+forms a name of the form
+<code class="docutils literal notranslate"><span class="pre">'.&lt;prefix&gt;&lt;4``digits&gt;'</span>
+<span class="pre">and</span> <span class="pre">calls</span>
+<span class="pre">``getsym</span></code>
+to enter the symbol.</p>
+<p>Below is the prototype for the
+<code class="docutils literal notranslate"><span class="pre">getccssym</span></code>
+function:</p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getccssym(char</span> <span class="pre">\*pfx,</span> <span class="pre">int</span> <span class="pre">n,</span> <span class="pre">int</span> <span class="pre">stype);</span></code></p>
+<p>The following describes the arguments:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pfx</span></code>
+- the prefix string for the temporary</p>
+<p><code class="docutils literal notranslate"><span class="pre">n</span></code>
+- the number (integer represented with 4 digits) added after the prefix string</p>
+<p><code class="docutils literal notranslate"><span class="pre">stype</span></code>
+- the symbol table type (ST type) to assign to the temporary.</p>
+<p>The following table shows the prefixes used within the compilers:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="13%" />
+<col width="78%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Prefix</td>
+<td>Language</td>
+<td>Use</td>
+</tr>
+<tr class="row-even"><td colspan="3">_</td>
+</tr>
+<tr class="row-odd"><td>dX</td>
+<td>f90</td>
+<td>do index temp</td>
+</tr>
+<tr class="row-even"><td>dY</td>
+<td>f90</td>
+<td>do end temp</td>
+</tr>
+<tr class="row-odd"><td>de</td>
+<td>f90</td>
+<td>OpenMP doend temp</td>
+</tr>
+<tr class="row-even"><td>di</td>
+<td>f90</td>
+<td>do increment temp</td>
+</tr>
+<tr class="row-odd"><td>dr</td>
+<td>f90</td>
+<td>OpenMP runtime-scheduler temp</td>
+</tr>
+<tr class="row-even"><td>ds</td>
+<td>f90</td>
+<td>do step temp for OpenMP block-cyclic loops</td>
+</tr>
+<tr class="row-odd"><td>dy</td>
+<td>f90</td>
+<td>do end temp for OpenMP block-cyclic loops</td>
+</tr>
+<tr class="row-even"><td>sr</td>
+<td>all</td>
+<td>scalar temp for scalar replacement</td>
+</tr>
+<tr class="row-odd"><td>wi</td>
+<td>all</td>
+<td>wider (int) temp for replacing narrow int scalars</td>
+</tr>
+</tbody>
+</table>
+<p>For the Fortran compiler, compiler-created temporaries which are user-visible
+are allocate by calling the functions
+<code class="docutils literal notranslate"><span class="pre">getcctmp</span></code>
+(in
+<em>symtab.c</em>).
+and
+<code class="docutils literal notranslate"><span class="pre">getcctmp_sc</span></code>
+(in
+<em>symtab.c</em>).
+It forms a name of the form
+<code class="docutils literal notranslate"><span class="pre">'z_&lt;letter&gt;_&lt;digits&gt;'</span></code>
+and calls
+<code class="docutils literal notranslate"><span class="pre">getsym</span></code>
+to enter the symbol.
+The number represented by <code class="docutils literal notranslate"><span class="pre">&lt;digits&gt;</span></code> ranges from 0 to 9999.
+Only lower case letters are allowed.</p>
+<p>Below are the prototypes for the
+<code class="docutils literal notranslate"><span class="pre">getcctmp</span></code>
+and
+<code class="docutils literal notranslate"><span class="pre">getcctmp_sc</span></code>
+functions:</p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getcctmp(int</span> <span class="pre">letter,</span> <span class="pre">int</span> <span class="pre">n,</span> <span class="pre">int</span> <span class="pre">stype,</span> <span class="pre">int</span> <span class="pre">dtype);</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getcctmp_sc(int</span> <span class="pre">letter,</span> <span class="pre">int</span> <span class="pre">n,</span> <span class="pre">int</span> <span class="pre">stype,</span> <span class="pre">int</span> <span class="pre">dtype,</span> <span class="pre">int</span> <span class="pre">sc);</span></code></p>
+<p>The following describes the function arguments:</p>
+<p><code class="docutils literal notranslate"><span class="pre">letter</span></code>
+- the character specifying the prefix letter of temporary name</p>
+<p><code class="docutils literal notranslate"><span class="pre">n</span></code>
+- The number (an integer) appended onto the temporary name</p>
+<p><code class="docutils literal notranslate"><span class="pre">stype</span></code>
+- the symbol table type (ST type) to assign to the temporary</p>
+<p><code class="docutils literal notranslate"><span class="pre">sc</span></code>
+- (for
+<code class="docutils literal notranslate"><span class="pre">getcctmp_sc()</span></code>
+only) the storage class to assign to the temporary
+Note: for
+<code class="docutils literal notranslate"><span class="pre">getcctmp()</span></code>
+, the storage class of the temporary is
+<code class="docutils literal notranslate"><span class="pre">SC_LOCAL</span></code></p>
+<p>The following table shows the letters used within the compilers
+for compiler created temporaries:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="9%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Letter</td>
+<td>Language</td>
+<td>Use</td>
+</tr>
+<tr class="row-even"><td colspan="3">_</td>
+</tr>
+<tr class="row-odd"><td>a</td>
+<td>Fortran</td>
+<td>array temporaries</td>
+</tr>
+<tr class="row-even"><td>b</td>
+<td>Fortran</td>
+<td>array bounds temporaries</td>
+</tr>
+<tr class="row-odd"><td>c</td>
+<td>Fortran</td>
+<td>array constant temporaries</td>
+</tr>
+<tr class="row-even"><td>d</td>
+<td>Fortran</td>
+<td>bound of the shape of the dim specified in an intrinsic; misc. temporaries</td>
+</tr>
+<tr class="row-odd"><td>e</td>
+<td>Fortran</td>
+<td>shared array bounds temporaries; sharing is based on the
+value (ast) of the bounds expression.</td>
+</tr>
+<tr class="row-even"><td>f</td>
+<td>Fortran</td>
+<td>array-valued function</td>
+</tr>
+<tr class="row-odd"><td>g</td>
+<td colspan="2">reserved</td>
+</tr>
+<tr class="row-even"><td>h</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-odd"><td>i</td>
+<td>Fortran</td>
+<td>scalar non-character temps for semant</td>
+</tr>
+<tr class="row-even"><td>j</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-odd"><td>k</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-even"><td>l</td>
+<td>Fortran</td>
+<td>label variable temporaries</td>
+</tr>
+<tr class="row-odd"><td>m</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-even"><td>n</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-odd"><td>o</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-even"><td>p</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-odd"><td>q</td>
+<td colspan="2">quad temps</td>
+</tr>
+<tr class="row-even"><td>r</td>
+<td>Fortran</td>
+<td>redundss shared temps base on the ast value</td>
+</tr>
+<tr class="row-odd"><td>s</td>
+<td>Fortran</td>
+<td>scalar character temps for semant</td>
+</tr>
+<tr class="row-even"><td>t</td>
+<td>Fortran</td>
+<td>scalar character temps for semant created for a character contstant
+which is substring</td>
+</tr>
+<tr class="row-odd"><td>u</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-even"><td>v</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-odd"><td>w</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-even"><td>x</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-odd"><td>y</td>
+<td colspan="2">not used</td>
+</tr>
+<tr class="row-even"><td>z</td>
+<td colspan="2">not used</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="symtab-utility">
+<h2>SYMTAB Utility<a class="headerlink" href="#symtab-utility" title="Permalink to this headline">¶</a></h2>
+<p>The SYMTAB utility reads a specially formatted troff document, a
+symbol table include file, and a symbol table initialization file.
+It writes
+another troff document that will become the symbol table chapter in the
+maintenance document,
+the include file for the symbol table in the compiler source, and
+a file of data definitions for the compiler source.</p>
+<div class="section" id="troff-document">
+<h3>Troff Document<a class="headerlink" href="#troff-document" title="Permalink to this headline">¶</a></h3>
+<p>The symbol table troff document consists of text interspersed with macros.
+The symbol table macros have the following meanings:</p>
+<dl class="docutils">
+<dt>.OC B width</dt>
+<dd>Begin overloading class definitions.
+<em>width</em>
+is the width of the widest overloading class name plus a little (for
+.ip).</dd>
+<dt>.OC name</dt>
+<dd>Name of an overloading class.  Should be followed by descriptive text.</dd>
+<dt>.SF B width</dt>
+<dd>Begin shared field definitions.
+<em>width</em>
+is the width of the hanging tag.</dd>
+<dt>.SF name [where]</dt>
+<dd>Name of a shared field.
+<em>where</em>
+is the location of the field in the form
+<em>wordspec[:fieldspec]</em>
+where
+<em>wordspec</em>
+is w*n* meaning word
+<em>n</em>,
+and
+<em>fieldspec</em>
+is h*n* meaning halfword
+<em>n</em>,
+b*n* meaning byte
+<em>n</em>,
+or b*n-m* meaning bytes
+<em>m-n</em>
+(used for flags only).
+Halfwords and
+bytes are numbered left to right starting with 1.</dd>
+</dl>
+<ul class="simple">
+<li>The field name
+“flags”
+is special.  It is the field that contains the flag values (single bits).
+For this field alone,
+a range of bytes or halfwords can be specified using (mi.  The
+.FL macro specifies values for this field.</li>
+</ul>
+<dl class="docutils">
+<dt>.ST B width</dt>
+<dd>Begin symbol type definitions.</dd>
+<dt>.ST E</dt>
+<dd>End symbol type definitions.</dd>
+<dt>.ST name</dt>
+<dd>Specify a symbol type definition.
+<em>name</em>
+is the symbol type name.</dd>
+<dt>.Sc B width</dt>
+<dd>Begin storage class definitions.</dd>
+<dt>.Sc E</dt>
+<dd>End storage class definitions.</dd>
+<dt>.Sc name</dt>
+<dd>Specify a storage class definition.
+<em>name</em>
+is the storage class name.</dd>
+<dt>.SM stype [stype …]</dt>
+<dd>Specify a symbol definition for the given
+<em>stype</em>.
+The symbol has all shared fields unless they are overridden by a
+.SE for this symbol.  The macro generates a new page and a section header
+for the symbol.  The picture goes immediately after the section header.
+Note that the picture is generated automatically from the following
+.SE lines.</dd>
+<dt>.SM E</dt>
+<dd>End of symbol definitions.</dd>
+<dt>.SE name [where]</dt>
+<dd>Specify a symbol element (field) for the current symbol type.
+<em>name</em>
+is the name of the field.
+<em>where</em>
+only needs to be specified if a field of this name has not yet been
+defined; it gives the location and size of the field as defined above
+for .SF.</dd>
+<dt>.SI oclass sname [sname …]</dt>
+<dd>Specify symbol information for the current symbol type.
+<em>oclass</em>
+is the overloading class for this symbol type.
+<em>sname</em>
+is the textual name (e.g., pointer, label) corresponding to the symbol
+type specified on the .SM line.  This macro generates no output in the
+troff document, only in the utility output.</dd>
+<dt>.FL name [where]</dt>
+<dd>Specify a flag.
+<em>name</em>
+is the name of the flag.
+<em>where</em>
+is the flag number in the form f*n*, where
+<em>is*the bit number in the
+*flags</em>
+field.  Bits are numbered left to right starting at 1.
+All flags must have different bits assigned to them.</dd>
+<dt>.TY B width</dt>
+<dd>Begin the type word definitions.
+<em>width</em>
+is the width of the hanging tag.</dd>
+<dt>.TY E</dt>
+<dd>End the type word definitions.</dd>
+<dt>.TY name attr [attr …]</dt>
+<dd>Specify a type word.
+<em>name</em>
+is the name of the type word.
+<em>attr</em>
+is an attribute of the type (e.g., INT, SCALAR)
+used to define the DT_ISxxx macros.</dd>
+<dt>.DT name [name …]</dt>
+<dd>Specify a data type record.
+The picture goes right after this macro.
+<em>name</em>
+should be the type word in the first word of the record
+(e.g., TY_ENUM).
+This is used for complex data types.
+The elements of the record are specified using .DE macros.</dd>
+<dt>.DE name</dt>
+<dd>Define the next element of the current data type record.  This should
+be followed by descriptive text.</dd>
+<dt>.PD B width</dt>
+<dd>Begin the predefined data type definitions.
+<em>width</em>
+is the width of the hanging tag.</dd>
+<dt>.PD E</dt>
+<dd>End the predefined data type definitions.</dd>
+<dt>.PD name sname def [def …]</dt>
+<dd>Define a predefined data type record.
+<em>name</em>
+is the index in the data type area used to access the record
+(e.g., DT_INT).
+<em>sname</em>
+is a descriptive textual name (e.g., int, char *).
+<em>def</em>
+defines the record.  Each
+<em>def</em>
+defines one word of the record.</dd>
+</dl>
+</div>
+<div class="section" id="include-file">
+<h3>Include File<a class="headerlink" href="#include-file" title="Permalink to this headline">¶</a></h3>
+<p>The symbol table include template is a C header file containing
+predefined header information interspersed with macro lines.  The macro
+lines begin with a period and are replaced with the appropriate information
+as follows:</p>
+<dl class="docutils">
+<dt>.ST</dt>
+<dd>Symbol types</dd>
+<dt>.TY</dt>
+<dd>Data type words (TY_)</dd>
+<dt>.TA</dt>
+<dd>Type attributes (DT_ISINT, etc.)</dd>
+<dt>.Sc</dt>
+<dd>Storage classes</dd>
+<dt>.OC</dt>
+<dd>Overloading classes</dd>
+<dt>.SE</dt>
+<dd>Symbol field access macros</dd>
+</dl>
+</div>
+<div class="section" id="data-file-and-symbol-init">
+<h3>Data File and Symbol Init<a class="headerlink" href="#data-file-and-symbol-init" title="Permalink to this headline">¶</a></h3>
+<p>The data initialization file is written from information gathered from the
+symtab document and the symbol initialization file.  Symbol initialization
+file:</p>
+<dl class="docutils">
+<dt>.ST</dt>
+<dd>field[=value] [field[=value] …]</dd>
+<dt>.SM</dt>
+<dd>name [value …]
+.ST defines a template for following .SM up to end or next .ST.  Fields
+that are initialized with =value are duplicated for each .SM; other fields
+are set with values taken from macro line in same order as specified in
+template line.  Other fields are set to zero.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="error.html">Error Reporting Utils</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="xflag.html">Other Compiler Switches</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

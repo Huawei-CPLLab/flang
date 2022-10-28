@@ -1,0 +1,271 @@
+
+
+******************
+Program Controller
+******************
+The Program Controller (main routine) controls invocation of the initialization
+routines, the other major compiler modules, and the finish routine.
+
+Initialization is performed by the routine
+*init*
+at the
+very beginning of execution.
+
+
+==================
+Program Controller
+==================
+Each subprogram is completely processed and output before the
+next subprogram is processed. Conceptually, it is as if each subprogram
+were in a separate file.
+For Fortran 90 contained subprograms, some information must be preserved
+from the host subprogram to the contained subprograms, particularly any
+stack or BSS addresses assigned to host subprogram variables.
+
+The same source file is used to generate the program controller
+for both the compiler and the extractor, since they share so much code.
+The differences in the source code appear as tests of the preprocessor
+variable
+``EXTRACTOR,``
+which is defined only for the extractor controller.
+
+See figure 2-1 for a pseudo-code description of the Program Controller processing
+for the compiler.
+See figure 2-2 for a pseudo-code description of the Program Controller
+for the extractor.
+
+.. code-block:: none
+
+   init();
+
+   for (each subprogram) {
+      reinit();   /\* init for subprogram \*/
+      upper();    /\* import ILMs from F90 front end \*/
+      extractor();/\* optionally extract subprograms for future inlining \*/
+      expand();   /\* expand ILMs into shared ILI \*/
+      upper_save_syminfo();       /\* save host subprogram info \*/
+      xref();     /\* optionally generate cross reference \*/
+   }
+
+   finish();
+
+
+Figure 2-1 Program Controller Operation for Compiler
+
+.. code-block:: none
+
+   init();
+
+   for (each subprogram) {
+       reinit();	/\* init for subprogram \*/
+       upper();    /\* import ILMs from F90 front end \*/
+       extractor();/\* extract subprograms for future inlining \*/
+   }
+
+   finish();
+
+
+Figure 2-2 Program Controller Operation for Extractor
+
+
+====
+Init
+====
+The
+``init``
+module performs the following five major tasks:
+
+#. Processes command line and sets values of internal variables
+   depending on the flags specified by the user.
+
+#. Opens input and output files.
+
+#. If a listing file is being generated, writes the Listing
+   Header.
+
+#. Initializes the Error message module, Symbol table module,
+   Scanner, Directive processing, and other modules
+   by calling the appropriate init routine for each.
+
+
+---------------------
+Adding Compiler Flags
+---------------------
+The command line processor searches the structure
+``swtchtab[]``
+(defined in
+``main.c``)
+to
+find valid flags or flag prefixes.
+To add a flag, add the new flag (without
+the preceeding
+"\(mi")
+to
+``swtchtab[]``'s
+initialization, keeping the flags in lexicographic order.
+Also add a case constant to the initialization.
+Switch case constants are
+``#define``'d
+constants of the form
+``SW_<flag name in caps>``,
+and appear
+above the definition
+of
+``swtchtab``.
+The case constant must be unique but numerical order is not necessary.
+(i.e., you don't have to change existing constants, just use the next
+biggest unused integer.)
+
+Add the case label
+``SW_<flag name in caps>:``
+to
+``init()``
+(also defined in
+``main.c``).
+Also, add code to process flag and any values that follow the flag.
+See existing code in
+``init()``
+for examples.
+
+
+======
+Finish
+======
+``finish``
+is called at the end of compiler execution to
+close files, write a compilation summary line to the
+user's terminal, and exit.
+
+
+=========
+Debugging
+=========
+The development compiler supports debug output in the
+compile process; these are mostly
+disabled when the preprocessor variable DEBUG is zero,
+as is done for a release.
+Most debug output is enabled with a
+``-q``
+or
+``-qq``
+switch.
+Each of these takes two arguments;
+the
+``-q 45 8``
+sets bit mask
+``8``
+in
+``flg.dbg[45]``.
+This is tested in the compiler source code with
+
+.. code-block:: none
+
+       #if DEBUG
+          if( DBGBIT(45,8) ) fprintf( gbl.dbgfil, "debug output\\n" );
+       #endif
+
+The
+``#if DEBUG``
+test disables this code for a release.
+The
+``DBGBIT(45,8)``
+macro is shorthand for
+``(flg.dbg[45]&8)``.
+
+Debug output is normally written to
+``gbl.dbgfil``,
+which is normally be opened to the file
+``filename.qdbg``
+by
+*init*
+unless
+``-q 0 1``
+is specified, which says to open
+``gbl.dbgfil``
+to standard output.
+Using the compiler driver, debug switches can be set using
+
+.. code-block:: none
+
+       -Mq,45,8
+       -Mq,66,7
+
+where the latter sets bits 1, 2, and 4.
+
+The controller can also generate dumps during
+compile process.
+At various points in the controller will appear a line like:
+
+.. code-block:: none
+
+       DUMP( "expand" );
+
+This is a preprocessor macro that calls a generic debug dump routine.
+To enable a dump, you can pass a
+``-qq``
+switch to the compiler like
+
+.. code-block:: none
+
+       -qq expand blocks
+
+which will invoke the
+``blocks``
+dump after the
+``expand``
+phase.
+Multiple phases and multiple dumps can be specified at once, like
+
+.. code-block:: none
+
+       -qq expand+optimize blocks
+       -qq unroll printblocks+sym
+
+which will invoke the
+``blocks``
+dump after both the
+``expand``
+and
+``optimize``
+phases, and will invoke both the
+``printblocks``
+and
+``sym``
+dumps after the
+``unroll``
+phase.
+Using the driver, these would appear as
+
+.. code-block:: none
+
+       -Mqq,expand+optimize,blocks
+       -Mqq,unroll,printblocks+sym
+
+Specifying
+``all``
+as the phase name will invoke those dump routines after all phases.
+The list of available phases is available by looking at the source code
+for the
+
+.. code-block:: none
+
+       DUMP( "phase" )
+
+lines, or by looking at the
+``filename.qdbg``
+file for lines something like
+
+.. code-block:: none
+
+       {pgf90-linux86-64 after expand
+       {pgf90-linux86-64 after upper
+
+The dump controller prints out these lines before every active phase, and will
+generate any dumps after each of these lines.
+New dump points can be inserted anywhere in the source of the program controller.
+The list of available dumps is only available by looking at the source code
+of the program controller; look for the variable
+``dumpnames``.
+New dump names can be added here, and the appropriate dump code added
+in the switch statement in routine
+``do_debug``.

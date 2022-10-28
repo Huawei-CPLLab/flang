@@ -1,0 +1,7334 @@
+
+
+*****************************
+Appendix IV - ILM Definitions
+*****************************
+
+
+===============
+ILM Definitions
+===============
+
+#. **BOS** stc1 stc2 stc3    *Type*: *misc*
+
+   Always (and only) appears as the first ILM of an ILM block.
+   (roughly corresponds to the beginning of a source statement.)
+
+   .. line-block::
+
+       stc1 - source statement line number (negated for insert files?).
+       If more than one ILM block is written for a given
+       statement, all but the first have 0 specified for the
+       line number.
+       For typical statements, this is actually the line
+       number of the terminating ';'.
+       stc2 - current file index, default is 1.
+       stc3 - number of words for this ILM block (including the BOS).
+
+
+   *Attributes*: spec trm
+
+#. **RISNAN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec trm
+
+#. **DISNAN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec trm
+
+#. **FLOAT** lnk    *Type*: *arth*
+
+   Convert integer to real number (REAL and FLOAT intrinsics).
+
+   .. code-block:: none
+
+      FLOAT r p1
+
+#. **DFLOAT** lnk    *Type*: *arth*
+
+   Convert integer to double precision (DFLOAT intrinsic).
+
+   .. code-block:: none
+
+      DFLOAT r p1
+
+#. **CTOI** lnk    *Type*: *arth*
+
+   Convert unsigned character to signed integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **CTOI** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **SCTOI** lnk    *Type*: *arth*
+
+   Convert unsigned character to signed integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **STOI** lnk    *Type*: *arth*
+
+   Convert short to signed integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **USTOI** lnk    *Type*: *arth*
+
+   Convert unsigned short to signed integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **CTOUI** lnk    *Type*: *arth*
+
+   Convert unsigned character to unsigned integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **SCTOUI** lnk    *Type*: *arth*
+
+   Convert signed character to unsigned integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **ITOUI** lnk    *Type*: *arth*
+
+   Convert signed integer to unsigned integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **UITOI** lnk    *Type*: *arth*
+
+   Convert unsigned integer to signed integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **STOUI** lnk    *Type*: *arth*
+
+   Convert short to unsigned integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **USTOUI** lnk    *Type*: *arth*
+
+   Convert unsigned short to unsigned integer.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **CDTOUDI** lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      DP2KR r rp1
+
+#. **CTOUDI** lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      SP2IR t1 rp1
+      UIKMV r t1
+
+#. **DTOUDI** lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      DP2KR r rp1
+
+#. **DTOUI** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DP2KR t1 p1
+      KIMV r t1
+
+#. **UDCON** sym    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCON r v1
+
+#. **UDITOD** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      KR2DP r p1
+
+#. **UDITOR** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      KIMV t1 p1
+      IR2SP r t1
+
+#. **UDITOS** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **UDITOSC** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **UDITOUI** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **UITOD** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UIKMV t1 p1
+      KR2DP r t1
+
+#. **UITOR** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IR2SP r p1
+
+#. **UITOS** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **UITOSC** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **UITOUDI** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UIKMV r p1
+
+#. **ITOUDI** lnk    *Type*: *arth*
+
+   Cast a 32-bit integer to a 64-bit unsigned integer (dword).
+
+   .. code-block:: none
+
+      UIKMV r p1
+
+#. **SCTOUDI** lnk    *Type*: *arth*
+
+   Cast a 8 bit integer quantity to a 64-bit unsigned integer (dword).
+
+   .. code-block:: none
+
+      UIKMV r p1
+
+#. **STOUDI** lnk    *Type*: *arth*
+
+   Cast a 16 bit integer quantity to a 64-bit quantity.
+
+   .. code-block:: none
+
+      UIKMV r p1
+
+#. **UDITOI** lnk    *Type*: *arth*
+
+   Cast an unsigned double integer (dword) to a 32-bit signed integer.
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **RTOUI** lnk    *Type*: *arth*
+
+   Cast a real to a 32-bit unsigned integer (word).
+
+   .. code-block:: none
+
+      SP2IR r p1
+
+#. **RTOUDI** lnk    *Type*: *arth*
+
+   Cast a real to a 64-bit unsigned integer (dword).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      SP2IR t1 p1
+      UIKMV r t1
+
+#. **CRTOI** lnk lnk    *Type*: *arth*
+
+   Cast a complex to integer (C)
+
+   *Attributes*: spec
+
+#. **CDTOI** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **UITOC** lnk    *Type*: *arth*
+
+   Convert unsigned integer to unsigned character.
+
+   .. code-block:: none
+
+      ICON t1 =i'255
+      AND r t1 p1
+
+#. **ITOSC** lnk    *Type*: *arth*
+
+   Convert signed integer to signed character.
+
+   *Attributes*: spec
+
+#. **ITOS** lnk    *Type*: *arth*
+
+   Convert integer to short.
+
+   *Attributes*: spec
+
+#. **UITOUS** lnk    *Type*: *arth*
+
+   Convert unsigned integer to unsigned short.
+
+   .. code-block:: none
+
+      ICON t1 =i'65535
+      AND r t1 p1
+
+#. **FLOATU** lnk    *Type*: *arth*
+
+   Convert unsigned integer to real.
+
+   .. code-block:: none
+
+      UIKMV t1 p1
+      FLOATK r t1
+
+#. **DFLOATU** lnk    *Type*: *arth*
+
+   Convert unsigned to double.
+
+   .. code-block:: none
+
+      UIKMV t1 p1
+      DFLOATK r t1
+
+#. **RTOR** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FPOWF r p1 p2
+
+#. **VRTOR** lnk lnk    *Type*: *arth*
+
+
+#. **DTOD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DPOWD r p1 p2
+
+#. **CTOC** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDTOCD** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **FIX** lnk    *Type*: *arth*
+
+   Convert real number to integer (INT and IFIX intrinsics).
+
+   .. code-block:: none
+
+      FIX r p1
+
+#. **FIXU** lnk    *Type*: *arth*
+
+   Convert real number to unsigned.
+
+   .. code-block:: none
+
+      FIXK t1 p1
+      KIMV r t1
+
+#. **DBLE** lnk    *Type*: *arth*
+
+   Convert single precision floating point value to double precision.
+
+   .. code-block:: none
+
+      DBLE r p1
+
+#. **DFIX** lnk    *Type*: *arth*
+
+   Convert double precision floating point number to integer.
+
+   .. code-block:: none
+
+      DFIX r p1
+
+#. **DFIXU** lnk    *Type*: *arth*
+
+   Convert double precision floating point number to
+   unsigned integer.
+
+   .. code-block:: none
+
+      DFIXK t1 p1
+      KIMV r t1
+
+#. **REAL** lnk    *Type*: *arth*
+
+   Returns real part of complex number (single precision).
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      MVSP r rp1 iv-1
+
+#. **DREAL** lnk    *Type*: *arth*
+
+   Returns double precision real part of a double complex value.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      MVDP r rp1 iv-1
+
+#. **IMAG** lnk    *Type*: *arth*
+
+   Returns imaginary part of complex value (single precision)
+   (AIMAG intrinsic).
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      MVSP r ip1 iv-1
+
+#. **DIMAG** lnk    *Type*: *arth*
+
+   Returns double precision imaginary part of a double complex value
+   (DIMAG intrinsic).
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      MVDP r ip1 iv-1
+
+#. **CMPLX** lnk lnk    *Type*: *arth*
+
+   Form complex number out of two single precision real values.
+
+   *Attributes*: spec
+
+#. **DCMPLX** lnk lnk    *Type*: *arth*
+
+   Form double complex number out of two double precision real values.
+
+   *Attributes*: spec dcmplx
+
+#. **ICHAR** lnk    *Type*: *fstr*
+
+   Converts single character to integer.
+
+   *Attributes*: spec
+
+#. **INCHAR** lnk    *Type*: *fstr*
+
+   Converts single ncharacter to integer.
+
+   *Attributes*: spec
+
+#. **CHAR** lnk    *Type*: *fstr*
+
+   Converts integer to character string of length 1.
+
+   *Attributes*: spec
+
+#. **NCHAR** lnk    *Type*: *fstr*
+
+   Converts integer to ncharacter string of length 1.
+
+   *Attributes*: spec
+
+#. **AINT** lnk    *Type*: *arth*
+
+   AINT intrinsic (converts real to real).
+
+   .. code-block:: none
+
+      AINT r p1
+
+#. **DINT** lnk    *Type*: *arth*
+
+   DINT intrinsic (converts double to double).
+
+   .. code-block:: none
+
+      DINT r p1
+
+#. **ANINT** lnk    *Type*: *arth*
+
+   ANINT intrinsic (converts real to real).
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_anint t1
+      DFRSP r t2 spret
+
+#. **DNINT** lnk    *Type*: *arth*
+
+   DNINT intrinsic (converts double to double).
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dnint t1
+      DFRDP r t2 dpret
+
+#. **NINT** lnk    *Type*: *arth*
+
+   NINT intrinsic (converts real to integer).
+
+   .. code-block:: none
+
+      NINT r p1
+
+#. **IDNINT** lnk    *Type*: *arth*
+
+   IDNINT intrinsic (converts double to integer).
+
+   .. code-block:: none
+
+      IDNINT r p1
+
+#. **ZEXTB** lnk    *Type*: *arth*
+
+   Zero extend byte (ZEXT intrinsic).
+
+   .. code-block:: none
+
+      ICON t1 =i'255
+      AND r t1 p1
+
+#. **ZEXTS** lnk    *Type*: *arth*
+
+   Zero extend short (ZEXT intrinsic).
+
+   .. code-block:: none
+
+      ICON t1 =i'65535
+      AND r t1 p1
+
+#. **IABS** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IABS r p1
+
+#. **ABS** lnk    *Type*: *arth*
+
+   Absolute value of single precision real number.
+
+   .. code-block:: none
+
+      FABS r p1
+
+#. **DABS** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DABS r p1
+
+#. **CABS** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      DBLE t1 rp1
+      DBLE t2 ip1
+      DMUL t1 t1 t1
+      DMUL t2 t2 t2
+      DADD t3 t1 t2
+      DSQRT t3 t3
+      SNGL r t3
+
+#. **CDABS** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 ip1 dp(0) t1
+      DADP t2 rp1 dp(1) t1
+      QJSR t3 =e'%d%__mth_i_cdabs t2
+      DFRDP r t3 dpret
+
+#. **LEN** lnk    *Type*: *fstr*
+
+   Length of a character expression.  This ILM contains a link to
+   one character expression.
+   The result returned is the sum of the lengths of its operands.
+
+   *Attributes*: spec
+
+#. **NLEN** lnk    *Type*: *fstr*
+
+   Length of ncharacter expr.
+
+   *Attributes*: spec
+
+#. **CONJG** lnk    *Type*: *arth*
+
+   Conjugate of a single precision complex number.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      MVSP rr rp1 iv-1
+      FNEG ir ip1
+
+#. **DCONJG** lnk    *Type*: *arth*
+
+   Conjugate of a double complex number.
+
+   *Attributes*: spec dcmplx
+
+   .. code-block:: none
+
+      MVDP rr rp1 iv-1
+      DNEG ir ip1
+
+#. **SQRT** lnk    *Type*: *arth*
+
+   Square root of a single precision real number (SQRT intrinsic).
+
+   .. code-block:: none
+
+      FSQRT r p1
+
+#. **DSQRT** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DSQRT r p1
+
+#. **CSQRT** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDSQRT** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **EXP** lnk    *Type*: *arth*
+
+   EXP intrinsic for single precision floating point values.
+
+   .. code-block:: none
+
+      FEXP r p1
+
+#. **DEXP** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DEXP r p1
+
+#. **CEXP** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDEXP** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CACOS** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDACOS** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CASIN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDASIN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CATAN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDATAN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CCOSH** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDCOSH** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CSINH** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDSINH** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CTANH** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDTANH** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CTAN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDTAN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **ALOG** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FLOG r p1
+
+#. **DLOG** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DLOG r p1
+
+#. **CLOG** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDLOG** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **ALOG10** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FLOG10 r p1
+
+#. **DLOG10** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DLOG10 r p1
+
+#. **SIN** lnk    *Type*: *arth*
+
+   Sine of a single precision value
+
+   .. code-block:: none
+
+      FSIN r p1
+
+#. **DSIN** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DSIN r p1
+
+#. **CSIN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDSIN** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **COS** lnk    *Type*: *arth*
+
+   Cosine of a single precision number
+
+   .. code-block:: none
+
+      FCOS r p1
+
+#. **DCOS** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DCOS r p1
+
+#. **CCOS** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDCOS** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **TAN** lnk    *Type*: *arth*
+
+   Tangent of a single precision value
+
+   .. code-block:: none
+
+      FTAN r p1
+
+#. **DTAN** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DTAN r p1
+
+#. **ASIN** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FASIN r p1
+
+#. **DASIN** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DASIN r p1
+
+#. **ACOS** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FACOS r p1
+
+#. **DACOS** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DACOS r p1
+
+#. **ATAN** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FATAN r p1
+
+#. **DATAN** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DATAN r p1
+
+#. **ATAN2** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FATAN2 r p1 p2
+
+#. **DATAN2** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DATAN2 r p1 p2
+
+#. **SIND** lnk    *Type*: *arth*
+
+   SIN in degrees.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_sind t1
+      DFRSP r t2 spret
+
+#. **DSIND** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dsind t1
+      DFRDP r t2 dpret
+
+#. **COSD** lnk    *Type*: *arth*
+
+   COS in degrees.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_cosd t1
+      DFRSP r t2 spret
+
+#. **DCOSD** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dcosd t1
+      DFRDP r t2 dpret
+
+#. **TAND** lnk    *Type*: *arth*
+
+   TAN in degrees.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_tand t1
+      DFRSP r t2 spret
+
+#. **DTAND** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dtand t1
+      DFRDP r t2 dpret
+
+#. **ASIND** lnk    *Type*: *arth*
+
+   ASIN in degrees.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_asind t1
+      DFRSP r t2 spret
+
+#. **DASIND** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dasind t1
+      DFRDP r t2 dpret
+
+#. **ACOSD** lnk    *Type*: *arth*
+
+   ACOS in degrees.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_acosd t1
+      DFRSP r t2 spret
+
+#. **DACOSD** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dacosd t1
+      DFRDP r t2 dpret
+
+#. **ATAND** lnk    *Type*: *arth*
+
+   ATAN in degrees.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_atand t1
+      DFRSP r t2 spret
+
+#. **DATAND** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_datand t1
+      DFRDP r t2 dpret
+
+#. **ATAN2D** lnk lnk    *Type*: *arth*
+
+   ATAN2 in degrees.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p2 sp(1) t1
+      DASP t2 p1 sp(0) t1
+      QJSR t3 =e'%s%__mth_i_atan2d t2
+      DFRSP r t3 spret
+
+#. **DATAN2D** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p2 dp(1) t1
+      DADP t2 p1 dp(0) t1
+      QJSR t3 =e'%d%__mth_i_datan2d t2
+      DFRDP r t3 dpret
+
+#. **SINH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FSINH r p1
+
+#. **DSINH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DSINH r p1
+
+#. **COSH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FCOSH r p1
+
+#. **DCOSH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DCOSH r p1
+
+#. **TANH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FTANH r p1
+
+#. **DTANH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DTANH r p1
+
+#. **ERF** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_erf t1
+      DFRSP r t2 spret
+
+#. **DERF** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_derf t1
+      DFRDP r t2 dpret
+
+#. **ERFC** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_erfc t1
+      DFRSP r t2 spret
+
+#. **DERFC** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_derfc t1
+      DFRDP r t2 dpret
+
+#. **ERFC_SCALED** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_erfc_scaled t1
+      DFRSP r t2 spret
+
+#. **DERFC_SCALED** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_derfc_scaled t1
+      DFRDP r t2 dpret
+
+#. **GAMMA** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_gamma t1
+      DFRSP r t2 spret
+
+#. **DGAMMA** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dgamma t1
+      DFRDP r t2 dpret
+
+#. **LOG_GAMMA** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_log_gamma t1
+      DFRSP r t2 spret
+
+#. **DLOG_GAMMA** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dlog_gamma t1
+      DFRDP r t2 dpret
+
+#. **HYPOT** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p2 sp(1) t1
+      DASP t2 p1 sp(0) t1
+      QJSR t3 =e'%s%__mth_i_hypot t2
+      DFRSP r t3 spret
+
+#. **DHYPOT** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p2 dp(1) t1
+      DADP t2 p1 dp(0) t1
+      QJSR t3 =e'%d%__mth_i_dhypot t2
+      DFRDP r t3 dpret
+
+#. **ACOSH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_acosh t1
+      DFRSP r t2 spret
+
+#. **DACOSH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dacosh t1
+      DFRDP r t2 dpret
+
+#. **ASINH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_asinh t1
+      DFRSP r t2 spret
+
+#. **DASINH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dasinh t1
+      DFRDP r t2 dpret
+
+#. **ATANH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_atanh t1
+      DFRSP r t2 spret
+
+#. **DATANH** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_datanh t1
+      DFRDP r t2 dpret
+
+#. **BESSEL_J0** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_bessel_j0 t1
+      DFRSP r t2 spret
+
+#. **DBESSEL_J0** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dbessel_j0 t1
+      DFRDP r t2 dpret
+
+#. **BESSEL_J1** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_bessel_j1 t1
+      DFRSP r t2 spret
+
+#. **DBESSEL_J1** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dbessel_j1 t1
+      DFRDP r t2 dpret
+
+#. **BESSEL_JN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p2 sp(0) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t3 =e'%s%__mth_i_bessel_jn t2
+      DFRSP r t3 spret
+
+#. **DBESSEL_JN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p2 dp(0) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t3 =e'%d%__mth_i_dbessel_jn t2
+      DFRDP r t3 dpret
+
+#. **BESSEL_Y0** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_bessel_y0 t1
+      DFRSP r t2 spret
+
+#. **DBESSEL_Y0** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dbessel_y0 t1
+      DFRDP r t2 dpret
+
+#. **BESSEL_Y1** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%s%__mth_i_bessel_y1 t1
+      DFRSP r t2 spret
+
+#. **DBESSEL_Y1** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%d%__mth_i_dbessel_y1 t1
+      DFRDP r t2 dpret
+
+#. **BESSEL_YN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p2 sp(0) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t3 =e'%s%__mth_i_bessel_yn t2
+      DFRSP r t3 spret
+
+#. **DBESSEL_YN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p2 dp(0) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t3 =e'%d%__mth_i_dbessel_yn t2
+      DFRDP r t3 dpret
+
+#. **SNGL** lnk    *Type*: *arth*
+
+   Convert double precision number to single precision (SNGL intrinsic).
+
+   .. code-block:: none
+
+      SNGL r p1
+
+#. **IPTR** lnk    *Type*: *arth*
+
+   Converts integral value to pointer.
+   The ili created is:
+   IAMV r p1
+
+   *Attributes*: spec
+
+#. **KPTR** lnk    *Type*: *arth*
+
+   Converts long (64-bit) value to pointer.
+   The ili created is:
+   KAMV r p1
+
+   *Attributes*: spec
+
+#. **PTRI** lnk    *Type*: *arth*
+
+   Converts pointer to an integral value
+   The ili created is:
+   AIMV r p1
+
+   *Attributes*: spec
+
+#. **PTRK** lnk    *Type*: *arth*
+
+   Converts pointer to a long (64-bit) value
+   The ili created is:
+   AKMV r p1
+
+   *Attributes*: spec
+
+#. **INEG** lnk    *Type*: *arth*
+
+   Integer negation.
+
+   .. code-block:: none
+
+      INEG r p1
+
+#. **UINEG** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      INEG r p1
+
+#. **RNEG** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FNEG r p1
+
+#. **DNEG** lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DNEG r p1
+
+#. **CNEG** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      FNEG rr rp1
+      FNEG ir ip1
+
+#. **CDNEG** lnk    *Type*: *arth*
+
+   Double complex negation.
+
+   *Attributes*: spec dcmplx
+
+   .. code-block:: none
+
+      DNEG rr rp1
+      DNEG ir ip1
+
+#. **NOT64** lnk    *Type*: *arth*
+
+   Bitwise negation of 64 bit value (NOT intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KNOT r p1
+
+#. **NOT** lnk    *Type*: *arth*
+
+   Bitwise negation of 32 bit signed value (NOT intrinsic).
+
+   .. code-block:: none
+
+      NOT r p1
+
+#. **UNOT** lnk    *Type*: *arth*
+
+   Bitwise negation of 32 bit unsigned value.
+
+   .. code-block:: none
+
+      UNOT r p1
+
+#. **LNOT** lnk    *Type*: *arth*
+
+   Logical negation.  The link must be to an expression of type
+   integer, float, or pointer.
+   The value is 1 if link is zero (0.0, or NULL); otherwise, the value is 0.
+
+   .. code-block:: none
+
+      ICMPZ r p1 eq
+
+#. **LNOT** lnk    *Type*: *arth*
+
+   Logical negation.  The link must be to an expression of type
+   LOGICAL; depends on internal representation of logical values (VAX or
+   UNIX)
+
+   *Attributes*: spec
+
+#. **DLNOT** lnk    *Type*: *arth*
+
+   Logical negation, where the link is an expression of type double.
+   The value is 1 if link is zero; otherwise, it is 0.
+
+   .. code-block:: none
+
+      DCMPZ r p1 eq
+
+#. **LNOP** lnk    *Type*: *arth*
+
+   Logical no-op.  Used by semant when space must be reserved
+   for a potential LNOT ILM.
+   Returns 1 if its operand is non-zero, else 0.
+
+   .. code-block:: none
+
+      ICMPZ r p1 ne
+
+#. **LNOP** lnk    *Type*: *arth*
+
+   Logical noop.  Used by semant when space must be reserved
+   for a potential LNOT ILM.  'lnk' points to a logical
+   expression.
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **IMERGE** lnk lnk lnk    *Type*: *arth*
+
+   Integer valued f90 merge intrinsic.
+
+   .. line-block::
+       p1 - tsource
+       p2 - fsource
+       p3 - mask
+
+
+   .. code-block:: none
+
+      ICMPZ t1 p3 ne
+      ISELECT r t1 p2 p1
+
+#. **KMERGE** lnk lnk lnk    *Type*: *arth*
+
+   Integer\*8 valued f90 merge intrinsic.
+
+   .. line-block::
+       p1 - tsource
+       p2 - fsource
+       p3 - mask
+
+
+   .. code-block:: none
+
+      ICMPZ t1 p3 ne
+      KSELECT r t1 p2 p1
+
+#. **RMERGE** lnk lnk lnk    *Type*: *arth*
+
+   Real valued f90 merge intrinsic.
+
+   .. line-block::
+       p1 - tsource
+       p2 - fsource
+       p3 - mask
+
+
+   .. code-block:: none
+
+      ICMPZ t1 p3 ne
+      FSELECT r t1 p2 p1
+
+#. **DMERGE** lnk lnk lnk    *Type*: *arth*
+
+   Real\*8 valued f90 merge intrinsic.
+
+   .. line-block::
+       p1 - tsource
+       p2 - fsource
+       p3 - mask
+
+
+   .. code-block:: none
+
+      ICMPZ t1 p3 ne
+      DSELECT r t1 p2 p1
+
+#. **CMERGE** lnk lnk lnk    *Type*: *arth*
+
+   Real\*4 complex valued f90 merge intrinsic.
+
+   .. line-block::
+       p1 - tsource
+       p2 - fsource
+       p3 - mask
+
+
+   .. code-block:: none
+
+      ICMPZ t1 p3 ne
+      CSSELECT r t1 p2 p1
+
+#. **CDMERGE** lnk lnk lnk    *Type*: *arth*
+
+   Real\*8 complex valued f90 merge intrinsic.
+
+   .. line-block::
+       p1 - tsource
+       p2 - fsource
+       p3 - mask
+
+
+   .. code-block:: none
+
+      ICMPZ t1 p3 ne
+      CDSELECT r t1 p2 p1
+
+#. **IADD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IADD r p1 p2
+
+#. **UIADD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UIADD r p1 p2
+
+#. **RADD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FADD r p1 p2
+
+#. **DADD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DADD r p1 p2
+
+#. **CADD** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      FADD rr rp1 rp2
+      FADD ir ip1 ip2
+
+#. **CDADD** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+   .. code-block:: none
+
+      DADD rr rp1 rp2
+      DADD ir ip1 ip2
+
+#. **PIADD** lnk1 lnk2 stc    *Type*: *arth*
+
+   Add pointer (lnk1) to integer (lnk2) creating a new pointer value.
+   'stc' locates a data type item describing the type which
+   the pointer (lnk1) points to.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      ICON t1 scz3
+      IMUL t2 t1 p2
+      IAMV t3 t2
+      AADD r p1 t3 scf3
+
+#. **PKADD** lnk1 lnk2 stc    *Type*: *arth*
+
+   Add pointer (lnk1) to long (lnk2) creating a new pointer value.
+   'stc' locates a data type item describing the type which
+   the pointer (lnk1) points to.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      ICON t1 scz3
+      IKMV t1 t1
+      KMUL t2 t1 p2
+      KAMV t3 t2
+      AADD r p1 t3 scf3
+
+#. **ISUB** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      ISUB r p1 p2
+
+#. **UISUB** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UISUB r p1 p2
+
+#. **RSUB** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FSUB r p1 p2
+
+#. **DSUB** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DSUB r p1 p2
+
+#. **CSUB** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      FSUB rr rp1 rp2
+      FSUB ir ip1 ip2
+
+#. **CDSUB** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+   .. code-block:: none
+
+      DSUB rr rp1 rp2
+      DSUB ir ip1 ip2
+
+#. **PSUB** lnk lnk stc    *Type*: *arth*
+
+   Subtract two pointers (of the same type).
+   'stc' locates a data type item describing the type which
+   the pointer (lnk1) points to.
+   The result of this operation is an
+   integer.
+
+   .. code-block:: none
+
+      ASUB t1 p1 p2 iv0
+      AKMV t2 t1
+      ICON t1 sz3
+      IKMV t1 t1
+      KDIVZR r t2 t1
+
+#. **PISUB** lnk1 lnk2 stc    *Type*: *arth*
+
+   Substract integer (lnk2) from a pointer (lnk1) creating a new
+   pointer value.
+   'stc' locates a data type item describing the type which
+   the pointer (lnk1) points to.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      ICON t1 scz3
+      IMUL t2 t1 p2
+      IAMV t3 t2
+      ASUB r p1 t3 scf3
+
+#. **PKSUB** lnk1 lnk2 stc    *Type*: *arth*
+
+   Substract long (lnk2) from a pointer (lnk1) creating a new
+   pointer value.
+   'stc' locates a data type item describing the type which
+   the pointer (lnk1) points to.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      ICON t1 scz3
+      IKMV t1 t1
+      KMUL t2 t1 p2
+      KAMV t3 t2
+      ASUB r p1 t3 scf3
+
+#. **IMUL** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IMUL r p1 p2
+
+#. **UIMUL** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IMUL r p1 p2
+
+#. **RMUL** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FMUL r p1 p2
+
+#. **DMUL** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DMUL r p1 p2
+
+#. **CMUL** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      FMUL t1 rp1 rp2
+      FMUL t2 ip1 ip2
+      FMUL t3 ip1 rp2
+      FMUL t4 ip2 rp1
+      FSUB rr t1 t2
+      FADD ir t3 t4
+
+#. **CDMUL** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+   .. code-block:: none
+
+      DMUL t1 rp1 rp2
+      DMUL t2 ip1 ip2
+      DSUB rr t1 t2
+      DMUL t1 ip1 rp2
+      DMUL t2 ip2 rp1
+      DADD ir t2 t1
+
+#. **IDIV** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IDIV r p1 p2
+
+#. **UIDIV** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UIDIV r p1 p2
+
+#. **RDIV** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FDIV r p1 p2
+
+#. **DDIV** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DDIV r p1 p2
+
+#. **CDIV** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CDIVR** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      FDIV rr rp1 p2
+      FDIV ir ip1 p2
+
+#. **CDDIV** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CDDIVD** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec dcmplx
+
+   .. code-block:: none
+
+      DDIV rr rp1 p2
+      DDIV ir ip1 p2
+
+#. **ITOI** lnk lnk    *Type*: *arth*
+
+   Exponentiation - integer to an integer power.
+
+   .. code-block:: none
+
+      IPOWI r p1 p2
+
+#. **RTOI** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FPOWI r p1 p2
+
+#. **DTOI** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DPOWI r p1 p2
+
+#. **MOD** lnk lnk    *Type*: *arth*
+
+   Integer remainder
+
+   .. code-block:: none
+
+      MOD r p1 p2
+
+#. **MOD** lnk lnk    *Type*: *arth*
+
+   Integer remainder (MOD intrinsic).
+
+   .. code-block:: none
+
+      MOD r p1 p2
+
+#. **UIMOD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UIMOD r p1 p2
+
+#. **AMOD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FMOD r p1 p2
+
+#. **DMOD** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DMOD r p1 p2
+
+#. **ISIGN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      ICMPZ t1 p2 lt
+      IABS t2 p1
+      INEG t3 t2
+      ISELECT r t1 t2 t3
+
+#. **SIGN** lnk lnk    *Type*: *arth*
+
+   Real valued SIGN intrinsic.
+
+   .. code-block:: none
+
+      FCMPZ t1 p2 lt
+      FABS t2 p1
+      FNEG t3 t2
+      FSELECT r t1 t2 t3
+
+#. **DSIGN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DCMPZ t1 p2 lt
+      DABS t2 p1
+      DNEG t3 t2
+      DSELECT r t1 t2 t3
+
+#. **IDIM** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p2 dr(1) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t3 =e'%i%ftn_i_idim t2
+      DFRIR r t3 drret
+
+#. **DIM** lnk lnk    *Type*: *arth*
+
+   Real valued DIM intrinsic.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p2 sp(1) t1
+      DASP t2 p1 sp(0) t1
+      QJSR t3 =e'%s%ftn_i_dim t2
+      DFRSP r t3 spret
+
+#. **DDIM** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p2 dp(1) t1
+      DADP t2 p1 sp(0) t1
+      QJSR t3 =e'%d%ftn_i_ddim t2
+      DFRDP r t3 dpret
+
+#. **DPROD** lnk lnk    *Type*: *arth*
+
+   Multiply two single precision real values and return double
+   precision value. (DPROD intrinsic).
+
+   .. code-block:: none
+
+      DBLE t1 p1
+      DBLE t2 p2
+      DMUL r t1 t2
+
+#. **IMAX** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IMAX r p1 p2
+
+#. **UIMAX** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UIMAX r p1 p2
+
+#. **RMAX** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FMAX r p1 p2
+
+#. **DMAX** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DMAX p p1 p2
+
+#. **IMIN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      IMIN r p1 p2
+
+#. **UIMIN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      UIMIN r p1 p2
+
+#. **RMIN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      FMIN r p1 p2
+
+#. **DMIN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      DMIN r p1 p2
+
+#. **INDEX** lnk lnk    *Type*: *fstr*
+
+   INDEX intrinsic (inputs are two character strings and result is an integer).
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      QJSR t1 =e'%i%ftn_index iv0
+      DFRIR r t1 drret
+
+#. **NINDEX** lnk lnk    *Type*: *fstr*
+
+   Same as INDEX except for ncharacter strings.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      QJSR t1 =e'%i%ftn_nindex iv0
+      DFRIR r t1 drret
+
+#. **AND64** lnk lnk    *Type*: *arth*
+
+   Bitwise logical and of two 64 bit values (AND intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KAND r p1 p2
+
+#. **AND** lnk lnk    *Type*: *arth*
+
+   Bitwise logical and of two 32 bit values (AND intrinsic).
+
+   .. code-block:: none
+
+      AND r p1 p2
+
+#. **OR64** lnk lnk    *Type*: *arth*
+
+   Bitwise logical or of two 64-bit values (OR instrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KOR r p1 p2
+
+#. **OR** lnk lnk    *Type*: *arth*
+
+   Bitwise logical or of two 32 bit values (OR intrinsic).
+
+   .. code-block:: none
+
+      OR r p1 p2
+
+#. **XOR64** lnk lnk    *Type*: *arth*
+
+   Bitwise exclusive or of two 64 bit values (NEQV intrinsic)
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KXOR r p1 p2
+
+#. **XOR** lnk lnk    *Type*: *arth*
+
+   Bitwise exclusive or of two 32 bit values (^ operator / EOR intrinsic).
+
+   .. code-block:: none
+
+      XOR r p1 p2
+
+#. **XNOR64** lnk lnk    *Type*: *arth*
+
+   Bitwise exclusive nor of two 64 bit values (EQV intrinsic)
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KXOR t1 p1 p2
+      KNOT r t1
+
+#. **EQV** lnk lnk    *Type*: *arth*
+
+   Bitwise complement of the exclusive or of two 32 bit values
+
+   .. code-block:: none
+
+      XOR t1 p1 p2
+      NOT r t1
+
+#. **LSHIFT** lnk lnk    *Type*: *arth*
+
+   Left shift operator (<<) - first operand is 32 bit signed integer
+   value and second is a positive integer.
+
+   .. code-block:: none
+
+      LSHIFT r p1 p2
+
+#. **RSHIFT** lnk lnk    *Type*: *arth*
+
+   Right shift operator (>>).  First operand is 32 bit signed integer
+   value and second is assumed to be a positive integer.
+
+   .. code-block:: none
+
+      RSHIFT r p1 p2
+
+#. **KRSHIFT** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KARSHIFT r p1 p2
+
+#. **ULSHIFT** lnk lnk    *Type*: *arth*
+
+   Left shift operator (<<) - first operand is 32 bit unsigned integer
+   value and second is a positive integer.
+
+   .. code-block:: none
+
+      ULSHIFT r p1 p2
+
+#. **URSHIFT** lnk lnk    *Type*: *arth*
+
+   Right shift operator (>>).  First operand is 32 bit unsigned integer
+   value and second is assumed to be a positive integer.
+
+   .. code-block:: none
+
+      URSHIFT r p1 p2
+
+#. **SHIFT64** lnk lnk    *Type*: *arth*
+
+   SHIFT intrinsic - first operand is 64 bit value and second is a positive
+   or negative integer shift count.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p2 dr(1) t1
+      DAKR t1 p1 dr(0) t1
+      QJSR t2 =e'%l%ftn_i_kishft t1
+      DFRKR r t2 krret
+
+#. **SHIFT** lnk lnk    *Type*: *arth*
+
+   SHIFT intrinsic - first operand is 32 bit value and second is positive or
+   negative integer shift count (not constants).
+   When the second operand is a constant, ULSHIFT or URSHIFT is used.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p2 dr(1) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t2 =e'%i%ftn_i_shift t2
+      DFRIR r t2 drret
+
+#. **I1SHFT** lnk lnk    *Type*: *intr*
+
+   ISHFT intrinsic - first operand is 8 bit value and second is positive or
+   negative integer shift count. If the shift count <= -8 or >=8, the
+   result is 0.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p2 dr(1) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t2 =e'%i%ftn_i_i1shft t2
+      DFRIR r t2 drret
+
+#. **IISHFT** lnk lnk    *Type*: *intr*
+
+   ISHFT intrinsic - first operand is 16 bit value and second is positive or
+   negative integer shift count. If the shift count <= -16 or >=16, the
+   result is 0.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p2 dr(1) t1
+      DAIR t2 p1 dr(0) t1
+      QJSR t2 =e'%i%ftn_i_iishft t2
+      DFRIR r t2 drret
+
+#. **JISHFT** lnk lnk    *Type*: *intr*
+
+   ISHFT intrinsic - first operand is 32 bit value and second is positive or
+   negative integer shift count. If the shift count <= -32 or >=32, the
+   result is 0.  Expand will convert JISHFT ili to a ULSHIFT, URSHIFT, or
+   a call.
+
+   .. code-block:: none
+
+      JISHFT r p1 p2
+
+#. **LAND** lnk lnk    *Type*: *arth*
+
+   Logical .AND. operation.
+
+   .. code-block:: none
+
+      AND r p1 p2
+
+#. **VSLAND** lnk lnk    *Type*: *arth*
+
+   Vector 16-bit logical and
+
+#. **LOR** lnk lnk    *Type*: *arth*
+
+   Logical or.
+   This opcode is for use within the Semantic Analyzer only, and should
+   never appear in the ILM's sent to the Expander.
+
+#. **LOR** lnk lnk    *Type*: *arth*
+
+   Logical .OR. operation.
+
+   .. code-block:: none
+
+      OR r p1 p2
+
+#. **LEQV** lnk lnk    *Type*: *arth*
+
+   Logical .EQV. operation.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      ICMP r p1 p2 eq
+
+#. **LNEQV** lnk lnk    *Type*: *arth*
+
+   Logical .NEQV. operation.
+
+   .. code-block:: none
+
+      XOR r p1 p2
+
+#. **I1SHFTC** lnk lnk lnk    *Type*: *arth*
+
+   ISHFTC(p1, p2, p3) - circularly shift the rightmost p3 bits of p1
+   by p2, where p1 is a 8-bit interger
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p3 dr(2) t1
+      DAIR t2 p2 dr(1) t1
+      DAIR t3 p1 dr(0) t2
+      QJSR t1 =e'%i%ftn_i_i1shftc t3
+      DFRIR r t1 drret
+
+#. **IISHFTC** lnk lnk lnk    *Type*: *arth*
+
+   ISHFTC(p1, p2, p3) - circularly shift the rightmost p3 bits of p1
+   by p2, where p1 is a 16-bit interger
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p3 dr(2) t1
+      DAIR t2 p2 dr(1) t1
+      DAIR t3 p1 dr(0) t2
+      QJSR t1 =e'%i%ftn_i_iishftc t3
+      DFRIR r t1 drret
+
+#. **ISHFTC** lnk lnk lnk    *Type*: *arth*
+
+   ISHFTC(p1, p2, p3) - circularly shift the rightmost p3 bits of p1
+   by p2.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAIR t1 p3 dr(2) t1
+      DAIR t2 p2 dr(1) t1
+      DAIR t3 p1 dr(0) t2
+      QJSR t1 =e'%i%ftn_ishftc t3
+      DFRIR r t1 drret
+
+#. **IBITS** lnk lnk lnk    *Type*: *arth*
+
+   IBITS(p1, p2, p3) - extract p3 bits beginning at p2 from p1.
+
+   .. line-block::
+       r = p3 != 0 ? (p1 >> p2) & (-1 >> (32 - p3)) : 0
+
+
+   .. code-block:: none
+
+      RSHIFT t1 p1 p2
+      ICON t2 =i'-1
+      ICON t3 =i'32
+      ISUB t4 t3 p3
+      URSHIFT t5 t2 t4
+      AND t6 t1 t5
+      ICMPZ t7 p3 eq
+      ISELECT r t7 t6 p3
+
+#. **IBSET** lnk lnk    *Type*: *arth*
+
+   IBSET(p1, p2) - set bit p2 of p1 to 1.
+
+   .. line-block::
+       r = p1 | (1 << p2)
+
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      LSHIFT t2 t1 p2
+      OR r p1 t2
+
+#. **BTEST** lnk lnk    *Type*: *arth*
+
+   BTEST(p1, p2) - .TRUE. if bit p2 of p1 is 1.
+
+   .. line-block::
+       r = (p1 & (1 << p2)) != 0
+
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      LSHIFT t2 t1 p2
+      AND t3 p1 t2
+      ICMPZ r t3 ne
+
+#. **IBCLR** lnk lnk    *Type*: *arth*
+
+   IBLCR(p1, p2) - clear bit p2 of p1.
+
+   .. line-block::
+       r = p1 & ~(1 << p2)
+
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      LSHIFT t2 t1 p2
+      NOT t3 t2
+      AND r p1 t3
+
+#. **RFLOOR** lnk    *Type*: *arth*
+
+   FLOOR of real to real
+
+   .. code-block:: none
+
+      FFLOOR r p1
+
+#. **DFLOOR** lnk    *Type*: *arth*
+
+   FLOOR of double to double
+
+   .. code-block:: none
+
+      DFLOOR r p1
+
+#. **RCEIL** lnk    *Type*: *arth*
+
+   CELING of real to real
+
+   .. code-block:: none
+
+      FCEIL r p1
+
+#. **DCEIL** lnk    *Type*: *arth*
+
+   CELING of double to double
+
+   .. code-block:: none
+
+      DCEIL r p1
+
+#. **ICMP** lnk lnk    *Type*: *arth*
+
+   Integer comparision of two integer numbers.
+   The compare ILMs are used only in the context of a relational expression
+   and do not by themselves generate code.
+   A compare ILM passes up the opcode of the compare ILI which reflects the
+   data type of the operands to the relational ILM.
+   When the relational ILM using the compare ILM is processed,
+   the appropriate code is generated.
+
+   *Attributes*: spec
+
+#. **RCMP** lnk lnk    *Type*: *arth*
+
+   Compare two single precision floating point numbers.
+
+   *Attributes*: spec
+
+#. **DCMP** lnk lnk    *Type*: *arth*
+
+   Compare two double precision floating point numbers.
+
+   *Attributes*: spec
+
+#. **UICMP** lnk lnk    *Type*: *arth*
+
+   Unsigned integer comparison.
+
+   *Attributes*: spec
+
+#. **UDICMP** lnk lnk    *Type*: *arth*
+
+   Unsigned double integer comparison.
+
+   *Attributes*: spec
+
+#. **PCMP** lnk lnk    *Type*: *arth*
+
+   Pointer comparison.
+
+   *Attributes*: spec
+
+#. **CCMP** lnk lnk    *Type*: *arth*
+
+   Compare two complex numbers.
+   The value computed is 0 if equal and -1 or 1 if not equal.
+
+   *Attributes*: spec
+
+#. **CDCMP** lnk lnk    *Type*: *arth*
+
+   Compare two double complex numbers.
+   The value computed is the same as for the ICMP ILM.
+
+   *Attributes*: spec
+
+#. **SCMP** lnk lnk    *Type*: *fstr*
+
+   Compare two strings.
+   The value computed is the same as for the ICMP ILM.  SCMP has no
+   corresponding vector ILM.
+
+   *Attributes*: spec
+
+#. **NSCMP** lnk lnk    *Type*: *fstr*
+
+   Same as SCMP for ncharacter strings.
+
+   *Attributes*: spec
+
+#. **EQ** lnk    *Type*: *arth*
+
+   Generate true if compare is equal (lnk locates a compare ILM)
+
+   *Attributes*: spec
+
+#. **NE** lnk    *Type*: *arth*
+
+   Generate true if compare is not equal
+
+   *Attributes*: spec
+
+#. **LT** lnk    *Type*: *arth*
+
+   Generate true if compare is less than
+
+   *Attributes*: spec
+
+#. **GE** lnk    *Type*: *arth*
+
+   Generate true if compare is greater than or equal to
+
+   *Attributes*: spec
+
+#. **LE** lnk    *Type*: *arth*
+
+   Generate true if compare is less than or equal to
+
+   *Attributes*: spec
+
+#. **GT** lnk    *Type*: *arth*
+
+   Generate true if compare is greater than
+
+   *Attributes*: spec
+
+#. **SCAT** lnk lnk    *Type*: *fstr*
+
+   Character string concatenation of 2 character expressions
+   (none of which are themselves concatenations).
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      QJSR r =e'%v%ftn_str_copy iv0
+
+#. **NSCAT** lnk lnk    *Type*: *fstr*
+
+   Concatenate ncharacter strings.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      QJSR r =e'%v%ftn_str_copy iv0
+
+#. **LOC** lnk    *Type*: *arth*
+
+   Returns the address represented by a BASE, ELEMENT, or
+   a MEMBER ILM, or substring reference.
+   Used for the '&' operator.
+
+   *Attributes*: spec
+
+#. **BASE** sym    *Type*: *ref*
+
+   Represents base address of a variable, array, struct, or union.
+
+   *Attributes*: spec
+
+#. **ELEMENT** lnk lnk stc    *Type*: *ref*
+
+   Address of an array element reference:
+   lnk1 - subscripted lvalue
+   lnk2 - subscript expression
+   stc  - data type of each element
+
+   *Attributes*: spec
+
+#. **ELEMENT** n lnk1 stc lnk+    *Type*: *ref*
+
+   Address of an array element reference:
+   lnk1 - subscripted lvalue
+   stc  - data type of each element
+   lnk+ - subscript expressions (<= 7)
+
+   *Attributes*: spec
+
+#. **INLELEM** n lnk1 stc lnk+    *Type*: *ref*
+
+   Address of an array element reference.  Generated by function inlining.
+   lnk1 - subscripted lvalue
+   stc  - data type of each element
+   lnk+ - subscript expressions (<= 7)
+
+   *Attributes*: spec
+
+#. **MEMBER** lnk sym    *Type*: *ref*
+
+   Address of a structure member or field reference.
+   lnk  - base address of the structure.
+   sym  - pointer to a struct member ST item.
+
+   *Attributes*: spec
+
+#. **SHAPE** n lnk+    *Type*: *misc*
+
+   Shape ILM.  Links point to SHD ILMs.  One link for each dimension.
+
+   *Attributes*: spec
+
+#. **SHD** lnk lnk lnk    *Type*: *misc*
+
+   Shape descriptor for a dimension.
+   lnk1 - lower bound
+   lnk2 - upper bound
+   lnk3 - stride
+
+   *Attributes*: spec
+
+#. **UCON** sym    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      ICON r v1
+
+#. **ICON** sym    *Type*: *cons*
+
+
+   .. code-block:: none
+
+      ICON r v1
+
+#. **RCON** sym    *Type*: *cons*
+
+
+   .. code-block:: none
+
+      FCON r v1
+
+#. **DCON** sym    *Type*: *cons*
+
+
+   .. code-block:: none
+
+      DCON r v1
+
+#. **CCON** sym    *Type*: *cons*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      FCON rr iv0
+      FCON ir iv0
+
+#. **CDCON** sym    *Type*: *cons*
+
+
+   *Attributes*: spec dcmplx
+
+   .. code-block:: none
+
+      DCON rr iv0
+      DCON ir iv0
+
+#. **ACON** sym    *Type*: *cons*
+
+   Address constant ILM. sym is a symbol table pointer to
+   an address constant.
+   The template is: ACON r v1
+
+   *Attributes*: spec
+
+#. **ACON** sym    *Type*: *cons*
+
+   Address constant. 'sym' must be a symbol table pointer to
+   an address constant for a label.
+   This ILM is generated when an ASSIGN statement is processed.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      ACON r v1
+
+#. **LCON** sym    *Type*: *cons*
+
+   Logical constant.
+
+   .. code-block:: none
+
+      ICON r v1
+
+#. **BR** sym    *Type*: *branch*
+
+   Branch to label indicated by 'sym'.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      JMP null v1
+
+#. **BRT** lnk sym    *Type*: *branch*
+
+   Branch on logical condition true by comparing for zero/nonzero (PGC).
+   'lnk' may point to a constant ILM, in which case it will always
+   be an ICON 0 or 1.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      ICJMPZ null p1 ne v2
+
+#. **BRF** lnk sym    *Type*: *branch*
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      ICJMPZ null p1 eq v2
+
+#. **BRT** lnk sym    *Type*: *branch*
+
+   Branch on logical condition true by testing the low bit (PGFTN).
+   'lnk' may point to a constant ILM.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      LCJMPZ null p1 ne v2
+
+#. **BRF** lnk sym    *Type*: *branch*
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      LCJMPZ null p1 eq v2
+
+#. **SWITCH** lnk stc    *Type*: *branch*
+
+   Switch determinator, where
+   lnk - switch expression
+   stc - relative pointer to switch table, consisting of linked list of case value/label pairs.
+
+   *Attributes*: spec trm
+
+#. **SWTCHLL** lnk stc    *Type*: *branch*
+
+   Switch determinator, where
+   lnk - switch expression
+   stc - relative pointer to switch table, consisting of linked list of case value/label pairs.
+
+   *Attributes*: spec trm
+
+
+#. **IAIF** lnk sym1 sym2 sym3    *Type*: *branch*
+
+   Arithmetic IF branch on integer expression.
+   \'sym's are symbol table pointers to labels.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      ICJMPZ null p1 le v2
+      ICJMPZ null p1 eq v3
+      ICJMPZ null p1 gt v4
+
+#. **RAIF** lnk sym1 sym2 sym3    *Type*: *branch*
+
+   Arithmetic if branch on real expression.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      FCJMPZ null p1 le v2
+      FCJMPZ null p1 eq v3
+      FCJMPZ null p1 gt v4
+
+#. **DAIF** lnk sym1 sym2 sym3    *Type*: *branch*
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      DCJMPZ null p1 le v2
+      DCJMPZ null p1 eq v3
+      DCJMPZ null p1 gt v4
+
+#. **QAIF** lnk sym1 sym2 sym3    *Type*: *branch*
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      QCJMPZ null p1 le v2
+      QCJMPZ null p1 eq v3
+      QCJMPZ null p1 gt v4
+
+#. **AGOTO** n lnk sym\*    *Type*: *branch*
+
+   Assigned GOTO.
+   'lnk' is to an ILD ILM.
+   \'sym's are symbol table pointers
+   to labels specified on the assigned GOTO statement, if any.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      JMPA null t1
+
+#. **CGOTO** lnk stc    *Type*: *branch*
+
+   Computed goto.
+   lnk - ILM of the computed goto index
+   stc - relative pointer to goto/switch table, consisting of linked list of index value/label pairs.
+
+   *Attributes*: spec trm
+
+#. **CHLD** lnk    *Type*: *load*
+
+   Load signed char (byte)
+
+   *Attributes*: spec
+
+#. **UCHLD** lnk    *Type*: *load*
+
+   Load unsigned char (byte)
+
+   *Attributes*: spec
+
+#. **ILD** lnk    *Type*: *load*
+
+   Load long integer
+
+   *Attributes*: spec
+
+#. **UILD** lnk    *Type*: *load*
+
+   Load unsigned long integer
+
+   *Attributes*: spec
+
+#. **UDILD** lnk    *Type*: *load*
+
+   Load unsigned double integer
+
+   *Attributes*: spec
+
+#. **SILD** lnk    *Type*: *load*
+
+   Load short signed integer
+
+   *Attributes*: spec
+
+#. **USILD** lnk    *Type*: *load*
+
+   Load short unsigned integer
+
+   *Attributes*: spec
+
+#. **RLD** lnk    *Type*: *load*
+
+   Load real
+
+   *Attributes*: spec
+
+#. **DLD** lnk    *Type*: *load*
+
+   Load double
+
+   *Attributes*: spec
+
+#. **QLD** lnk    *Type*: *load*
+
+   Load m128
+
+   *Attributes*: spec
+
+#. **M256LD** lnk    *Type*: *load*
+
+   Load m256
+
+   *Attributes*: spec
+
+#. **CLD** lnk    *Type*: *load*
+
+
+   *Attributes*: spec
+
+#. **CDLD** lnk    *Type*: *load*
+
+
+   *Attributes*: spec dcmplx
+
+#. **LLD** lnk    *Type*: *load*
+
+   Load logical value.
+
+   *Attributes*: spec
+
+#. **SLLD** lnk    *Type*: *load*
+
+   Load logical value - LOGICAL\*2
+
+   *Attributes*: spec
+
+#. **PLD** lnk sym    *Type*: *load*
+
+   Load pointer.  For fortran, 'sym' field is used for PLD's
+   generated by inlining array arguments, and points to actual array
+   For C & Fortran, the 'sym' field locates the based object
+   for which the PLD is generated; the 'sym' field is 0 for
+   loads of normal C pointers.
+
+   *Attributes*: spec
+
+#. **FLD** lnk    *Type*: *load*
+
+   Load field.  Always points to a MEMBER ilm.
+
+   *Attributes*: spec
+
+#. **SFLD** lnk    *Type*: *load*
+
+   Load signed field.  Always points to a MEMBER ilm.
+
+   *Attributes*: spec
+
+#. **SUBS** lnk1 lnk2 lnk3    *Type*: *fstr*
+
+   Character substring.  Lnk1 must point to a BASE, MEMBER, or ELEMENT ILM.
+   Lnk2 and lnk3 must point to the integer expressions for the lower
+   and upper bounds respectively.
+
+   *Attributes*: spec
+
+#. **NSUBS** lnk1 lnk2 lnk3    *Type*: *fstr*
+
+   Substring of ncharacter string.
+
+   *Attributes*: spec
+
+#. **NCSELD** lnk    *Type*: *load*
+
+   Non-cse load.  lnk points to a load ilm.  Used for
+   volatile types.  Expands to ILI that forces scheduler to do the load rather
+   then optimizing it away.
+
+   *Attributes*: spec
+
+#. **VLD** stc    *Type*: *load*
+
+   Fake vector load ILM for vector expander.  stc is really
+   index into vector table.
+
+   *Attributes*: spec
+
+#. **CHST** lnk1 lnk2    *Type*: *store*
+
+   Store signed char, lnk1 = lnk2 (??)
+
+   *Attributes*: spec trm
+
+#. **UCHST** lnk1 lnk2    *Type*: *store*
+
+   Store unsigned char, lnk1 = lnk2 (??)
+
+   *Attributes*: spec trm
+
+#. **IST** lnk lnk    *Type*: *store*
+
+   Store into integer variable.
+
+   *Attributes*: spec trm
+
+#. **UIST** lnk lnk    *Type*: *store*
+
+   Store into unsigned long integer
+
+   *Attributes*: spec trm
+
+#. **SIST** lnk lnk    *Type*: *store*
+
+   Store short signed integer
+
+   *Attributes*: spec trm
+
+#. **USIST** lnk lnk    *Type*: *store*
+
+   Store short unsigned integer
+
+   *Attributes*: spec trm
+
+#. **RST** lnk lnk    *Type*: *store*
+
+   Store float
+
+   *Attributes*: spec trm
+
+#. **DST** lnk lnk    *Type*: *store*
+
+   Store double
+
+   *Attributes*: spec trm
+
+#. **QST** lnk lnk    *Type*: *store*
+
+   Store m128
+
+   *Attributes*: spec trm
+
+#. **M256ST** lnk lnk    *Type*: *store*
+
+   Store m256
+
+   *Attributes*: spec trm
+
+#. **CST** lnk lnk    *Type*: *store*
+
+
+   *Attributes*: spec trm
+
+#. **CSTR** lnk lnk    *Type*: *store*
+
+   Store the real part of a single complex
+
+   *Attributes*: spec trm
+
+#. **CSTI** lnk lnk    *Type*: *store*
+
+   Store the imaginary part of a single complex
+
+   *Attributes*: spec trm
+
+#. **CDST** lnk lnk    *Type*: *store*
+
+
+   *Attributes*: spec trm dcmplx
+
+#. **CDSTR** lnk lnk    *Type*: *store*
+
+   Store the real part of a double complex
+
+   *Attributes*: spec trm
+
+#. **CDSTI** lnk lnk    *Type*: *store*
+
+   Store the imaginary part of a double complex
+
+   *Attributes*: spec trm
+
+#. **LST** lnk lnk    *Type*: *store*
+
+
+   *Attributes*: spec trm
+
+#. **SLST** lnk lnk    *Type*: *store*
+
+
+   *Attributes*: spec trm
+
+#. **AST** lnk lnk    *Type*: *store*
+
+   Store address scalar.
+   This ILM is used for an ASSIGN statement.
+   'lnk' points to an ACON ILM.
+
+   *Attributes*: spec trm
+
+#. **SST** lnk1 lnk2    *Type*: *fstr*
+
+   Store character expression into character variable, array element,
+   or substring.
+   Lnk1 and lnk2 point to character expressions.
+   Lnk1 is the destination - cannot be a concatenation.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      QJSR null =e'%v%ftn_str_copy iv0
+
+#. **NSST** lnk1 lnk2    *Type*: *fstr*
+
+   Store ncharacter expression.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      QJSR null =e'%v%ftn_str_copy iv0
+
+#. **PST** lnk lnk    *Type*: *store*
+
+   Store pointer
+
+   *Attributes*: spec trm
+
+#. **PSTRG1** lnk stc    *Type*: *store*
+
+   Store pointer to argument register number stc : used in g++ style thunks
+   to store the adjusted value bask to rdi/rsi etc before jumping through to the function.
+
+   *Attributes*: spec trm
+
+#. **FST** lnk lnk    *Type*: *store*
+
+   Store into field.
+
+   *Attributes*: spec trm
+
+#. **SMOVE** lnk1 lnk2 stc    *Type*: *store*
+
+   Store from one structure into another (of same type).
+   lnk1 - base address of receiving structure (to).
+   lnk2 - base address of stored structure (from).
+   stc is a data type pointer which describes the structures.
+   The expansion of this ILM can generate ILI for a sequence of
+   loads and stores or a call (JSR) to one of:
+   "c_bcopy"  copy bytes
+   "c_hcopy"  copy half-words
+   "c_wcopy"  copy words
+   "c_dcopy"  copy double words
+
+   *Attributes*: spec trm
+
+#. **SZERO** lnk1 lnk2 stc    *Type*: *store*
+
+   Zero memory locations.
+   lnk1 - base address to zero
+   lnk2 - number of units to zero
+   stc  - data type of units to zero: char, short, int, dble
+   The expansion of this ILM can generate ILI for a sequence of
+   stores or a JSR to one of
+   "c_bzero"  zero bytes
+   "c_hzero"  zero halfwords
+   "c_wzero"  zero words
+   "c_dzero"  zero double words
+
+   *Attributes*: spec trm
+
+#. **PSEUDOST** stc lnk    *Type*: *store*
+
+   Pseudo store.
+   This ILM is used to mark an expression whose value may be required
+   later in the ILM block (e.g., for i++, the orginal value of i may be
+   needed as the result of this expression.  The expander will expand
+   this ILM to one of the ILIs (FREEIR, FREEAR, or FREEIR) depending on
+   the type of the register defined by the ILI which lnk locates.
+   stc is just a dummy field (0) so that the ILM requires a total of
+   3 words.
+
+   *Attributes*: spec trm
+
+#. **SPSEUDOST** stc lnk    *Type*: *fstr*
+
+   Character pseudo store.  lnk points to a character expression.
+   stc is the length of the destination.
+   This ILM is used to mark a character expression whose value is
+   restricted by length;  this occurs when a character expression
+   is used as an argument to a statement function and when the result
+   of a character statement function is referenced.
+
+   *Attributes*: spec trm
+
+#. **NSPSEUDOST** stc lnk    *Type*: *fstr*
+
+   Same as SPSEUDOST but for ncharacter type.
+
+   *Attributes*: spec trm
+
+#. **NCSEST** lnk    *Type*: *store*
+
+   Non-cse store.  lnk points to a store ilm.  Used for
+   volatile types.  Expands to ILI that forces scheduler to do the store rather
+   then optimizing it away.
+
+   *Attributes*: spec trm
+
+#. **FAPPLY** n stc lnk lnk\*    *Type*: *proc*
+
+   Call function, where stc is the dtype for the function signature.
+   'n' is the number of actual arguments.
+   'lnk1' is the lvalue of the procedure
+   The other links point to the arguments in the same order they appeared
+   in the actual argument list.
+   If the type of the argument is struct,
+   the lnk will point to
+   an ILM for the address of the struct.
+   For other types of arguments the lnk will just point to
+   the ILM's for the expression.
+
+   *Attributes*: spec
+
+#. **VAPPLY** n stc lnk lnk\*    *Type*: *proc*
+
+   Like FAPPLY, but has trm attribute.
+   The result is discarded if there is one, i.e. if the function signature
+   has a return type other than DT_VOID.
+
+   *Attributes*: spec trm
+
+#. **FINVOKE** n sym stc lnk lnk\*    *Type*: *proc*
+
+   Like FAPPLY, but has label argument indicating where control-flow
+   jumps if the function throws an exception.
+
+   *Attributes*: spec
+
+#. **VINVOKE** n sym stc lnk lnk\*    *Type*: *proc*
+
+   Like VAPPLY, but has label argument similar to FINVOKE.
+
+   *Attributes*: spec trm
+
+#. **VFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call void function, where
+   'n' is the number of actual arguments.
+   'lnk1' is the lvalue of the procedure
+   The links point to the arguments in the same order they appeared
+   in the actual argument list.
+   If the type of the argument is struct,
+   the lnk will point to
+   an ILM for the address of the struct.
+   For other types of arguments the lnk will just point to
+   the ILM's for the expression.
+
+   *Attributes*: spec trm
+
+#. **IFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call integer function.
+
+   *Attributes*: spec
+
+#. **IFUNC** n sym lnk\*    *Type*: *proc*
+
+   Call integer function.
+
+   *Attributes*: spec
+
+#. **IFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+   Call integer function.
+
+   *Attributes*: spec
+
+#. **PIFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call integer function through procedure pointer
+
+   *Attributes*: spec
+
+#. **IVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+   Call integer function.
+
+   *Attributes*: spec
+
+#. **UIFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call unsigned function
+
+   *Attributes*: spec
+
+#. **RFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call float function.  This ILM is only
+   when the compiler is asked to not convert ALL instances
+   of float to double.
+
+   *Attributes*: spec
+
+#. **RFUNC** n sym lnk\*    *Type*: *proc*
+
+   Call real function.
+
+   *Attributes*: spec
+
+#. **RFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+   Call real function.
+
+   *Attributes*: spec
+
+#. **PRFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call real function through procedure pointer
+
+   *Attributes*: spec
+
+#. **RVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+   Call real function.
+
+   *Attributes*: spec
+
+#. **DFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call double function
+
+   *Attributes*: spec
+
+#. **DFUNC** n sym lnk\*    *Type*: *proc*
+
+   Call double function
+
+   *Attributes*: spec
+
+#. **DFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+   Call double function
+
+   *Attributes*: spec
+
+#. **PDFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call double function through procedure pointer
+
+   *Attributes*: spec
+
+#. **DVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+   Call double function
+
+   *Attributes*: spec
+
+#. **QFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call m128 function
+
+   *Attributes*: spec
+
+#. **QFUNC** n sym lnk\*    *Type*: *proc*
+
+   Call m128 function
+
+   *Attributes*: spec
+
+#. **QFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+   Call m128 function
+
+   *Attributes*: spec
+
+#. **M256FUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call m256 function
+
+   *Attributes*: spec
+
+#. **M256FUNC** n sym lnk\*    *Type*: *proc*
+
+   Call m256 function
+
+   *Attributes*: spec
+
+#. **M256FUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+   Call m256 function
+
+   *Attributes*: spec
+
+#. **M256VFUNC** n sym lnk sym lnk\*    *Type*: *proc*
+
+   Call m256 function
+
+   *Attributes*: spec
+
+#. **M256VFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+   Call m256 function
+
+   *Attributes*: spec
+
+#. **QVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+   Call m128 function
+
+   *Attributes*: spec
+
+#. **CALL** n sym lnk\*    *Type*: *proc*
+
+   Call external subprogram.
+   'n' is the number of actual arguments.
+   \'sym' is symbol table pointer to the external subprogram.
+   The links point to the arguments in the same order they appeared
+   in the CALL statement.
+
+   *Attributes*: spec trm
+
+#. **CALLA** n stc lnk lnk\*    *Type*: *proc*
+
+   Call external subprogram.
+   'n' is the number of actual arguments.
+   'lnk1' is address of the subprogram
+   The links point to the arguments in the same order they appeared
+   in the CALL statement.
+
+   *Attributes*: spec trm
+
+#. **PCALLA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call subprogram through procedure pointer
+   \'n' is the number of actual arguments.
+   \'sym' is the pointer's descriptor
+   \'lnk1' is address of the subprogram
+   The links point to the arguments in the same order they appeared
+   in the CALL statement.
+
+   *Attributes*: spec trm
+
+#. **VCALLA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+   Call external subprogram.
+   'n' is the number of actual arguments.
+   \'sym1' is symbol table pointer to the external subprogram.
+   'lnk' ilm of invoking object
+   \'sym2' address of invoking object desc
+   The links point to the arguments in the same order they appeared
+   in the CALL statement.
+
+   *Attributes*: spec trm
+
+#. **CFUNC** n lnk lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec
+
+#. **CDFUNC** n lnk lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CFUNC** n sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec
+
+#. **CFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec
+
+#. **PCFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call complex function through procedure pointer.
+
+   *Attributes*: spec
+
+#. **CVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec
+
+#. **CDFUNC** n sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec dcmplx
+
+#. **CDFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec dcmplx
+
+#. **PCDFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call double complex function through procedure pointer.
+
+   *Attributes*: spec dcmplx
+
+#. **CDVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec dcmplx
+
+#. **LFUNC** n sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec
+
+#. **LFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec
+
+#. **PLFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call logical function through procedure pointer.
+
+   *Attributes*: spec
+
+#. **LVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec
+
+#. **PFUNC** n sym lnk\*    *Type*: *proc*
+
+   Call function which returns a pointer.
+
+   *Attributes*: spec
+
+#. **PFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+   Call function which returns a pointer.
+
+   *Attributes*: spec
+
+#. **PPFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call function which returns a pointer through a procedure pointer.
+
+   *Attributes*: spec
+
+#. **PVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+   Call function which returns a pointer.
+
+   *Attributes*: spec
+
+#. **PFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call function which returns a pointer.
+
+   *Attributes*: spec
+
+#. **SFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call function which returns a structure/union.
+   The second link is the address (a LOC ilm) of the
+   temporary which is used to return the result of the function.
+
+   *Attributes*: spec
+
+#. **SFUNC** n sym lnk\*    *Type*: *proc*
+
+   Call function that has the bind(C) attribute and returns a structure/union.
+   The first link is the address (a LOC ilm) of the
+   temporary which is used to return the result of the function.
+
+   *Attributes*: spec
+
+#. **CHFUNC** n sym lnk lnk\*    *Type*: *proc*
+
+   Call function which returns Fortran character.
+   The first link is the address (a BASE ilm) of the
+   temporary which is used to return the result of the function.
+
+   *Attributes*: spec trm
+
+#. **CHFUNCA** n stc lnk lnk lnk\*    *Type*: *proc*
+
+   Call function which returns Fortran character.
+   The first link is the address (a BASE ilm) of the
+   temporary which is used to return the result of the function.
+
+   *Attributes*: spec trm
+
+#. **PCHFUNCA** n stc sym lnk lnk lnk\*    *Type*: *proc*
+
+   Call function which returns Fortran character through a procedure pointer.
+   The first link is the address (a BASE ilm) of the
+   temporary which is used to return the result of the function.
+
+   *Attributes*: spec trm
+
+#. **CHVFUNCA** n stc sym lnk sym lnk lnk\*    *Type*: *proc*
+
+   Call function which returns Fortran character.
+   The first link is the address (a BASE ilm) of the
+   temporary which is used to return the result of the function.
+
+   *Attributes*: spec trm
+
+#. **NCHFUNC** n sym lnk lnk\*    *Type*: *proc*
+
+   Call function which returns ncharacter.
+
+   *Attributes*: spec trm
+
+#. **NCHFUNCA** n stc lnk lnk lnk\*    *Type*: *proc*
+
+   Call function which returns ncharacter.
+
+   *Attributes*: spec trm
+
+#. **PNCHFUNCA** n stc lnk lnk lnk\*    *Type*: *proc*
+
+   Call function which returns ncharacter through a procedure pointer.
+
+   *Attributes*: spec trm
+
+#. **NCHVFUNCA** n stc sym lnk sym lnk lnk\*    *Type*: *proc*
+
+   Call function which returns ncharacter.
+
+   *Attributes*: spec trm
+
+#. **ARG** lnk lnk stc stc    *Type*: *misc*
+
+   Special purpose ilm for arguments which require special processing.
+   For example, an argument which is a structure or union would
+   use this ilm (the function ilm locates the ARG ilm).
+
+   .. line-block::
+       lnk1 - BASE ilm of temporary (if needed)
+       lnk2 - ilm of argument
+       stc  - dtype of dummy argument
+       stc  - dtype of actual argument
+
+
+   *Attributes*: spec
+
+#. **FARG** lnk stc    *Type*: *misc*
+
+   Special purpose ilm for argument passing, to keep the
+   data type of the actual argument around
+
+   .. line-block::
+       lnk - ilm of argument
+       stc - dtype of actual argument
+
+
+   *Attributes*: spec
+
+#. **PARG** lnk lnk    *Type*: *misc*
+
+   Special purpose ilm for passing arguments with the F90 pointer attribute.
+
+   .. line-block::
+       lnk1 - ilm representing the address of the argument's pointer
+       lnk2 - BASE ilm of the object with the pointer attribute.
+
+
+   *Attributes*: spec
+
+#. **FARGF** lnk stc stc    *Type*: *misc*
+
+   Same as FARG with the addition of a flag denoting certain context.
+
+   .. line-block::
+       lnk  - ilm of argument
+       stc1 - dtype of actual argument
+       stc2 - a bit vector:
+       0x0 - no special case (therefore, same as FARG)
+       0x1 - corresponding formal is CLASS(#)
+
+
+   *Attributes*: spec
+
+#. **FATTR** lnk stc stc    *Type*: *misc*
+
+   ILM which passes up the address of the called procedure and specifies
+   certain attributes, such as stdcall, about the call.
+
+   .. line-block::
+       lnk1 - address of the procedure
+       stc1 - attributes (bit vector):
+       0x0001 - stdcall
+       stc2 - dtype record (TY_PFUNC/TY_FUNC) of the procedure
+
+
+   *Attributes*: spec
+
+#. **ENTRY** sym    *Type*: *misc*
+
+   This ILM is put out as the entry point for each
+   entry point defined in this file is processed (except for the
+   main entry in Fortran).
+   \'sym' is a symbol table
+   pointer to the function name.
+
+   *Attributes*: spec trm
+
+#. **LABEL** sym    *Type*: *misc*
+
+   Marks the position of a user defined or compiler created
+   label within the current ILM block.  'sym' is a symbol table
+   pointer to a label.
+
+   *Attributes*: spec trm
+
+#. **ESTMT** lnk    *Type*: *misc*
+
+   Expression statement -- generated when the value of an
+   expression (other than an assignment or VFUNC) is not
+   referenced (i.e., the value may be discarded).
+   However, the functions appearing in the expression must
+   still be evaluated (because of side effects).
+
+   *Attributes*: spec trm
+
+``RET``
+   Written for a RETURN statement which does not return a value.
+
+   *Attributes*: spec trm
+
+#. **RETV** lnk    *Type*: *misc*
+
+   Return value from function.
+
+   *Attributes*: spec trm
+
+#. **ARET** lnk    *Type*: *misc*
+
+   Alternate return.  'lnk' points to expression defining the
+   alternate return number.
+
+   *Attributes*: spec trm
+
+#. **RETAUTO** sym    *Type*: *misc*
+
+   Return from function after freeing automatic objects.
+   \'sym' is the symbol of the block containing the return.
+
+   *Attributes*: spec trm
+
+#. **RETVAUTO** lnk sym    *Type*: *misc*
+
+   Return value from function after freeing automatic objects.
+   \'sym' is the symbol of the block containing the return.
+
+   *Attributes*: spec trm
+
+``NOP``
+
+   *Attributes*: spec trm
+
+#. **ASM** sym    *Type*: *misc*
+
+   asm ( <string> );  'sym' is the symbol table pointer of the
+   ST_STRING representing <string>.
+
+   *Attributes*: spec trm
+
+#. **GASM** sym lnk lnk lnk    *Type*: *misc*
+
+   asm ( <string> : <outputs> : <inputs> : <clobbers> );
+   \'sym' is the symbol table pointer of the
+   ST_STRING representing <string>.
+   'lnk1' is GASMLNK of list of outputs
+   'lnk2' is GASMLNK of list of inputs
+   'lnk3' is GASMLNK of list of clobber descriptors
+
+   *Attributes*: spec trm
+
+#. **GASMLNK** sym1 lnk lnk sym2 stc3    *Type*: *misc*
+
+   \'sym1' is the symbol table pointer of the ST_STRING representing the
+   descriptor ('=r' for outputs, 'r' for inputs, 'r2' for clobbers)
+   'lnk1' is the link to the output or input expression
+   'lnk2' is the link to the next GASMLNK
+   \'sym2' is the symbol table pointer of the identifier representing the constraint
+   name for an input or output item. It is 0 if no constraint name applies to this
+   item.
+   'stc3' is the dtype of the item.
+
+   *Attributes*: spec trm
+
+``END``
+   End of function -- written when the final '}' is processed.
+
+   *Attributes*: spec trm
+
+``END``
+   End of subroutine or main program - last ILM in ilm file seen by Expander.
+
+   *Attributes*: spec trm
+
+#. **ENDF** lnk    *Type*: *misc*
+
+   End of function subprogram - lnk points to load of the
+   compiler created variable for the function return value.
+
+   *Attributes*: spec trm
+
+#. **DOBEG** lnk sym1 sym2    *Type*: *misc*
+
+   DO-loop begin.  May be used, as an optimization, for certain
+   for loops.
+   ILM's to store the initial DO value into the DO index
+   variable must precede the DOBEG ILM,
+   and a LABEL ILM for the loop-top label must follow it.
+
+   .. line-block::
+
+       lnk - link to expression computing the loop count:
+
+       INT((e2 - e1 + e3) / e3)
+
+       sym1 - symbol table pointer to zero trip label.
+       sym2 - symbol table pointer to DO count temporary.
+
+
+   *Attributes*: spec trm
+
+#. **DOBEGNZ** lnk sym1 sym2 lnk    *Type*: *misc*
+
+   DO-loop begin.  Used as an optimization, for certain
+   for array assignment compiler generated forall loops.
+   ILM's to store the initial DO value into the DO index
+   variable must precede the DOBEGNZ ILM,
+   and a LABEL ILM for the loop-top label must follow it.
+
+   .. line-block::
+
+       lnk - link to expression computing the loop count:
+
+       INT((e2 - e1 + e3) / e3)
+
+       sym1 - symbol table pointer to zero trip label.
+       sym2 - symbol table pointer to DO count temporary.
+       lnk -  link to expression to check if array is zero-size
+
+
+
+   *Attributes*: spec trm
+
+#. **DOENDNZ** sym1 sym2    *Type*: *misc*
+
+   DO-loop end.
+   Always matches a DOBEGNZ ILM.
+
+   .. line-block::
+
+       sym1 - symbol table pointer to loop top label.
+       sym2 - symbol table pointer to DO count variable.
+       This item generates the following for the loop end condtion:
+       v2 <-- v2 - 1
+       if ( v2 > 0 ) goto v1
+
+
+
+   *Attributes*: spec trm
+
+
+#. **DOEND** sym1 sym2    *Type*: *misc*
+
+   DO-loop end.
+   Always matches a DOBEG ILM.
+
+   .. line-block::
+
+       sym1 - symbol table pointer to loop top label.
+       sym2 - symbol table pointer to DO count variable.
+       This item generates the following for the loop end condtion:
+       v2 <-- v2 - 1
+       if ( v2 > 0 ) goto v1
+
+
+   *Attributes*: spec trm
+
+#. **BYVAL** lnk stc    *Type*: *misc*
+
+   General ILM to support passing arguments by value.
+
+   .. line-block::
+       lnk  - link to argument being passed by value
+       stc  - its data type
+
+
+   *Attributes*: spec
+
+#. **DPVAL** lnk    *Type*: *misc*
+
+   This ILM is generated when the %VAL operator is used.
+   'lnk' is a pointer to a 32-bit valued expression.
+
+   *Attributes*: spec
+
+#. **DPREF** lnk    *Type*: *misc*
+
+   This ILM is generated when the %REF operator is used.
+
+   *Attributes*: spec
+
+#. **DPSCON** stc    *Type*: *misc*
+
+   Define parameter which is a short integer constant passed
+   by value.  This ILM is included for the convenience of semant
+   when generating code for io statements.
+
+   *Attributes*: spec
+
+``DPNULL``
+   Define a parameter which is a 'null pointer', i.e. the value 0 is
+   to be passed, and an additional argument for the character length
+   (which equals 0) is to be added to the end of the argument list.
+
+   *Attributes*: spec
+
+#. **CMSIZE** sym    *Type*: *misc*
+
+   Get the size of the common block (sym1).
+
+   *Attributes*: spec
+
+#. **MAD24** lnk lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      IMUL t1 p1 p2
+      IADD r t1 p3
+
+#. **UMAD24** lnk lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      IMUL t1 p1 p2
+      UIADD r t1 p3
+
+#. **MUL24** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      IMUL r p1 p2
+
+#. **UMUL24** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      IMUL r p1 p2
+
+#. **HADD** lnk lnk    *Type*: *arth*
+
+   hadd(x,y), where x and y are char or short, and
+   computed as (x+y) >> 1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      IADD t2 p1 p2
+      RSHIFT r t2 t1
+
+#. **UHADD** lnk lnk    *Type*: *arth*
+
+   hadd(x,y), where x and y are unsigned char or unsigned short, and
+   computed as (x+y) >> 1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      UIADD t2 p1 p2
+      URSHIFT r t2 t1
+
+#. **IHADD** lnk lnk    *Type*: *arth*
+
+   hadd(x,y), where x and y are int, and
+   computed as (x>>1) + (y>>1) + (x&y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      ARSHIFT t2 p1 t1
+      ARSHIFT t3 p2 t1
+      AND t4 p1 p2
+      AND t4 t4 t1
+      IADD t5 t2 t3
+      IADD r t5 t4
+
+#. **UIHADD** lnk lnk    *Type*: *arth*
+
+   hadd(x,y), where x and y are unsigned, and
+   computed as (x>>1) + (y>>1) + (x&y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      URSHIFT t2 p1 t1
+      URSHIFT t3 p2 t1
+      AND t4 p1 p2
+      AND t4 t4 t1
+      UIADD t5 t2 t3
+      UIADD r t5 t4
+
+#. **KHADD** lnk lnk    *Type*: *arth*
+
+   hadd(x,y), where x and y are long, and
+   computed as (x>>1) + (y>>1) + (x&y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      KARSHIFT t2 p1 t1
+      KARSHIFT t3 p2 t1
+      IKMV t1 t1
+      KAND t4 p1 p2
+      KAND t4 t4 t1
+      KADD t5 t2 t3
+      KADD r t5 t4
+
+#. **UKHADD** lnk lnk    *Type*: *arth*
+
+   hadd(x,y), where x and y are unsigned long, and
+   computed as (x>>1) + (y>>1) + (x&y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      KURSHIFT t2 p1 t1
+      KURSHIFT t3 p2 t1
+      IKMV t1 t1
+      KAND t4 p1 p2
+      KAND t4 t4 t1
+      UKADD t5 t2 t3
+      UKADD r t5 t4
+
+#. **RHADD** lnk lnk    *Type*: *arth*
+
+   rhadd(x,y), where x and y are char or short, and
+   computed as (x+y+1) >> 1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      IADD t2 p1 p2
+      IADD t2 t2 t1
+      RSHIFT r t2 t1
+
+#. **URHADD** lnk lnk    *Type*: *arth*
+
+   rhadd(x,y), where x and y are unsigned char or unsigned short, and
+   computed as (x+y+1) >> 1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      UIADD t2 p1 p2
+      UIADD t2 t2 t1
+      URSHIFT r t2 t1
+
+#. **IRHADD** lnk lnk    *Type*: *arth*
+
+   rhadd(x,y), where x and y are int, and
+   computed as (x>>1) + (y>>1) + (x|y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      ARSHIFT t2 p1 t1
+      ARSHIFT t3 p2 t1
+      OR t4 p1 p2
+      AND t4 t4 t1
+      IADD t5 t2 t3
+      IADD r t5 t4
+
+#. **UIRHADD** lnk lnk    *Type*: *arth*
+
+   rhadd(x,y), where x and y are unsigned, and
+   computed as (x>>1) + (y>>1) + (x|y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      URSHIFT t2 p1 t1
+      URSHIFT t3 p2 t1
+      OR t4 p1 p2
+      AND t4 t4 t1
+      UIADD t5 t2 t3
+      UIADD r t5 t4
+
+#. **KRHADD** lnk lnk    *Type*: *arth*
+
+   rhadd(x,y), where x and y are long, and
+   computed as (x>>1) + (y>>1) + (x|y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      KARSHIFT t2 p1 t1
+      KARSHIFT t3 p2 t1
+      IKMV t1 t1
+      KOR t4 p1 p2
+      KAND t4 t4 t1
+      KADD t5 t2 t3
+      KADD r t5 t4
+
+#. **UKRHADD** lnk lnk    *Type*: *arth*
+
+   rhadd(x,y), where x and y are unsigned long, and
+   computed as (x>>1) + (y>>1) + (x|y)&1
+
+   .. code-block:: none
+
+      ICON t1 =i'1
+      KURSHIFT t2 p1 t1
+      KURSHIFT t3 p2 t1
+      IKMV t1 t1
+      KOR t4 p1 p2
+      KAND t4 t4 t1
+      UKADD t5 t2 t3
+      UKADD r t5 t4
+
+#. **VECTFUNC** n lnk stc lnk\*    *Type*: *proc*
+
+   Call function which returns a vector
+   n    - the number of arguments.
+   lnk1 - address of the function being called
+   stc  - the function's vector data type.
+   lnk2 - address (a LOC ilm) of the temporary which is used to return the result of the function.
+   lnk3 ... - user arguments
+
+   *Attributes*: spec
+
+#. **VSCALAR** lnk stc2 stc3    *Type*: *ref*
+
+   Represents the address of a scalar component of a vector
+   lnk  - base address of vector
+   stc2 - which component [0, n-1], where n is the number of components in the vector
+   stc3 - element dtype
+
+   *Attributes*: spec
+
+#. **VSEL** lnk sym stc    *Type*: *ref*
+
+   Represents the address of selecting multiple components from a vector
+   lnk  - base address of vector
+   sym  - component mask (int vector constant)
+   stc  - result vector data type of the components
+
+   *Attributes*: spec
+
+#. **VCON** sym    *Type*: *cons*
+
+
+   .. code-block:: none
+
+      VCON r v1
+
+#. **VLD** lnk stc    *Type*: *load*
+
+   Vector load.
+
+   .. line-block::
+       lnk  - its address
+       stc  - its vector data type
+
+
+   *Attributes*: spec
+
+#. **VLDU** lnk stc    *Type*: *load*
+
+   Vector load (unaligned)
+
+   .. line-block::
+       lnk  - its address
+       stc  - its vector data type
+
+
+   *Attributes*: spec
+
+#. **VNEG** lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VNEG r p1 v2
+
+#. **VADD** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VADD r p1 p2 v3
+
+#. **VSUB** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VSUB r p1 p2 v3
+
+#. **VMUL** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VMUL r p1 p2 v3
+
+#. **VDIV** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VDIV r p1 p2 v3
+
+#. **VDIVZ** lnk lnk stc    *Type*: *arth*
+
+   Vector divide where divide by zero does not fault.
+
+   .. code-block:: none
+
+      VDIVZ r p1 p2 v3
+
+#. **VMOD** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VMOD r p1 p2 v3
+
+#. **VMODZ** lnk lnk stc    *Type*: *arth*
+
+   Vector remainder where divide by zero does not fault.
+
+   .. code-block:: none
+
+      VMODZ r p1 p2 v3
+
+#. **VCVTV** lnk stc stc    *Type*: *arth*
+
+   Vector convert from vector
+
+   .. code-block:: none
+
+      VCVTV r p1 v2 v3
+
+#. **VCVTS** lnk stc    *Type*: *arth*
+
+   Vector convert from scalar
+
+   .. code-block:: none
+
+      VCVTS r p1 v2
+
+#. **VNOT** lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VNOT r p1 v2
+
+#. **VAND** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VAND r p1 p2 v3
+
+#. **VOR** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VOR r p1 p2 v3
+
+#. **VXOR** lnk lnk stc    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      VXOR r p1 p2 v3
+
+#. **VLSHIFTV** lnk lnk stc    *Type*: *arth*
+
+   Vector >> by scalar
+
+   .. code-block:: none
+
+      VLSHIFTV r p1 p2 v3
+
+#. **VRSHIFTV** lnk lnk stc    *Type*: *arth*
+
+   Vector >> by vector
+
+   .. code-block:: none
+
+      VRSHIFTV r p1 p2 v3
+
+#. **VLSHIFTS** lnk lnk stc    *Type*: *arth*
+
+   Vector << by scalar
+
+   .. code-block:: none
+
+      VLSHIFTS r p1 p2 v3
+
+#. **VRSHIFTS** lnk lnk stc    *Type*: *arth*
+
+   Vector >> by scalar
+
+   .. code-block:: none
+
+      VRSHIFTS r p1 p2 v3
+
+#. **VCMP** lnk lnk stc    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **VST** lnk lnk stc    *Type*: *store*
+
+   Vector store.
+   lnk1 - destination
+   lnk2 - source
+   stc  - its vector data type
+
+   *Attributes*: spec trm
+
+#. **VSTU** lnk lnk stc    *Type*: *store*
+
+   Vector store (unaligned)
+   lnk1 - destination
+   lnk2 - source
+   stc  - its vector data type
+
+   *Attributes*: spec trm
+
+#. **ADJARR** sym sym sym    *Type*: *misc*
+
+   This ILM is emitted after every "entry" if the entry has
+   adjustable array arguments. This ILM is used control any additional
+   setup necessary for the array bounds information of the entry's
+   adjustable arrays. This ILM will do nothing if the this is for
+   the primary entry and code has already been emitted for its adjustable
+   arrays.
+   \'sym1' entry symbol
+   \'sym2' label of the additional code
+   \'sym3' label to which the code branches (returns)
+
+   *Attributes*: spec trm
+
+#. **VFENTER** sym    *Type*: *misc*
+
+   Enter a "function" which computes the value of an expression in a
+   variable format item (<expr>).  This ILM is "closed" by a VFRET.
+
+   *Attributes*: spec trm
+
+#. **VFRET** lnk    *Type*: *misc*
+
+   Return the value of an expression in a variable format item (<expr>).
+
+   *Attributes*: spec trm
+
+#. **PRAGMA** stc1 stc2 stc3    *Type*: *misc*
+
+   pragma/directive ILM
+
+#. **FLOATK** lnk    *Type*: *arth*
+
+   Convert long long to real number (REAL and FLOAT intrinsics).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      FLOATK r p1
+
+#. **FLOATUK** lnk    *Type*: *arth*
+
+   Convert unsigned long long to real
+
+   *Attributes*: spec i8
+
+   .. code-block:: none
+
+      FLOATK r t1
+
+#. **DFLOATK** lnk    *Type*: *arth*
+
+   Convert long long to double precision (DFLOAT intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      DFLOATK r p1
+
+#. **DFLOATUK** lnk    *Type*: *arth*
+
+   Convert unsigned long long integer to double precision (DFLOAT intrinsic).
+
+   *Attributes*: spec i8
+
+   .. code-block:: none
+
+      DFLOATUK r p1
+
+#. **KNEG** lnk    *Type*: *arth*
+
+   Integer negation.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KNEG r p1
+
+#. **UKNEG** lnk    *Type*: *arth*
+
+   Integer negation.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKNEG r p1
+
+#. **KADD** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KADD r p1 p2
+
+#. **UKADD** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKADD kr p1 p2
+
+#. **KSUB** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KSUB r p1 p2
+
+#. **UKSUB** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKSUB kr p1 p2
+
+#. **KMUL** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KMUL r p1 p2
+
+#. **UKMUL** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKMUL kr p1 p2
+
+#. **KDIV** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KDIV r p1 p2
+
+#. **UKDIV** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKDIV kr p1 p2
+
+#. **IDIVZ** lnk lnk    *Type*: *arth*
+
+   Signed integer divide where divide by zero does not fault.
+
+   .. code-block:: none
+
+      IDIVZ r p1 p2
+
+#. **UIDIVZ** lnk lnk    *Type*: *arth*
+
+   Unsigned integer divide where divide by zero does not fault.
+
+   .. code-block:: none
+
+      UIDIVZ r p1 p2
+
+#. **KDIVZ** lnk lnk    *Type*: *arth*
+
+   Signed integer64 divide where divide by zero does not fault.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KDIVZ r p1 p2
+
+#. **UKDIVZ** lnk lnk    *Type*: *arth*
+
+   Unsigned integer64 divide where divide by zero does not fault.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKDIVZ kr p1 p2
+
+#. **KTOI** lnk lnk    *Type*: *intr*
+
+   Exponentiation - integer to an integer power.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KPOWI r p1 p2
+
+#. **KTOK** lnk lnk    *Type*: *intr*
+
+   Exponentiation - integer to an integer power.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KPOWK r p1 p2
+
+#. **RTOK** lnk lnk    *Type*: *intr*
+
+
+   .. code-block:: none
+
+      FPOWK r p1 p2
+
+#. **DTOK** lnk lnk    *Type*: *intr*
+
+
+   .. code-block:: none
+
+      DPOWK r p1 p2
+
+#. **CTOK** lnk lnk    *Type*: *intr*
+
+
+   *Attributes*: spec
+
+#. **CDTOK** lnk lnk    *Type*: *intr*
+
+
+   *Attributes*: spec dcmplx
+
+#. **KCMP** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **UKCMP** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec i8
+
+#. **KABS** lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KABS r p1
+
+#. **KFIX** lnk    *Type*: *arth*
+
+   Convert real number to integer\*8 (INT and IFIX intrinsics).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      FIXK r p1
+
+#. **UKFIX** lnk    *Type*: *arth*
+
+   Convert real number to integer\*8 (INT and IFIX intrinsics).
+
+   *Attributes*: spec i8
+
+   .. code-block:: none
+
+      FIXUK r p1
+
+#. **KDFIX** lnk    *Type*: *arth*
+
+   Convert double precision floating point number to integer\*8.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      DFIXK r p1
+
+#. **UKDFIX** lnk    *Type*: *arth*
+
+   Convert double precision floating point number to integer\*8.
+
+   *Attributes*: spec i8
+
+   .. code-block:: none
+
+      DFIXUK r p1
+
+#. **ITOI8** lnk    *Type*: *arth*
+
+   Convert int to long (long long)
+   Convert integer to integer\*8
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      IKMV kr p1
+
+#. **ITOUI8** lnk    *Type*: *arth*
+
+   Convert long to unsigned long (unsigned long long)
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      IKMV kr p1
+
+#. **UITOI8** lnk    *Type*: *arth*
+
+   Convert unsigned int to long (long long)
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UIKMV kr p1
+
+#. **UITOUI8** lnk    *Type*: *arth*
+
+   Convert unsigned int to unsigned long (unsigned long long)
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UIKMV kr p1
+
+#. **I8TOI** lnk    *Type*: *arth*
+
+   Convert long long to long
+   Convert integer\*8 to integer\*4
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **I8TOUI** lnk    *Type*: *arth*
+
+   Convert long long to long
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **UI8TOI** lnk    *Type*: *arth*
+
+   Convert long long to long
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **UI8TOUI** lnk    *Type*: *arth*
+
+   Convert long long to long
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **KNINT** lnk    *Type*: *intr*
+
+   NINT intrinsic (converts real to integer\*8).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DASP t1 p1 sp(0) t1
+      QJSR t2 =e'%l%__mth_i_knint t1
+      DFRKR r t2 krret
+
+#. **KDNINT** lnk    *Type*: *intr*
+
+   KIDNINT intrinsic (converts double to integer).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DADP t1 p1 dp(0) t1
+      QJSR t2 =e'%l%__mth_i_kidnnt t1
+      DFRKR r t2 krret
+
+#. **KMAX** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KMAX r p1 p2
+
+#. **UKMAX** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKMAX r p1 p2
+
+#. **KMIN** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KMIN r p1 p2
+
+#. **UKMIN** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKMIN r p1 p2
+
+#. **KDIM** lnk lnk    *Type*: *intr*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      DAKR t1 p2 dr(1) t1
+      DAKR t2 p1 dr(0) t1
+      QJSR t2 =e'ftn_i_kidim t2
+      DFRKR r t2 krret
+
+#. **KMOD** lnk lnk    *Type*: *arth*
+
+   Integer remainder (MOD intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KMOD r p1 p2
+
+#. **UKMOD** lnk lnk    *Type*: *arth*
+
+   Integer remainder (MOD intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KUMOD r p1 p2
+
+#. **MODZ** lnk lnk    *Type*: *arth*
+
+   Integer remainder where divide by zero does not fault.
+
+   .. code-block:: none
+
+      MODZ r p1 p2
+
+   Integer remainder (MODZ intrinsic).
+
+   .. code-block:: none
+
+      MODZ r p1 p2
+
+#. **UIMODZ** lnk lnk    *Type*: *arth*
+
+   Unsigned integer mod where divide by zero does not fault.
+
+   .. code-block:: none
+
+      UIMODZ r p1 p2
+
+#. **KMODZ** lnk lnk    *Type*: *arth*
+
+   Integer64 remainder where divide by zero does not fault.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KMODZ r p1 p2
+
+#. **UKMODZ** lnk lnk    *Type*: *arth*
+
+   Unsigned integer64 remainder where divide by zero does not fault.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KUMODZ r p1 p2
+
+#. **KSIGN** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCMPZ t1 p2 lt
+      KABS t2 p1
+      KNEG t3 t2
+      KSELECT r t1 t2 t3
+
+#. **KAND** lnk lnk    *Type*: *arth*
+
+   Bitwise logical and of two 64 bit values (AND intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KAND r p1 p2
+
+#. **KOR** lnk lnk    *Type*: *arth*
+
+   Bitwise logical or of two 64 bit values (OR intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KOR r p1 p2
+
+#. **KXOR** lnk lnk    *Type*: *arth*
+
+   Bitwise exclusive or of two 64 bit values (^ operator / EOR intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KXOR r p1 p2
+
+#. **KNOT** lnk    *Type*: *arth*
+
+   Bitwise negation of 64 bit signed value (NOT intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KNOT r p1
+
+#. **UKNOT** lnk    *Type*: *arth*
+
+   Bitwise negation of 64 bit signed value (NOT intrinsic).
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UKNOT r p1
+
+#. **KBITS** lnk lnk lnk    *Type*: *arth*
+
+   IBITS(p1, p2, p3) - extract p3 bits beginning at p2 from p1.
+
+   .. line-block::
+       r = p3 != 0 ? (p1 >> p2) & (-1 >> (64 - p3)) : 0
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KIMV t1 p2
+      KARSHIFT t1 p1 t1
+      KCON t2 =ll'-1
+      KIMV t3 p3
+      ICON t4 =i'64
+      ISUB t4 t4 t3
+      KURSHIFT t5 t2 t4
+      KAND t6 t1 t5
+      KCMPZ t7 p3 eq
+      KSELECT r t7 t6 p3
+
+#. **KBSET** lnk lnk    *Type*: *arth*
+
+   IBSET(p1, p2) - set bit p2 of p1 to 1.
+
+   .. line-block::
+       r = p1 | (1 << p2)
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCON t1 =ll'1
+      KIMV t2 p2
+      KLSHIFT t2 t1 t2
+      KOR r p1 t2
+
+#. **KBTEST** lnk lnk    *Type*: *arth*
+
+   BTEST(p1, p2) - .TRUE. if bit p2 of p1 is 1.
+
+   .. line-block::
+       r = (p1 & (1 << p2)) != 0
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCON t1 =ll'1
+      KIMV t2 p2
+      KLSHIFT t2 t1 t2
+      KAND t3 p1 t2
+      KCMPZ t4 t3 ne
+      IKMV r t4
+
+#. **KBCLR** lnk lnk    *Type*: *arth*
+
+   IBLCR(p1, p2) - clear bit p2 of p1.
+
+   .. line-block::
+       r = p1 & ~(1 << p2)
+
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCON t1 =ll'1
+      KIMV t2 p2
+      KLSHIFT t2 t1 t2
+      KNOT t3 t2
+      KAND r p1 t3
+
+#. **KSHFTC** lnk lnk lnk    *Type*: *intr*
+
+   ISHFTC(p1, p2, p3) - circularly shift the rightmost p3 bits of p1
+   by p2.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      KIMV t2 p3
+      DAIR t1 t2 dr(2) t1
+      KIMV t2 p2
+      DAIR t2 t2 dr(1) t1
+      DAKR t3 p1 dr(0) t2
+      QJSR t1 =e'%l%ftn_i_kishftc t3
+      DFRKR r t1 krret
+
+#. **KULSHIFT** lnk lnk    *Type*: *arth*
+
+   Left shift operator (<<) - first operand is 64 bit unsigned integer
+   value and second is a positive 64-bit integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KIMV t1 p2
+      KLSHIFT r p1 t1
+
+#. **KULSHIFT** lnk lnk    *Type*: *arth*
+
+   Left shift operator (<<) - first operand is 64 bit unsigned integer
+   value and second is a 32-bit positive integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KLSHIFT r p1 p2
+
+#. **KURSHIFT** lnk lnk    *Type*: *arth*
+
+   Right shift operator (>>).  First operand is 64 bit unsigned integer
+   value and second is assumed to be a positive 64-bit integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KIMV t1 p2
+      KURSHIFT r p1 t1
+
+#. **KURSHIFT** lnk lnk    *Type*: *arth*
+
+   Right shift operator (>>).  First operand is 64 bit unsigned integer
+   value and second is assumed to be a positive 32-bit integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KURSHIFT r p1 p2
+
+#. **KAIF** lnk sym1 sym2 sym3    *Type*: *branch*
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      ICJMPZ null p1 le v2
+      ICJMPZ null p1 eq v3
+      ICJMPZ null p1 gt v4
+
+#. **KLD** lnk    *Type*: *load*
+
+
+   *Attributes*: spec i8
+
+#. **KLLD** lnk    *Type*: *load*
+
+   Load logical value.
+
+   *Attributes*: spec i8
+
+#. **KST** lnk lnk    *Type*: *store*
+
+
+   *Attributes*: spec trm
+
+#. **KLST** lnk lnk    *Type*: *store*
+
+
+   *Attributes*: spec trm
+
+#. **KFUNC** n sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec trm i8
+
+#. **KFUNCA** n stc lnk lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec trm i8
+
+#. **PKFUNCA** n stc sym lnk lnk\*    *Type*: *proc*
+
+   Call a function which returns an integer\*8 through a procedure pointer.
+
+   *Attributes*: spec trm i8
+
+#. **KVFUNCA** n stc sym lnk sym lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec trm i8
+
+#. **KFUNC** n lnk lnk\*    *Type*: *proc*
+
+
+   *Attributes*: spec i8
+
+#. **KCON** sym    *Type*: *cons*
+
+
+   *Attributes*: spec i8
+
+#. **KISHFT** lnk lnk    *Type*: *intr*
+
+   ISHFT intrinsic - first operand is 64 bit value and second is positive or
+   negative integer shift count. If the shift count <= -64 or >=64, the
+   result is 0.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KISHFT r p1 p2
+
+#. **DPREF8** lnk    *Type*: *misc*
+
+   This ILM is generated when integer\*8/logical\*8 arguments
+   are passed in certains contexts and where the address needs
+   to be adjusted by expand.
+
+   *Attributes*: spec
+
+#. **LNOT8** lnk    *Type*: *arth*
+
+   Logical negation.  The link must be to an expression of type
+   LOGICAL; depends on internal representation of logical values (VAX or
+   UNIX)
+
+   *Attributes*: spec i8
+
+#. **LNOP8** lnk    *Type*: *arth*
+
+   Logical noop.  Used by semant when space must be reserved
+   for a potential LNOT ILM.  'lnk' points to a logical
+   expression.
+
+   *Attributes*: i8 spec
+
+   .. code-block:: none
+
+      MVIR r p1 iv-1
+
+#. **LAND8** lnk lnk    *Type*: *arth*
+
+   Logical .AND. operation.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KAND r p1 p2
+
+#. **LOR8** lnk lnk    *Type*: *arth*
+
+   Logical .OR. operation.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KOR r p1 p2
+
+#. **LEQV8** lnk lnk    *Type*: *arth*
+
+   Logical .EQV. operation.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCMP t1 p1 p2 eq
+      IKMV r t1
+
+#. **LNEQV8** lnk lnk    *Type*: *arth*
+
+   Logical .NEQV. operation.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KXOR r p1 p2
+
+#. **EQ8** lnk    *Type*: *arth*
+
+   Generate true if compare is equal (lnk locates a compare FLM)
+
+   *Attributes*: spec i8
+
+#. **NE8** lnk    *Type*: *arth*
+
+   Generate true if compare is not equal
+
+   *Attributes*: spec i8
+
+#. **LT8** lnk    *Type*: *arth*
+
+   Generate true if compare is less than
+
+   *Attributes*: spec i8
+
+#. **GE8** lnk    *Type*: *arth*
+
+   Generate true if compare is greater than or equal to
+
+   *Attributes*: spec i8
+
+#. **LE8** lnk    *Type*: *arth*
+
+   Generate true if compare is less than or equal to
+
+   *Attributes*: spec i8
+
+#. **GT8** lnk    *Type*: *arth*
+
+   Generate true if compare is greater than
+
+   *Attributes*: spec i8
+
+#. **K2D** lnk    *Type*: *arth*
+
+   Cast a 64-bit integer to a 64-bit unsigned integer (dword).
+
+   .. code-block:: none
+
+      MVKR r p1 iv-1
+
+#. **K2R** lnk    *Type*: *arth*
+
+   Cast a 64-bit integer to a single precision real.
+
+   .. code-block:: none
+
+      KR2SP r p1
+
+#. **K2I** lnk    *Type*: *arth*
+
+   Cast an integer to a 64-bit integer.
+
+   .. code-block:: none
+
+      KIMV r p1
+
+#. **D2K** lnk    *Type*: *arth*
+
+   Cast a 64-bit unsigned integer (dword) to a 64-bit integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      MVKR r p1 iv-1
+
+#. **R2K** lnk    *Type*: *arth*
+
+   Cast a single precision real to a 64-bit integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      SP2IR r rp1
+
+#. **I2K** lnk    *Type*: *arth*
+
+   Cast an integer to a 64-bit integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UIKMV r p1
+
+#. **KEQV** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: i8
+   Bitwise complement of the exclusive or of two 32 bit values
+
+   .. code-block:: none
+
+      KXOR t1 p1 p2
+      KNOT r t1
+
+#. **UKLD** lnk    *Type*: *load*
+
+   Load unsigned double integer
+
+   *Attributes*: spec i8
+
+#. **UKST** lnk lnk    *Type*: *store*
+
+
+   *Attributes*: spec i8 trm
+
+#. **KAST** lnk lnk    *Type*: *store*
+
+   Store address scalar.
+   This ILM is used for an ASSIGN statement where varref is integer\*8
+   'lnk' points to an ACON ILM.
+
+   *Attributes*: spec trm
+
+#. **KLEN** lnk    *Type*: *fstr*
+
+   Length of a character expression, returned as integer\*8.
+
+   *Attributes*: spec i8
+
+#. **KINDEX** lnk lnk    *Type*: *fstr*
+
+   KINDEX intrinsic (inputs are two character strings and result is an integer\*8).
+
+   *Attributes*: spec i8
+
+#. **UI2K** lnk    *Type*: *arth*
+
+   Cast an unsigned integer to a 64-bit integer.
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      UIKMV r p1
+
+#. **BLEADZ** lnk    *Type*: *intr*
+
+   8-bit integer LEADZ intrinsic
+
+   .. code-block:: none
+
+      ILEADZI r p1 iv0
+
+#. **SLEADZ** lnk    *Type*: *intr*
+
+   16-bit integer LEADZ intrinsic
+
+   .. code-block:: none
+
+      ILEADZI r p1 iv1
+
+#. **ILEADZ** lnk    *Type*: *intr*
+
+   32-bit integer LEADZ intrinsic
+
+   .. code-block:: none
+
+      ILEADZ r p1
+
+#. **KLEADZ** lnk    *Type*: *intr*
+
+   64-bit integer LEADZ intrinsic
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KLEADZ r p1
+
+#. **BTRAILZ** lnk    *Type*: *intr*
+
+   8-bit integer TRAILZ intrinsic
+
+   .. code-block:: none
+
+      ITRAILZI r p1 iv0
+
+#. **STRAILZ** lnk    *Type*: *intr*
+
+   16-bit integer TRAILZ intrinsic
+
+   .. code-block:: none
+
+      ITRAILZI r p1 iv1
+
+#. **ITRAILZ** lnk    *Type*: *intr*
+
+   32-bit integer TRAILZ intrinsic
+
+   .. code-block:: none
+
+      ITRAILZ r p1
+
+#. **KTRAILZ** lnk    *Type*: *intr*
+
+   64-bit integer TRAILZ intrinsic
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KTRAILZ r p1
+
+#. **BPOPCNT** lnk    *Type*: *intr*
+
+   8-bit integer POPCNT intrinsic
+
+   .. code-block:: none
+
+      IPOPCNTI r p1 iv0
+
+#. **SPOPCNT** lnk    *Type*: *intr*
+
+   16-bit integer POPCNT intrinsic
+
+   .. code-block:: none
+
+      IPOPCNTI r p1 iv1
+
+#. **IPOPCNT** lnk    *Type*: *intr*
+
+   32-bit integer POPCNT intrinsic
+
+   .. code-block:: none
+
+      IPOPCNT r p1
+
+#. **KPOPCNT** lnk    *Type*: *intr*
+
+   64-bit integer POPCNT intrinsic
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KPOPCNT r p1
+
+#. **BPOPPAR** lnk    *Type*: *intr*
+
+   8-bit integer POPPAR intrinsic
+
+   .. code-block:: none
+
+      IPOPPARI r p1 iv0
+
+#. **SPOPPAR** lnk    *Type*: *intr*
+
+   16-bit integer POPPAR intrinsic
+
+   .. code-block:: none
+
+      IPOPPARI r p1 iv1
+
+#. **IPOPPAR** lnk    *Type*: *intr*
+
+   32-bit integer POPPAR intrinsic
+
+   .. code-block:: none
+
+      IPOPPAR r p1
+
+#. **KPOPPAR** lnk    *Type*: *intr*
+
+   64-bit integer POPPAR intrinsic
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KPOPPAR r p1
+
+``ENLAB``
+   Marks the position of the first executable statement within
+   a function: Compiler generated
+
+   *Attributes*: spec trm
+
+#. **BMPSCOPE** sym    *Type*: *SMP*
+
+   Begin scope parallel/clause region.
+
+   .. line-block::
+       sym - symbol table entry to scope ST_BLOCK for this region
+
+
+   *Attributes*: spec trm
+
+``EMPSCOPE``
+   End scope for parallel/clause region.
+   Always matches a BMPSCOPE ilm.
+
+   *Attributes*: spec trm
+
+#. **BPAR** lnk    *Type*: *SMP*
+
+   Begin parallel region.
+
+   .. line-block::
+       lnk - link to logical expression (inhibit parallel flag):
+       0       -- parallel execution
+       nonzero -- serial execution
+
+
+   *Attributes*: spec trm
+
+#. **BPARD** lnk    *Type*: *SMP*
+
+   Begin nested parallel region.
+
+   .. line-block::
+       lnk - link to logical expression (inhibit parallel flag):
+       0       -- parallel execution
+       nonzero -- serial execution
+
+
+   *Attributes*: spec trm
+
+``EPARD``
+   End nested parallel region.
+   Always matches a BPARD ilm.
+
+   *Attributes*: spec trm
+
+``EPAR``
+   End parallel region.
+   Always matches a BPAR ilm.
+
+   *Attributes*: spec trm
+
+``BCS``
+   Begin critical section.
+
+   *Attributes*: spec trm
+
+``ECS``
+   End critical section.
+   Always matches a BCS ilm.
+
+   *Attributes*: spec trm
+
+``BARRIER``
+   Barrier; thread synchronization point.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_barrier2 t1
+
+#. **PDO** sym stc    *Type*: *SMP*
+
+   Marks the block associated with label as a parallel loop.
+   \'sym' - symbol table pointer to the label.
+   'stc' - encoded schedule information: stc&0xff          (stc>>8)&Oxff
+   0 static	  0 chunk not specified
+   0 static	  1 chunk is 1
+   0 static	  1 chunk is 'n'
+   1 dynamic         NA
+   2 guided          NA
+   3 interleaved     NA
+   4 runtime         NA
+
+   *Attributes*: spec trm
+
+#. **BSECTIONS** sym    *Type*: *SMP*
+
+   Begin SECTIONS directive.
+
+   .. line-block::
+
+       The BSECTIONS, SECTION, and ESECTIONS ILMs define a sections
+       control structure.  The sequence of ILMs and generated code
+       appear as:
+       BSECTIONS L1
+       if (_mp_lcpu2() .ne. 0) goto L1
+       <section 0>
+       SECTION   1 L2 L1
+       L1:
+       if (_mp_lcpu2() .ne. mod(1, _mp_ncpus2()) goto L2
+       <section 1>
+       SECTION   2 L3 L2
+       L2:
+       if (_mp_lcpu2() .ne. mod(2, _mp_ncpus2()) goto L3
+       <section 2>
+       ...
+       SECTION   n LL Ln
+       Ln:
+       if (_mp_lcpu2() .ne. mod(n, _mp_ncpus2()) goto LL
+       <section n>
+       ESECTIONS LL
+       LL:
+       ...
+
+       sym - symbol table pointer of the label of the next lexical section
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      JSR t2 =e'_mp_lcpu2 t1
+      DFRIR t2 t2 drret
+      ICJMPZ null t2 ne v1
+
+#. **SECTION** lnk sym1 sym2    *Type*: *SMP*
+
+   SECTION directive.
+
+   .. line-block::
+       lnk  - ILM representing the current section number.
+       sym1 - symbol table pointer of the label of the next lexical section
+       sym2 - symbol table pointer of the label which labels this section.
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      JSR t2 =e'_mp_lcpu2 t1
+      DFRIR t2 t2 drret
+      JSR t3 =e'_mp_ncpus2 t1
+      DFRIR t3 t3 drret
+      MOD t3 p1 t3
+      ICJMP null t3 t2 ne v2
+
+#. **LSECTION** lnk sym1 sym2    *Type*: *SMP*
+
+   LSECTION represent the end of last section for llvm target.
+
+   .. line-block::
+       lnk  - ILM representing the current section number.
+       sym1 - symbol table pointer of the label of the next lexical section
+       sym2 - symbol table pointer of the label which labels this section.
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      JSR t2 =e'_mp_lcpu2 t1
+      DFRIR t2 t2 drret
+      JSR t3 =e'_mp_ncpus2 t1
+      DFRIR t3 t3 drret
+      MOD t3 p1 t3
+      ICJMP null t3 t2 ne v2
+
+#. **ESECTIONS** sym    *Type*: *SMP*
+
+   End SECTIONS directive; always matches a BSECTIONS.
+
+   .. line-block::
+       sym - symbol table pointer of the label of the end of the
+       sections/endsections control structure.
+
+
+   *Attributes*: spec trm
+
+#. **MASTER** sym    *Type*: *SMP*
+
+   Begin master section.
+
+   .. line-block::
+       sym - symbol table pointer to the end of section label.
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      JSR t2 =e'_mp_lcpu2 t1
+      DFRIR t2 t2 drret
+      ICJMPZ null t2 ne v1
+
+#. **EMASTER** sym    *Type*: *SMP*
+
+   End master section.
+   Always matches a MASTER ilm.
+
+   .. line-block::
+       sym - symbol table pointer to the end of section label.
+
+
+   *Attributes*: spec trm
+
+#. **SINGLE** lnk sym    *Type*: *SMP*
+
+   Single directive.
+
+   .. line-block::
+       lnk - ILM representing the current single section number.
+       sym - symbol table pointer to the end of section label.
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      JSR t2 =e'_mp_lcpu2 t1
+      DFRIR t2 t2 drret
+      JSR t3 =e'_mp_ncpus2 t1
+      DFRIR t3 t3 drret
+      MOD t3 p1 t3
+      ICJMP null t3 t2 ne v2
+
+#. **ESINGLE** sym    *Type*: *SMP*
+
+   End single section.
+   Always matches a SINGLE ilm.
+
+   .. line-block::
+       sym - symbol table pointer to the end of section label.
+
+
+   *Attributes*: spec trm
+
+``LCPU``
+   Intrinsic for computing the cpu/thread number - only works
+   within the context of BPAR/EPAR.
+
+   *Attributes*: spec
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      JSR t2 =e'_mp_lcpu t1
+      DFRIR r t2 drret
+
+``LCPU2``
+
+   *Attributes*: spec
+   Intrinsic for computing the cpu/thread number - more general
+   version of LCPU.
+
+``LCPU3``
+
+   *Attributes*: spec
+   Intrinsic for computing the cpu/thread number to be used as the subscript
+   of a threadprivate's vector.
+
+``NCPUS``
+
+   *Attributes*: spec
+   Intrinsic for computing the number of cpus/threads - only works
+   within the context of BPAR/EPAR.
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      JSR t2 =e'_mp_ncpus t1
+      DFRIR r t2 drret
+
+``NCPUS2``
+
+   *Attributes*: spec
+   Intrinsic for computing the number of cpus/threads - more general
+   version of NCPUS.
+
+#. **PRE_TLS_COPY** sym    *Type*: *SMP*
+
+   Prepare the copyin for threadprivate in TLS. Thread that comes upon the
+   parallel  region must save tls-threaprivate address.
+
+   .. line-block::
+       sym - symbol of the tls-threadprivate that is to be copied.
+
+
+   *Attributes*: spec trm
+
+``BCOPYIN``
+   Begin a copyin block.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_copyin_init t1
+
+#. **COPYIN** sym    *Type*: *SMP*
+
+   Copyin a threadprivate common block or member
+
+   .. line-block::
+       sym - symbol table entry of the object to be copied in; if it's
+       ST_CMBLK, the whole common block is copied in.
+
+
+   *Attributes*: spec trm
+
+#. **COPYIN_A** sym lnk    *Type*: *SMP*
+
+   Copyin a threadprivate allocatable
+
+   .. line-block::
+       sym - symbol table entry of the allocatable object to be copied in.
+       lnk - size of the allocatable
+
+
+   *Attributes*: spec trm
+
+#. **COPYIN_CL** sym1 sym2    *Type*: *SMP*
+
+   Copyin a threadprivate common block or member
+
+   .. line-block::
+       sym1 - symbol table entry of the object to be copied in; if it's
+       ST_CMBLK, the whole common block is copied in.
+       sym2 -  symbol table entry of the assignment operator routine
+
+
+   *Attributes*: spec trm
+
+``ECOPYIN``
+   End a copyin block.
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_copyin_term t1
+
+#. **BCOPYPRIVATE** lnk    *Type*: *SMP*
+
+   Begin a copyprivate block.
+
+   .. line-block::
+       lnk - thread number of the thread from which the value(s) are to be copied
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_copypriv_init t1
+
+#. **COPYPRIVATE_P** lnk1 lnk2    *Type*: *SMP*
+
+   Copyprivate (out) a private variables
+
+   .. line-block::
+       lnk1 - thread number of the thread from which the value(s) are to be copied
+       lnk2 - link to the data item that is the object of the COPYPRIVATE
+
+
+   *Attributes*: spec trm
+
+#. **COPYPRIVATE_PA** lnk1 lnk2 lnk3    *Type*: *SMP*
+
+   Copyprivate (out) a private allocatable variable
+
+   .. line-block::
+       lnk1 - thread number of the thread from which the value(s) are to be copied
+       lnk2 - link to the data item that is the object of the COPYPRIVATE
+       lnk3 - size of the allocatable
+
+
+   *Attributes*: spec trm
+
+#. **COPYPRIVATE_CL_P** lnk1 lnk2 sym    *Type*: *SMP*
+
+   Copyprivate (out) a C++ private variable of type class
+
+   .. line-block::
+       lnk1 - thread number of the thread from which the value(s) are to be copied
+       lnk2 - link to the data item that is the object of the COPYPRIVATE
+       sym - symbol table enttry of the assignment operator routine
+
+
+   *Attributes*: spec trm
+
+#. **COPYPRIVATE** lnk sym    *Type*: *SMP*
+
+   Copyprivate (out) a threadprivate common block, common block member, or variable
+
+   .. line-block::
+       lnk - thread number of the thread from which the value(s) are to be copied
+       sym - symbol table entry of the object to be copied out; if it's
+       ST_CMBLK, the whole common block is copied out.
+
+
+   *Attributes*: spec trm
+
+#. **COPYPRIVATE_CL** lnk1 sym1 sym2    *Type*: *SMP*
+
+   Copyprivate (out) a threadprivate C++ variable of type class
+
+   .. line-block::
+       lnk1 - thread number of the thread from which the value(s) are to be copied
+       sym1 - symbol table entry of the class object to be copied out
+       sym2 - link to the ilms loading the assignment operator routine
+
+
+   *Attributes*: spec trm
+
+#. **ECOPYPRIVATE** lnk    *Type*: *SMP*
+
+   End a copyprivate block.
+
+   .. line-block::
+       lnk - thread number of the thread from which the value(s) are to be copied
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_copypriv_term t1
+
+``FLUSH``
+   Flush to memory
+
+   *Attributes*: spec trm
+
+#. **P** sym    *Type*: *SMP*
+
+   P(semaphore) - begin a critical section.
+
+   .. line-block::
+       sym - symbol table entry of a semaphore variable
+
+
+   *Attributes*: spec trm
+
+#. **V** sym    *Type*: *SMP*
+
+   V(semaphore) - end a critical section.
+
+   .. line-block::
+       sym - symbol table entry of a semaphore variable
+
+
+   *Attributes*: spec trm
+
+#. **PREFETCH** lnk stc    *Type*: *misc*
+
+   Cache prefetch.
+
+   .. line-block::
+       lnk1 - ILM link to an address
+       stc2 - prefetch flag (for future use).
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      PREFETCH null p1
+
+#. **BBND** sym stc    *Type*: *misc*
+
+   BBND begins the ILMs of the assignments of the bounds
+   of an adjustable array when it's unknown by
+   semant that the array is dummy or allocatable
+   at the time the array is declared.
+   This could occur when an adjustable array is declared
+   before its appearance in an ENTRY statement.
+   If the array is a dummy argument,
+   the expander will skip the ensuing bounds assignments.
+
+   .. line-block::
+       sym - symbol table entry of an array with adjustable bounds
+       stc - number of words in the ensuing block of ILMs
+       representing the adjustable bounds.
+
+
+   *Attributes*: spec trm
+
+#. **FILE** stc stc stc    *Type*: *misc*
+
+   FILE gives file information when inlining a file.
+   First operand is the line number.
+   Second operand is the FIH index of the current file (source or include file).
+   Third operand is the global ILM index.
+
+   *Attributes*: spec trm
+
+#. **ALLOC** lnk    *Type*: *arth*
+
+   Allocate memory for a C or C++ variable length array.
+
+   .. code-block:: none
+
+      ALLOC r p1
+
+#. **DEALLOC** lnk    *Type*: *misc*
+
+   Deallocate memory that was allocated by ALLOC.
+
+   *Attributes*: spec trm
+
+#. **ALLOCA** lnk lnk sym stc    *Type*: *arth*
+
+   Use the alloca builtin to create stack space.
+
+   .. line-block::
+       lnk - number of elements
+       lnk - size (units of bytes) of the base type
+       sym - symbol table entry of the automatic array
+       stc - flags: 0 - function level; 1 - from inliner
+
+
+   *Attributes*: spec
+
+#. **DEALLOCA** lnk sym1 sym2 stc    *Type*: *misc*
+
+   Deallocate memory that was allocated by ALLOCA.
+   Generally, this is a no-op, but if IM_ALLOCA reverts to using
+   the heap, need to explicitly free.
+   lnk  - load of array's pointer variable
+   sym1 - symbol table entry of the automatic array
+   sym2 - symbol table entry of the deallocation routine
+   stc - flags: 0 - function level; 1 - from inliner
+
+   *Attributes*: spec trm
+
+#. **BPARN** lnk lnk    *Type*: *SMP*
+
+   Begin parallel region with num_threads.
+
+   .. line-block::
+       lnk1 - link to logical expression (inhibit parallel flag):
+       0       -- parallel execution
+       nonzero -- serial execution
+       lnk2 - link to the num_threads values
+
+
+   *Attributes*: spec trm
+
+#. **BPARA** lnk lnk stc1 stc2    *Type*: *SMP*
+
+   Begin parallel region with num_threads and proc_bind.
+
+   .. line-block::
+       lnk1 - link to logical expression (inhibit parallel flag):
+       0       -- parallel execution
+       nonzero -- serial execution
+       lnk2 - link to the num_threads values
+       stc1 - bit vector:
+       0x01 - proc_bind is present
+       0x02 - num_thread is presetnt
+       0x04 - if is present
+       stc2:
+       0x0  - proc_bind - false
+       0x02 - proc_bind - master
+       0x03 - proc_bind - close
+       0x04 - proc_bind - spread
+
+
+   *Attributes*: spec trm
+
+``EPARN``
+   End parallel region.
+   Always matches a BPARN ilm.
+
+   *Attributes*: spec trm
+
+#. **BLOCK** sym    *Type*: *misc*
+
+   Beginning of a lexical block; sym is the symbol table pointer to the
+   block symbol.
+
+   *Attributes*: spec trm
+
+#. **PCMP** lnk lnk    *Type*: *arth*
+
+   Pointer comparison for Fortran.
+
+   *Attributes*: spec
+
+#. **PRAGMASYM** n stc stc sym\*    *Type*: *misc*
+
+   Handles a pragma with a list of symbols.
+   First stc is the pragma identifier, 2nd stc is the scope.
+
+   *Attributes*: spec trm
+
+#. **PRAGMAEXPR** n stc stc lnk stc\*    *Type*: *misc*
+
+   Handles a pragma with an expression argument
+   First stc is the pragma identifier, 2nd stc is the scope.
+   Link is the expression.
+   List of stc gives any other arguments.
+
+   *Attributes*: spec trm
+
+#. **PRAGMASYMEXPR** n stc stc sym lnk\*    *Type*: *misc*
+
+   Handles a pragma with a symbol and a number of expression arguments.
+   First stc is the pragma identifier, 2nd stc is the scope.
+   Sym is the symbol.
+   Links point to the arguments.
+
+   *Attributes*: spec trm
+
+#. **PRAGMAGEN** n stc stc stc\*    *Type*: *misc*
+
+   Handles a pragma with no expression and no symbol arguments.
+   First stc is the pragma identifier, 2nd stc is the scope.
+   List of stc gives any other arguments.
+
+   *Attributes*: spec trm
+
+#. **MPLOOP** sym sym sym sym sym stc stc    *Type*: *SMP*
+
+   Begin parallel do/loop
+   sym - lower bound
+   sym - upper bound
+   sym - stride
+   sym - chunk
+   sym - plast
+   stc -  dtype of loop bound type
+   stc -  schedule type
+
+   *Attributes*: spec trm
+
+#. **MPDISTLOOP** sym sym sym sym sym sym stc stc    *Type*: *SMP*
+
+   Begin parallel do/loop
+   sym - lower bound
+   sym - upper bound
+   sym - stride
+   sym - chunk
+   sym - plast
+   sym - upperD
+   stc -  dtype of loop bound type
+   stc -  schedule type
+
+   *Attributes*: spec trm
+
+``BTASKDUP``
+   Begin taskdup routine
+
+   *Attributes*: spec trm
+
+``ETASKDUP``
+   End taskdup routine
+
+   *Attributes*: spec trm
+
+#. **MPTASKLOOP** sym sym sym sym stc    *Type*: *SMP*
+
+   Begin taskloop
+   sym - lower bound
+   sym - upper bound
+   sym - stride
+   sym - last iteration
+   stc -  dtype of loop bound type
+
+   *Attributes*: spec trm
+
+#. **TASKLASTPRIV** sym    *Type*: *SMP*
+
+   taskloop lastprivate offset on task structure
+   sym - offset constant
+
+   *Attributes*: spec trm
+
+#. **MPLOOPFINI** stc stc    *Type*: *SMP*
+
+   Begin parallel do/loop
+   stc - dtype of loop bound type
+   stc - schedule type
+
+   *Attributes*: spec trm
+
+#. **MPSCHED** sym sym sym sym stc    *Type*: *SMP*
+
+   Begin parallel do/loop schedule
+   sym - lower bound
+   sym - upper bound
+   sym - stride
+   sym - plast
+   stc - dtype of loop bound type
+
+   *Attributes*: spec trm
+
+``MPBORDERED``
+   Begin KMPC ordered region
+
+   *Attributes*: spec trm
+
+``MPEORDERED``
+   End KMPC ordered region
+
+   *Attributes*: spec trm
+
+``BPDO``
+   Begin parallel do/loop
+
+   *Attributes*: spec trm
+
+``EPDO``
+   End parallel do/loop
+   Always matches a BPDO ilm.
+
+   *Attributes*: spec trm
+
+#. **CANCEL** sym stc lnk    *Type*: *SMP*
+
+   Cancel construct
+
+   .. line-block::
+       sym - symbol table pointer to the end of construct label.
+       stc - bit vector:
+       0x01 - parallel
+       0x02 - loop
+       0x03 - sections
+       0x04 - taskgroup
+       lnk - link to the logical expression in the if clause; if the clause
+       is absent, this field is 1 - always call cancel.
+
+
+   *Attributes*: spec trm
+
+#. **CANCELPOINT** sym stc    *Type*: *SMP*
+
+   Cancellation construct
+
+   .. line-block::
+       sym - symbol table pointer to the end of construct label.
+       stc - bit vector:
+       0x01 - parallel
+       0x02 - loop
+       0x03 - sections
+       0x04 - taskgroup
+
+
+   *Attributes*: spec trm
+
+#. **TASKFIRSTPRIV** sym sym    *Type*: *SMP*
+
+   Task firstprivate
+   sym - symbol table pointer to the shared variable.
+   sym - symbol table pointer to the private copy.
+
+   *Attributes*: spec trm
+
+#. **BTASK** sym stc lnk lnk    *Type*: *SMP*
+
+   Begin task
+   Always matches a ETASK ilm
+
+   .. line-block::
+       sym - symbol table pointer to the end of task label.
+       If this is llvm and C, this will actually be a symbol
+       table pointer to the flags variable that should already be initialized.
+       stc - bit vector:
+       0x01 - untied clause is present
+       0x02 - if clause is present
+       lnk1 - link to the logical expression in the if clause; if the clause
+       is absent, this field is 'null' (BOS_SIZE)
+       lnk2 - link to the logical expression in the final clause; if the clause
+       is absent, this field is 'null'
+
+
+   *Attributes*: spec trm
+
+#. **BTASKLOOP** sym stc lnk lnk lnk lnk    *Type*: *SMP*
+
+   Begin taskloop
+   Always matches a ETASKLOOP ilm
+
+   .. line-block::
+       sym - symbol table pointer to the end of taskloop label.
+       If this is llvm and C, this will actually be a symbol
+       table pointer to the flags variable that should already be initialized.
+       stc - bit vector:
+       0x01 - untied clause is present
+       0x02 - if clause is present
+       0x20 - if final is present
+       0x80 - if mergeable is present
+       0x1000 - nogroup clause is present
+       0x2000 - grainsize clause is present
+       0x4000 - num_tasks clause is present
+       lnk1 - link to the logical expression in the if clause; if the clause
+       is absent, this field is 'null' (BOS_SIZE)
+       lnk2 - link to the logical expression in the final clause; if the clause
+       is absent, this field is 'null'
+       lnk3 - link to priority expression, if clause is absent, this file is 0
+       lnk4 - link to grainsize or num_tasks, if clause is abssent, this field
+
+
+   *Attributes*: spec trm
+
+``ETASKGROUP``
+   Begin Task group.
+
+   *Attributes*: spec trm
+
+``TASKGROUP``
+   End of Task group.
+
+   *Attributes*: spec trm
+
+``ETEAMS``
+   End of Teams register.
+
+   *Attributes*: spec trm
+
+``BTEAMS``
+   Teams register
+
+   *Attributes*: spec trm
+
+#. **BTEAMSN** lnk lnk    *Type*: *SMP*
+
+   Teams register
+   lnk1 - link to num_teams expression.
+   lnk2 - link to thread limit expression.
+
+   *Attributes*: spec trm
+
+``ETARGETDATA``
+   End of target data
+
+   *Attributes*: spec trm
+
+#. **BTARGETDATA** lnk    *Type*: *SMP*
+
+   Begin target data
+
+   .. line-block::
+       lnk - link to logical expression (inhibit target data flag):
+       0       -- target data execution on host(device is host)
+       nonzero -- target data execution on device
+
+
+   *Attributes*: spec trm
+
+#. **BTARGETUPDATE** lnk stc    *Type*: *SMP*
+
+   Begin target update
+
+   .. line-block::
+       lnk - link to logical expression (inhibit target update flag):
+       0       -- nop
+       nonzero -- target update execution
+       stc - flag for target [inout|out|in|nowait|if]
+
+
+   *Attributes*: spec trm
+
+#. **TARGETUPDATE** n stc lnk lnk\*    *Type*: *SMP*
+
+   Handles a to/from clause from target update with a link to a symbol and a number of expression arguments.
+
+   .. line-block::
+       n - number of extra args
+       stc - map type
+       lnk - symbol to be mapped
+
+
+   *Attributes*: spec trm
+
+``ETARGETUPDATE``
+   End target update
+
+   *Attributes*: spec trm
+
+#. **TARGETENTERDATA** lnk stc    *Type*: *SMP*
+
+   Begin target enter data
+
+   .. line-block::
+       lnk - link to logical expression (inhibit target enter data flag):
+       0       -- target enter data execution on host(device is host)
+       nonzero -- target enter execution on device
+       stc - flag for target [inout|out|in|nowait|if]
+
+
+   *Attributes*: spec trm
+
+#. **TARGETEXITDATA** lnk stc    *Type*: *SMP*
+
+   Begin target exit data
+
+   .. line-block::
+       lnk - link to logical expression (inhibit target exit data flag):
+       0       -- target exit data execution on host(device is host)
+       nonzero -- target exit data execution on device
+       stc - flag for target [inout|out|in|nowait|if]
+
+
+   *Attributes*: spec trm
+
+``ETARGET``
+   End of Target register.
+
+   *Attributes*: spec trm
+
+#. **BTARGET** lnk stc    *Type*: *SMP*
+
+   Target register
+
+   .. line-block::
+       lnk - link to logical expression (inhibit target exit data flag):
+       0       -- target exit data execution on host(device is host)
+       nonzero -- target exit data execution on device
+       stc - flag for target [inout|out|in|nowait|if]
+
+
+   *Attributes*: spec trm
+
+``EDISTRIBUTE``
+   End of Distribute register.
+
+   *Attributes*: spec trm
+
+``BDISTRIBUTE``
+   Distribute register
+
+   *Attributes*: spec trm
+
+``ETASKREG``
+   End of Task register used in llvm target to mark the end of task region.
+
+   *Attributes*: spec trm
+
+``TASKREG``
+   Task register
+
+   *Attributes*: spec trm
+
+``ETASKLOOPREG``
+   End of Taskloop register used in llvm target to mark the end of task region.
+
+   *Attributes*: spec trm
+
+``TASKLOOPVARS``
+   Begin set up taskloop variables
+
+   *Attributes*: spec trm
+
+#. **TASKLOOPREG** lnk lnk lnk    *Type*: *SMP*
+
+   Begin taskloop register
+
+   .. line-block::
+       stc - bit vector
+       lnk1 -  lowerbound
+       lnk2 -  upperbound
+       lnk3 -  stride
+       .AT spec trm
+       .OP NULL t1 iv0
+       .OP QJSR null =e'_mp_task_begin t1
+       .IL ETASK SMP sym
+       End task
+       Always matches a BTASK ilm
+       .nf
+       sym - symbol table pointer to the end of task label.
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_task_end t1
+
+#. **ETASKLOOP** sym    *Type*: *SMP*
+
+   End taskloop
+   Always matches a BTASKLOOP ilm
+
+   .. line-block::
+       sym - symbol table pointer to the end of task label.
+
+
+   *Attributes*: spec trm
+
+``TASKWAIT``
+   Taskwait
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_task_wait t1
+
+``TASKYIELD``
+   Taskyield
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      NULL t1 iv0
+      QJSR null =e'_mp_task_yield t1
+
+``BMPPG``
+   Mark the block representing possible prologue of an mp region for
+   the parallel, parallel do, parallel section, & task directives.
+
+   *Attributes*: spec trm
+
+``EMPPG``
+   End the mp region to which the prologue applies.
+   Always matches a BMPPG ilm.
+
+   *Attributes*: spec trm
+
+``BAMPPG``
+   Add the ensuing code to the prologue
+
+   *Attributes*: spec trm
+
+``EAMPPG``
+   End adding to the prologue.
+   Always matches a BAMPPG ilm.
+
+   *Attributes*: spec trm
+
+#. **INLINE_START** sym    *Type*: *misc*
+
+   INLINE_START is put out at the beginning of an lined function to tell zc_eh
+   processing to process a possible region
+
+   *Attributes*: spec trm
+
+#. **INLINE_END** sym    *Type*: *misc*
+
+   INLINE_END is put out at the end of an lined function to tell zc_eh
+   processing to process a possible region
+
+   *Attributes*: spec trm
+
+``BEGIN_CATCH``
+   Mark the beginning of a user's C++ catch region for GSCOPE purposes
+
+   *Attributes*: spec trm
+
+``END_CATCH``
+   Mark the end of a user's C++ catch region for GSCOPE purposes
+
+   *Attributes*: spec trm
+
+#. **EHREG_ST** sym sym    *Type*: *misc*
+
+   Store catch_clause, caught_object to registers
+
+   *Attributes*: spec trm
+
+#. **EHRESUME** sym sym    *Type*: *misc*
+
+   Resume propagation of an existing in-flight exception whose unwinding was
+   interrupted to run some cleanup code.
+
+   *Attributes*: spec trm
+
+#. **PRAGMASLIST** n stc stc lnk\*    *Type*: *misc*
+
+   Handles a pragma with a list of links to symbols.
+   First stc is the pragma identifier, 2nd stc is the scope.
+
+   *Attributes*: spec trm
+
+#. **PRAGMASELIST** n stc stc lnk lnk\*    *Type*: *misc*
+
+   Handles a pragma with a link to a symbol and a number of expression arguments.
+   First stc is the pragma identifier, 2nd stc is the scope.
+   Sym is the symbol link.
+   Links point to the arguments.
+
+   *Attributes*: spec trm
+
+#. **SCOPEBEGIN** sym sym    *Type*: *misc*
+
+   Start a new lexical scope; first symbol is the block symbol, second symbol
+   is the label for the beginning of the scope.
+
+#. **SCOPEEND** sym sym    *Type*: *misc*
+
+   End an existing lexical scope; first symbol is the block symbol, second symbol
+   is the label for the end of the scope.
+
+#. **X87CON** sym    *Type*: *cons*
+
+   x87 80-bit extended precision constant.
+
+   .. code-block:: none
+
+      X87CON r v1
+
+#. **X87LD** lnk    *Type*: *load*
+
+   x87 80-bit extended precision load.
+
+   *Attributes*: spec
+
+#. **X87ST** lnk lnk    *Type*: *store*
+
+   x87 80-bit extended precision store.
+
+   *Attributes*: spec trm
+
+#. **X87FROM** lnk stc    *Type*: *arth*
+
+   Convert the DT_xxx type encoded by 'stc' to x87 80-bit extended precision.
+
+   *Attributes*: spec
+
+#. **X87TO** lnk stc    *Type*: *arth*
+
+   Convert x87 80-bit extended precision to the DT_xxx type encoded by 'stc'.
+
+   *Attributes*: spec
+
+#. **X87NEG** lnk    *Type*: *arth*
+
+   x87 80-bit extended precision negation.
+
+   .. code-block:: none
+
+      X87CHS r p1
+
+#. **X87ADD** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision addition.
+
+   .. code-block:: none
+
+      X87ADD r p1 p2
+
+#. **X87SUB** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision subtraction.
+
+   .. code-block:: none
+
+      X87SUB r p1 p2
+
+#. **X87MUL** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision multiplication.
+
+   .. code-block:: none
+
+      X87MUL r p1 p2
+
+#. **X87DIV** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision division.
+
+   .. code-block:: none
+
+      X87DIV r p1 p2
+
+#. **X87CMP** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision comparison.
+
+   *Attributes*: spec
+
+#. **X87FUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call long double function returning x87 80-bit extended precision.
+
+   *Attributes*: spec
+
+#. **X87CMPLX** lnk lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **X87REAL** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **X87IMAG** lnk    *Type*: *arth*
+
+
+   *Attributes*: spec
+
+#. **CX87CON** sym    *Type*: *cons*
+
+   x87 80-bit extended precision complex constant.
+
+   *Attributes*: spec x87cmplx
+
+#. **CX87LD** lnk    *Type*: *load*
+
+   x87 80-bit extended precision complex load.
+
+   *Attributes*: spec x87cmplx
+
+#. **CX87ST** lnk lnk    *Type*: *store*
+
+   x87 80-bit extended precision complex store.
+
+   *Attributes*: spec trm x87cmplx
+
+#. **CX87STR** lnk lnk    *Type*: *store*
+
+   Store the real part of a long double complex
+
+   *Attributes*: spec trm
+
+#. **CX87STI** lnk lnk    *Type*: *store*
+
+   Store the imaginary part of a long double complex
+
+   *Attributes*: spec trm
+
+#. **CX87NEG** lnk    *Type*: *arth*
+
+   x87 80-bit extended precision complex negation.
+
+   *Attributes*: x87cmplx
+
+   .. code-block:: none
+
+      X87CHS rr rp1
+      X87CHS ir ip1
+
+#. **CX87ADD** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision complex addition.
+
+   *Attributes*: x87cmplx
+
+   .. code-block:: none
+
+      X87ADD rr rp1 rp2
+      X87ADD ir ip1 ip2
+
+#. **CX87SUB** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision complex subtraction.
+
+   *Attributes*: x87cmplx
+
+   .. code-block:: none
+
+      X87SUB rr rp1 rp2
+      X87SUB ir ip1 ip2
+
+#. **CX87MUL** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision complex multiplication.
+
+   *Attributes*: x87cmplx
+
+   .. code-block:: none
+
+      X87MUL t1 rp1 rp2
+      X87MUL t2 ip1 ip2
+      X87SUB rr t1 t2
+      X87MUL t1 ip1 rp2
+      X87MUL t2 ip2 rp1
+      X87ADD ir t2 t1
+
+#. **CX87DIV** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision complex division.
+
+   *Attributes*: x87cmplx
+
+   .. code-block:: none
+
+      X87MUL t1 rp2 rp2
+      X87MUL t2 ip2 ip2
+      X87ADD t1 t1 t2
+      X87MUL t2 rp1 rp2
+      X87MUL t3 ip1 ip2
+      X87ADD t2 t2 t3
+      X87DIV rr t2 t1
+      X87MUL t2 ip1 rp2
+      X87MUL t3 rp1 ip2
+      X87SUB t2 t2 t3
+      X87DIV ir t2 t1
+
+#. **CX87CMP** lnk lnk    *Type*: *arth*
+
+   x87 80-bit extended precision complex comparison.
+
+   *Attributes*: spec x87cmplx
+
+#. **CX87FUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call long double complex function returning x87 80-bit extended precision
+   complex.
+
+   *Attributes*: spec x87cmplx
+
+
+
+``BEGINATOMIC``
+   Start marker for an ACC Atomic statement.
+
+   *Attributes*: spec trm
+
+``ENDATOMIC``
+   End marker for an ACC Atomic statement.
+
+   *Attributes*: spec trm
+
+``BEGINATOMICREAD``
+   Start marker for an ACC Atomic Read statement.
+
+   *Attributes*: spec trm
+
+``ENDATOMICREAD``
+   End marker for an ACC Atomic Read statement.
+
+   *Attributes*: spec trm
+
+``BEGINATOMICWRITE``
+   Start marker for an ACC Atomic Write statement.
+
+   *Attributes*: spec trm
+
+``ENDATOMICWRITE``
+   End marker for an ACC Atomic Write statement.
+
+   *Attributes*: spec trm
+
+``BEGINATOMICCAPTURE``
+   Start marker for an ACC Atomic Capture block.
+
+   *Attributes*: spec trm
+
+``ENDATOMICCAPTURE``
+   End marker for an ACC Atomic Capture block.
+
+   *Attributes*: spec trm
+
+``MP_ATOMIC``
+   Begin atomic region.
+   Always matches a ENDATOMIC ilm.
+
+   *Attributes*: spec trm
+
+``MP_ENDATOMIC``
+   End atomic region.
+   Always matches a MP_ATOMIC ilm.
+
+   *Attributes*: spec trm
+
+#. **MP_ATOMICREAD** lnk stc    *Type*: *SMP*
+
+   Atomic read
+
+   .. line-block::
+       lnk - link variable to be loaded
+       stc - memory order
+       .AT spec trm
+       .IL MP_ATOMICWRITE SMP lnk lnk stc
+       Atomic write
+       .nf
+       lnk1 - link to left hand side of atomic write
+       lnk2 - link to right hand side of atomic write
+       stc - memory order
+       .AT spec trm
+       .IL MP_ATOMICUPDATE SMP lnk lnk stc stc
+       Atomic write
+       .nf
+       lnk1 - link to left hand side of atomic update
+       lnk2 - link to rhs atomic update
+       stc1 - memory order
+       stc2 - aop
+       .AT spec trm
+       .IL MP_ATOMICCAPTURE SMP lnk lnk stc stc stc
+       Atomic write
+       .nf
+       lnk1 - link to left hand side of atomic capture
+       lnk2 - link to right hand side of capture statement
+       stc1 - memory order
+       stc2 - aop
+       stc4 - bit vector(unused):
+       0x01 - is update statment
+       0x02 - need post operation on old value
+       .AT spec trm
+       .IL PRAGMADPSELIST misc n stc stc lnk stc lnk\*
+       Handles a pragma with a link to a symbol and a number of expression arguments.
+       n is number of subscripts defined by this pragma
+       First stc is the pragma identifier, 2nd stc is the scope, 3rd stc is the policy id.
+       First link is the symbol link.
+       Links point to the arguments.
+       .AT spec trm
+       .IL MP_TARGETMODE SMP stc lnk lnk lnk
+       End of Target register.
+       .nf
+       stc Combined costruct mode
+       lnk link to num_teams clause if exists
+       lnk link to thread_limit clause if exists
+       lnk link to num_threads clause if exists
+       .AT spec trm
+       .IL MP_TARGETLOOPTRIPCOUNT SMP sym
+       loop trip count for target region
+       .nf
+       sym - trip count
+       .AT spec trm
+       .IL MP_MAP SMP lnk stc
+       map with to map type
+       .nf
+       lnk - symbol to be mapped
+       stc - map type
+
+
+   *Attributes*: spec trm
+
+#. **MP_REDUCTIONITEM** sym sym stc    *Type*: *SMP*
+
+   Begin of reduction clause.
+
+   .. line-block::
+       sym - reduction shared symbol
+       sym - reduction private symbol
+       stc - reduction operation
+
+
+   *Attributes*: spec trm
+
+``MP_BREDUCTION``
+   Begin of reduction clause.
+
+   *Attributes*: spec trm
+
+``MP_EREDUCTION``
+   End of reduction clause.
+
+   *Attributes*: spec trm
+
+``MP_EMAP``
+   End of map clause.
+
+   *Attributes*: spec trm
+
+``MP_BEGIN_DIR``
+   Begin directive
+
+   *Attributes*: spec trm
+
+``MP_END_DIR``
+   End directive
+
+   *Attributes*: spec trm
+
+#. **HFLD** lnk    *Type*: *load*
+
+   Load half precision
+
+   *Attributes*: spec
+
+#. **HFST** lnk lnk    *Type*: *store*
+
+   Store half precision
+
+   *Attributes*: spec trm
+
+#. **HFCON** sym    *Type*: *cons*
+
+   Half precision constant
+
+   .. code-block:: none
+
+      HFCON r v1
+
+#. **HFADD** lnk lnk    *Type*: *arth*
+
+   Add half precision
+
+   .. code-block:: none
+
+      HFADD r p1 p2
+
+#. **HFMUL** lnk lnk    *Type*: *arth*
+
+   Multiply half precision
+
+   .. code-block:: none
+
+      HFMUL r p1 p2
+
+#. **HFSUB** lnk lnk    *Type*: *arth*
+
+   Subtract half precision
+
+   .. code-block:: none
+
+      HFSUB r p1 p2
+
+#. **HFDIV** lnk lnk    *Type*: *arth*
+
+   Divide half precision
+
+   .. code-block:: none
+
+      HFDIV r p1 p2
+
+#. **HFNEG** lnk    *Type*: *arth*
+
+   Negate half precision
+
+   .. code-block:: none
+
+      HFNEG r p1
+
+#. **R2HF** lnk    *Type*: *arth*
+
+   Convert single precision to half precision
+
+   .. code-block:: none
+
+      SP2HP r p1
+
+#. **D2HF** lnk    *Type*: *arth*
+
+   Convert double precision to half precision
+
+   .. code-block:: none
+
+      DP2HP r p1
+
+#. **HF2R** lnk    *Type*: *arth*
+
+   Convert half precision to single precision
+
+   .. code-block:: none
+
+      HP2SP r p1
+
+#. **HFFUNC** n lnk lnk\*    *Type*: *proc*
+
+   Call half precision function
+
+   *Attributes*: spec
+
+#. **HFFUNC** n sym lnk\*    *Type*: *proc*
+
+   Call half precision function
+
+   *Attributes*: spec
+
+#. **HFCMP** lnk lnk    *Type*: *arth*
+
+   Compare half precision
+
+   *Attributes*: spec
+
+#. **HFAIF** lnk sym1 sym2 sym3    *Type*: *branch*
+
+
+   *Attributes*: spec trm
+
+   .. code-block:: none
+
+      HFCJMPZ null p1 le v2
+      HFCJMPZ null p1 eq v3
+      HFCJMPZ null p1 gt v4
+
+#. **HFMAX** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      HFMAX r p1 p2
+
+#. **HFMIN** lnk lnk    *Type*: *arth*
+
+
+   .. code-block:: none
+
+      HFMIN r p1 p2
+
+#. **UXLNEQV** lnk lnk    *Type*: *arth*
+
+   Logical .LNEQV. operation for unixlogical
+
+   .. code-block:: none
+
+      ICMPZ t1 p1 eq
+      ICMPZ t2 p2 eq
+      ICMP r t1 t2 ne
+
+#. **UXLEQV** lnk lnk    *Type*: *arth*
+
+   Logical .LEQV. operation for unixlogical
+
+   .. code-block:: none
+
+      ICMPZ t1 p1 eq
+      ICMPZ t2 p2 eq
+      ICMP r t1 t2 eq
+
+#. **UXLAND** lnk lnk    *Type*: *arth*
+
+   Logical .LAND. operation for unixlogical
+
+   .. code-block:: none
+
+      ICMPZ t1 p1 eq
+      ICMPZ t2 p2 eq
+      IADD t3 t1 t2
+      ICMPZ r t3 eq
+
+#. **UXLNOT** lnk    *Type*: *arth*
+
+   Logical .LNOT. operation for unixlogical
+
+   .. code-block:: none
+
+      ICMPZ r p1 eq
+
+#. **UXLNEQV8** lnk lnk    *Type*: *arth*
+
+   Logical .LNEQV8. operation for unixlogical
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCMPZ t1 p1 eq
+      KCMPZ t2 p2 eq
+      IKMV t1 t1
+      IKMV t2 t2
+      KCMP kr t1 t2 ne
+
+#. **UXLEQV8** lnk lnk    *Type*: *arth*
+
+   Logical .LEQV8. operation for unixlogical
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCMPZ t1 p1 eq
+      KCMPZ t2 p2 eq
+      IKMV t1 t1
+      IKMV t2 t2
+      KCMP kr t1 t2 eq
+
+#. **UXLAND8** lnk lnk    *Type*: *arth*
+
+   Logical .LAND8. operation for unixlogical
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCMPZ t1 p1 eq
+      KCMPZ t2 p2 eq
+      KADD t3 t1 t2
+      KCMPZ kr t3 eq
+
+#. **UXLNOT8** lnk    *Type*: *arth*
+
+   Logical .LNOT8. operation for unixlogical
+
+   *Attributes*: i8
+
+   .. code-block:: none
+
+      KCMPZ kr p1 eq
+
+
+#. **QFLD** lnk    *Type*: *load*
+
+   Load quad precision
+
+   *Attributes*: spec
+
+#. **QFST** lnk lnk    *Type*: *store*
+
+   Store quad precision
+
+   *Attributes*: spec trm
+
+#. **QADD** lnk lnk    *Type*: *arth*
+
+   Add quad precision
+
+   .. code-block:: none
+
+      QADD r p1 p2

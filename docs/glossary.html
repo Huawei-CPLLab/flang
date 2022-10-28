@@ -1,0 +1,133 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Flang glossary &#8212; Flang 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction to Flang" href="introduction_to_flang.html" />
+    <link rel="prev" title="Flang Design Documents" href="index.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>Flang 1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Flang glossary</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Flang Design Documents</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="introduction_to_flang.html">Introduction to Flang</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="flang-glossary">
+<span id="id1"></span><h1>Flang glossary<a class="headerlink" href="#flang-glossary" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="94%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ADT</td>
+<td>Abstract Data Types.</td>
+</tr>
+<tr class="row-odd"><td>ASD</td>
+<td>Array Subscript Descriptor - holds the number of dimensions for an array, see <code class="docutils literal notranslate"><span class="pre">ast.h.</span></code></td>
+</tr>
+<tr class="row-even"><td>AST</td>
+<td>Abstract Syntax Tree.</td>
+</tr>
+<tr class="row-odd"><td>BE</td>
+<td>short for “backend” (used heavily in code and comments)</td>
+</tr>
+<tr class="row-even"><td>FE</td>
+<td>short for “frontend” (used heavily in code and comments)</td>
+</tr>
+<tr class="row-odd"><td>ILM</td>
+<td>Intermediate Language Macros.
+Representation of executable statements.
+This is an output of flang1 and input for flang2.</td>
+</tr>
+<tr class="row-even"><td>ILI</td>
+<td>Intermediate Language Instructions.
+The IR used by flang2 for optimisations.</td>
+</tr>
+<tr class="row-odd"><td>ILT</td>
+<td>Terminal node of an ILI statement which corresponds to a source language statement.
+A sequence of ILTs represent a block. ILTs have links to next and previous.</td>
+</tr>
+<tr class="row-even"><td>IPA</td>
+<td>InterProcedural Analysis <a class="reference external" href="https://en.wikipedia.org/wiki/Interprocedural_optimization">https://en.wikipedia.org/wiki/Interprocedural_optimization</a></td>
+</tr>
+<tr class="row-odd"><td>IR</td>
+<td>Intermediate Representation. A general term which may refer to many representations.</td>
+</tr>
+<tr class="row-even"><td>PGI</td>
+<td>Older version of Fortran compiler, which Flang front-end bases on.
+PGI Compilers &amp; Tools have evolved into the NVIDIA HPC SDK.</td>
+</tr>
+<tr class="row-odd"><td>SD</td>
+<td>Static Descriptor (used with pointers e.g. <code class="docutils literal notranslate"><span class="pre">ptr$sd</span></code>)</td>
+</tr>
+<tr class="row-even"><td>STB</td>
+<td>Symbol TaBle, created symbol after symbol as identified by the parser</td>
+</tr>
+<tr class="row-odd"><td>SHD</td>
+<td>SHape Descriptor - holds the lower and upper bound of an array and the stride.</td>
+</tr>
+<tr class="row-even"><td>STD</td>
+<td>STatement Descriptor - a larger, more generic structure describing the parsed code elements
+See <code class="docutils literal notranslate"><span class="pre">ast.h</span></code> for full members list.</td>
+</tr>
+<tr class="row-odd"><td>TBAA</td>
+<td>Type Based Alias Analysis</td>
+</tr>
+<tr class="row-even"><td>TPV</td>
+<td>Target Processor Value (used in <code class="docutils literal notranslate"><span class="pre">semant.c</span></code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Flang Design Documents</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="introduction_to_flang.html">Introduction to Flang</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

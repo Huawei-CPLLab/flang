@@ -1,0 +1,4322 @@
+.GS 2 "TERMINAL AND NON-TERMINAL SYMBOLS"
+
+.. code-block:: none
+
+
+       1 %                              576 <AND opr1>
+       2 %FILL                          577 <F1 item>
+       3 %LOC                           578 <F2 item>
+       4 &                              579 <F3 item>
+       5 '$'                            580 <GOTO assignment>
+       6 '(/'                           581 <GOTO stmt>
+       7 '/)'                           582 <IF clause>
+       8 '//'                           583 <IO stmt>
+       9 '<'                            584 <OR opr1>
+      10 '<<<'                          585 <SYSTEM GOAL SYMBOL>
+      11 '=>'                           586 <ac beg>
+      12 '>'                            587 <ac end>
+      13 '>>>'                          588 <ac item>
+      14 (                              589 <ac list>
+      15 )                              590 <ac spec>
+      16 \*                              591 <acc gang arg>
+      17 \*\*                             592 <acc gang args>
+      18 +                              593 <acc init attr>
+      19 ,                              594 <acc shutdown attr>
+      20 -                              595 <accel add opr>
+      21 .                              596 <accel attr>
+      22 ..                             597 <accel begin>
+      23 .AND.                          598 <accel compare dir>
+      24 .EQ.                           599 <accel data list>
+      25 .EQV.                          600 <accel data name>
+      26 .GE.                           601 <accel data ss>
+      27 .GT.                           602 <accel data>
+      28 .LE.                           603 <accel decl attr>
+      29 .LT.                           604 <accel decl begin>
+      30 .N.                            605 <accel decl data list>
+      31 .NE.                           606 <accel decl data name>
+      32 .NEQV.                         607 <accel decl data ss>
+      33 .NOT.                          608 <accel decl data>
+      34 .O.                            609 <accel decl list>
+      35 .OR.                           610 <accel decl sub list>
+      36 .X.                            611 <accel decl sub>
+      37 .XOR.                          612 <accel dp addexp>
+      38 /                              613 <accel dp bnd>
+      39 :                              614 <accel dp bndexp1>
+      40 ::                             615 <accel dp bndexp>
+      41 <END stmt>                     616 <accel dp mulexp>
+      42 <Hollerith>                    617 <accel dp sbnd>
+      43 <aformat>                      618 <accel dp stmts>
+      44 <cmplx comma>                  619 <accel dpdefault attr>
+      45 <complex>                      620 <accel dpinit_needed attr>
+      46 <dcomplex>                     621 <accel dpinitvar list>
+      47 <defined op>                   622 <accel dptype attr>
+      48 <dformat>                      623 <accel dpvar bnd>
+      49 <dimattr>                      624 <accel dpvar bnds>
+      50 <directive>                    625 <accel dpvar>
+      51 <dlp>                          626 <accel dpvarlist>
+      52 <double>                       627 <accel list>
+      53 <dtformat>                     628 <accel mdata list>
+      54 <eformat>                      629 <accel mdata name>
+      55 <empty file>                   630 <accel mdata ss>
+      56 <fformat>                      631 <accel mdata>
+      57 <fmtstr>                       632 <accel mdecl data list>
+      58 <g0format>                     633 <accel mdecl data name>
+      59 <gformat>                      634 <accel mdecl data ss>
+      60 <half>                         635 <accel mdecl data>
+      61 <id name>                      636 <accel mul opr>
+      62 <iformat>                      637 <accel policy attr list>
+      63 <implp>                        638 <accel policy attr>
+      64 <int kind const>               639 <accel policy declstmt>
+      65 <integer>                      640 <accel policy dir>
+      66 <iolp>                         641 <accel policy name>
+      67 <kanji string>                 642 <accel routine list>
+      68 <letter>                       643 <accel sdata list>
+      69 <lformat>                      644 <accel sdata name>
+      70 <log const>                    645 <accel sdata>
+      71 <log kind const>               646 <accel setdev attr>
+      72 <mp atomic>                    647 <accel setdev dir>
+      73 <mp barrier>                   648 <accel setdev list>
+      74 <mp cancel>                    649 <accel shape attr>
+      75 <mp cancellationpoint>         650 <accel shape attrs>
+      76 <mp critical>                  651 <accel shape declstmt>
+      77 <mp declarereduction>          652 <accel shape dir>
+      78 <mp declaresimd>               653 <accel short update>
+      79 <mp declaretarget>             654 <accel stmt>
+      80 <mp distpardo>                 655 <accel sub list>
+      81 <mp distpardosimd>             656 <accel sub>
+      82 <mp distribute>                657 <accel update attr>
+      83 <mp distsimd>                  658 <accel update dir>
+      84 <mp doacross>                  659 <accel update list>
+      85 <mp dosimd>                    660 <accel wait list>
+      86 <mp endatomic>                 661 <access list>
+      87 <mp endcritical>               662 <access spec>
+      88 <mp enddistpardo>              663 <access>
+      89 <mp enddistpardosimd>          664 <accsize>
+      90 <mp enddistribute>             665 <accsizelist>
+      91 <mp enddistsimd>               666 <addition>
+      92 <mp enddosimd>                 667 <addop list>
+      93 <mp endmaster>                 668 <addop>
+      94 <mp endordered>                669 <aligned clause>
+      95 <mp endparallel>               670 <aligned>
+      96 <mp endpardo>                  671 <alloc cntl item>
+      97 <mp endpardosimd>              672 <alloc cntl list>
+      98 <mp endparsections>            673 <alloc cntl>
+      99 <mp endparworkshare>           674 <alloc id list>
+     100 <mp endpdo>                    675 <alloc id>
+     101 <mp endsections>               676 <alloc list>
+     102 <mp endsimd>                   677 <alloc obj>
+     103 <mp endsingle>                 678 <alloc object>
+     104 <mp endtarget>                 679 <alloc type>
+     105 <mp endtargetdata>             680 <allocation stmt>
+     106 <mp endtargpar>                681 <alt name>
+     107 <mp endtargpardo>              682 <arg builtin>
+     108 <mp endtargpardosimd>          683 <arg list>
+     109 <mp endtargparsimd>            684 <arg>
+     110 <mp endtargsimd>               685 <arith IF>
+     111 <mp endtargteams>              686 <arith expr>
+     112 <mp endtargteamsdist>          687 <arith>
+     113 <mp endtargteamsdistpardo>     688 <assigned GOTO>
+     114 <mp endtargteamsdistpardosimd> 689  <assignment>
+     115 <mp endtargteamsdistsimd>      690 <assoc or selector>
+     116 <mp endtask>                   691 <associate stmt>
+     117 <mp endtaskgroup>              692 <association list>
+     118 <mp endtaskloop>               693 <association>
+     119 <mp endtaskloopsimd>           694 <attr list>
+     120 <mp endteams>                  695 <attr>
+     121 <mp endteamsdist>              696 <base type>
+     122 <mp endteamsdistpardo>         697 <begininterface>
+     123 <mp endteamsdistpardosimd>     698 <bind attr>
+     124 <mp endteamsdistsimd>          699 <bind entry>
+     125 <mp endworkshare>              700 <bind list>
+     126 <mp flush>                     701 <binding attr list>
+     127 <mp master>                    702 <binding attr>
+     128 <mp ordered>                   703 <binding name list>
+     129 <mp parallel>                  704 <binding name>
+     130 <mp pardo>                     705 <block stmt>
+     131 <mp pardosimd>                 706 <call>
+     132 <mp parsections>               707 <case begin>
+     133 <mp parworkshare>              708 <case expr>
+     134 <mp pdo>                       709 <case value list>
+     135 <mp section>                   710 <case value>
+     136 <mp sections>                  711 <case>
+     137 <mp simd>                      712 <char expr>
+     138 <mp single>                    713 <char literal>
+     139 <mp target>                    714 <check construct>
+     140 <mp targetdata>                715 <chevron>
+     141 <mp targetenterdata>           716 <classdefault stmt>
+     142 <mp targetexitdata>            717 <classis stmt>
+     143 <mp targetupdate>              718 <cmn ident list>
+     144 <mp targpar>                   719 <cmn ident>
+     145 <mp targpardo>                 720 <com dcl>
+     146 <mp targpardosimd>             721 <common list>
+     147 <mp targparsimd>               722 <common>
+     148 <mp targsimd>                  723 <computed GOTO>
+     149 <mp targteams>                 724 <concatenation>
+     150 <mp targteamsdist>             725 <concurrent control>
+     151 <mp targteamsdistpardo>        726 <concurrent header>
+     152 <mp targteamsdistpardosimd>    727 <concurrent list>
+     153 <mp targteamsdistsimd>         728 <concurrent locality>
+     154 <mp task>                      729 <concurrent type>
+     155 <mp taskgroup>                 730 <conjunction>
+     156 <mp taskloop>                  731 <constant>
+     157 <mp taskloopsimd>              732 <construct name>
+     158 <mp taskwait>                  733 <control stmt>
+     159 <mp taskyield>                 734 <cvar ref>
+     160 <mp teams>                     735 <cycle stmt>
+     161 <mp teamsdist>                 736 <data constant>
+     162 <mp teamsdistpardo>            737 <data item>
+     163 <mp teamsdistpardosimd>        738 <data rpt>
+     164 <mp teamsdistsimd>             739 <data type>
+     165 <mp threadprivate>             740 <dcl id list>
+     166 <mp workshare>                 741 <dcl id>
+     167 <named construct>              742 <dec declaration>
+     168 <nformat>                      743 <declaration>
+     169 <nonddec const>                744 <declare reduction>
+     170 <nondec const>                 745 <declare simd name>
+     171 <oformat>                      746 <declare simd>
+     172 <qcomplex>                     747 <declare target>
+     173 <quad>                         748 <declarered begin>
+     174 <quoted string>                749 <defined binary>
+     175 <real>                         750 <defined unary>
+     176 <red type>                     751 <depend attr>
+     177 <underscore>                   752 <depend clause>
+     178 <zformat>                      753 <depend data list>
+     179 =                              754 <depend data>
+     180 A                              755 <derived type spec>
+     181 ABSTRACT                       756 <devtype attr>
+     182 ACCATOMIC                      757 <devtype list>
+     183 ACCATOMICCAPTURE               758 <dflt>
+     184 ACCATOMICREAD                  759 <dim beg>
+     185 ACCATOMICUPDATE                760 <dim list>
+     186 ACCATOMICWRITE                 761 <dim spec>
+     187 ACCATTACH                      762 <dimension list>
+     188 ACCDATA                        763 <dimkeyword>
+     189 ACCDATAREGION                  764 <dinit const list>
+     190 ACCDECL                        765 <dinit list>
+     191 ACCDETACH                      766 <dinit var list>
+     192 ACCDO                          767 <dinit var>
+     193 ACCENDATOMIC                   768 <dinit>
+     194 ACCENDDATA                     769 <disjunction>
+     195 ACCENDDATAREGION               770 <distpardo begin>
+     196 ACCENDDO                       771 <distpardosimd begin>
+     197 ACCENDHOSTDATA                 772 <distribute begin>
+     198 ACCENDKERNDO                   773 <distsimd begin>
+     199 ACCENDKERNELS                  774 <do begin>
+     200 ACCENDKERNLOOP                 775 <do construct>
+     201 ACCENDLOOP                     776 <doacross begin>
+     202 ACCENDPARALLEL                 777 <doconcurrent>
+     203 ACCENDPARDO                    778 <dosimd begin>
+     204 ACCENDPARLOOP                  779 <dowhile>
+     205 ACCENDREGION                   780 <dt vlist>
+     206 ACCENDSCALAR                   781 <dts>
+     207 ACCENDSCALARREGION             782 <dvar ref>
+     208 ACCENDSERIAL                   783 <e3>
+     209 ACCENDSERIALLOOP               784 <elp>
+     210 ACCENTER                       785 <elseif>
+     211 ACCEPT                         786 <elsewhere clause>
+     212 ACCESS                         787 <encode ctl>
+     213 ACCEXIT                        788 <encode spec>
+     214 ACCFINALIZE                    789 <encode unit>
+     215 ACCHOSTDATA                    790 <end accel attr>
+     216 ACCIFPRESENT                   791 <end accel list>
+     217 ACCIN                          792 <end interface>
+     218 ACCINIT                        793 <end stmt>
+     219 ACCKERNELS                     794 <end>
+     220 ACCKERNELSDO                   795 <endsingle item>
+     221 ACCKERNELSLOOP                 796 <endsingle list>
+     222 ACCLOOP                        797 <entity decl list>
+     223 ACCOUT                         798 <entity decl>
+     224 ACCPARALLELDO                  799 <entity id>
+     225 ACCPARALLELLOOP                800 <entry id>
+     226 ACCPOLICY                      801 <entry statement>
+     227 ACCREGION                      802 <enum>
+     228 ACCREGIONDO                    803 <enums>
+     229 ACCREGIONLOOP                  804 <equiv group>
+     230 ACCSCALAR                      805 <equiv groups>
+     231 ACCSCALARREGION                806 <equiv list>
+     232 ACCSERIAL                      807 <equiv var>
+     233 ACCSERIALLOOP                  808 <eqv or neqv>
+     234 ACCSET                         809 <error stop pause>
+     235 ACCSHAPE                       810 <error stop stmt>
+     236 ACCSHUTDOWN                    811 <etmp e3>
+     237 ACCTILE                        812 <etmp exp>
+     238 ACCUPDATE                      813 <etmp lp>
+     239 ACCUPDATEDEV                   814 <etmp>
+     240 ACCUPDATEHOST                  815 <exit stmt>
+     241 ACCUPDATEIN                    816 <explicit shape>
+     242 ACCUPDATEOUT                   817 <exponentiation>
+     243 ACCUPDATESELF                  818 <expression list>
+     244 ACCWAIT                        819 <expression>
+     245 ACTION                         820 <factor>
+     246 ADVANCE                        821 <fcn name>
+     247 ALIAS                          822 <ffield>
+     248 ALIGN                          823 <fid or nid>
+     249 ALIGNED                        824 <field name>
+     250 ALLOCATABLE                    825 <field namelist>
+     251 ALLOCATE                       826 <final list>
+     252 ALWAYS                         827 <final subroutines>
+     253 ASSIGN                         828 <final>
+     254 ASSIGNMENT                     829 <firstprivate>
+     255 ASSOCIATE                      830 <flp>
+     256 ASYNC                          831 <forall assn stmt>
+     257 ASYNCHRONOUS                   832 <forall begin>
+     258 ATTRIBUTES                     833 <forall clause>
+     259 AUTO                           834 <forall construct>
+     260 AUTOMATIC                      835 <formal list>
+     261 B                              836 <formal>
+     262 BACKSPACE                      837 <format id>
+     263 BIND                           838 <format item>
+     264 BLANK                          839 <format list unl>
+     265 BLOCK                          840 <format list>
+     266 BLOCKDATA                      841 <format stmt>
+     267 BN                             842 <format>
+     268 BYTE                           843 <func prefix>
+     269 BZ                             844 <func suffix>
+     270 CACHE                          845 <gangsize2>
+     271 CALL                           846 <gangsize3>
+     272 CAPTURE                        847 <gangsizes>
+     273 CASE                           848 <gen access spec>
+     274 CASEDEFAULT                    849 <generic binding list>
+     275 CHARACTER                      850 <generic binding name>
+     276 CHUNK                          851 <generic binding>
+     277 CLASS                          852 <generic name>
+     278 CLASSDEFAULT                   853 <generic spec>
+     279 CLASSIS                        854 <generic type procedure>
+     280 CLOSE                          855 <get module>
+     281 COLLAPSE                       856 <id name list>
+     282 COMMON                         857 <id>
+     283 COMPARE                        858 <idc eq>
+     284 COMPLEX                        859 <ident constant>
+     285 CONCURRENT                     860 <ident list>
+     286 CONSTANT                       861 <ident ssa>
+     287 CONTAINS                       862 <ident>
+     288 CONTIGUOUS                     863 <ideqc list>
+     289 CONTINUE                       864 <if construct>
+     290 CONVERT                        865 <ignore tkr>
+     291 COPY                           866 <iii>
+     292 COPYIN                         867 <implicit list>
+     293 COPYOUT                        868 <implicit type>
+     294 COPYPRIVATE                    869 <implied do control>
+     295 CREATE                         870 <import name list>
+     296 CYCLE                          871 <import name>
+     297 D                              872 <import>
+     298 DATA                           873 <init beg>
+     299 DC                             874 <init com dcl>
+     300 DEALLOCATE                     875 <input item>
+     301 DECIMAL                        876 <input list>
+     302 DECLARE                        877 <intent>
+     303 DECODE                         878 <interface>
+     304 DEFAULT                        879 <intrinsic op>
+     305 DEFAULTKIND                    880 <intrinsic type>
+     306 DEFAULTMAP                     881 <io spec>
+     307 DEFAULT_ASYNC                  882 <kernel begin>
+     308 DELETE                         883 <kernel do arg>
+     309 DELIM                          884 <kernel do args>
+     310 DEPEND                         885 <kernel do block shape>
+     311 DEVICE                         886 <kernel do grid shape>
+     312 DEVICEID                       887 <kernel do list>
+     313 DEVICEPTR                      888 <kernel do nest>
+     314 DEVICE_NUM                     889 <kernel do shape>
+     315 DEVICE_RESIDENT                890 <kernel shape expr>
+     316 DEVICE_TYPE                    891 <kernel shape list>
+     317 DIMENSION                      892 <kernel stmt>
+     318 DIRECT                         893 <label list>
+     319 DISPOSE                        894 <label>
+     320 DISTRIBUTE                     895 <lastprivate>
+     321 DISTRIBUTEPOINT                896 <launchbound>
+     322 DIST_SCHEDULE                  897 <len kind spec>
+     323 DO                             898 <len kind>
+     324 DOUBLECOMPLEX                  899 <len spec>
+     325 DOUBLEPRECISION                900 <linear clause>
+     326 DP                             901 <linear expr>
+     327 DT                             902 <linear modifier>
+     328 E                              903 <linear opt step>
+     329 ELEMENTAL                      904 <locality kind>
+     330 ELSE                           905 <locality name list>
+     331 ELSEIF                         906 <locality spec list>
+     332 ELSEWHERE                      907 <locality spec>
+     333 EN                             908 <log disjunct>
+     334 ENCODE                         909 <log expr>
+     335 ENCODING                       910 <log factor>
+     336 END                            911 <log negation>
+     337 ENDASSOCIATE                   912 <log term>
+     338 ENDBLOCK                       913 <loop control>
+     339 ENDBLOCKDATA                   914 <map clause>
+     340 ENDDO                          915 <map item>
+     341 ENDENUM                        916 <map type>
+     342 ENDFILE                        917 <mask expr>
+     343 ENDFORALL                      918 <module nature>
+     344 ENDFUNCTION                    919 <module procedure stmt>
+     345 ENDIF                          920 <motion clause>
+     346 ENDINTERFACE                   921 <mp atomic begin>
+     347 ENDMAP                         922 <mp begin>
+     348 ENDMODULE                      923 <mp decl begin>
+     349 ENDPROCEDURE                   924 <mp decl>
+     350 ENDPROGRAM                     925 <mp stmt>
+     351 ENDSELECT                      926 <msattr list>
+     352 ENDSTRUCTURE                   927 <msattr>
+     353 ENDSUBMODULE                   928 <mult op>
+     354 ENDSUBROUTINE                  929 <multiplication>
+     355 ENDTYPE                        930 <n eqv op>
+     356 ENDUNION                       931 <namelist group>
+     357 ENDWHERE                       932 <namelist groups>
+     358 ENTRY                          933 <namelist list>
+     359 ENUM                           934 <namelist var>
+     360 ENUMERATOR                     935 <new factor>
+     361 EOR                            936 <new term>
+     362 EQUIVALENCE                    937 <nii>
+     363 ERR                            938 <nim>
+     364 ERRMSG                         939 <nis>
+     365 ERRORSTOP                      940 <nowait>
+     366 ES                             941 <null stmt>
+     367 EXCLUDE                        942 <null>
+     368 EXIST                          943 <nullify list>
+     369 EXIT                           944 <nullify object>
+     370 EXTENDS                        945 <nullify stmt>
+     371 EXTERNAL                       946 <only list>
+     372 End                            947 <only operator>
+     373 F                              948 <only>
+     374 FILE                           949 <operator>
+     375 FINAL                          950 <opt accel init list>
+     376 FIRSTPRIVATE                   951 <opt accel list>
+     377 FLUSH                          952 <opt accel shutdown list>
+     378 FMT                            953 <opt aif label>
+     379 FORALL                         954 <opt atomic type>
+     380 FORM                           955 <opt attr list>
+     381 FORMAT                         956 <opt attr>
+     382 FORMATTED                      957 <opt binding attr list>
+     383 FROM                           958 <opt chunk>
+     384 FUNCTION                       959 <opt comma>
+     385 G                              960 <opt csident>
+     386 GANG                           961 <opt derived type spec>
+     387 GENERIC                        962 <opt distchunk>
+     388 GOTO                           963 <opt end accel list>
+     389 GOTOX                          964 <opt endsingle list>
+     390 GRAINSIZE                      965 <opt expression>
+     391 HOST                           966 <opt gen access spec>
+     392 I                              967 <opt ident>
+     393 ID                             968 <opt import>
+     394 IF                             969 <opt interface name>
+     395 IGNORE_TKR                     970 <opt len spec>
+     396 IMPLICIT                       971 <opt mask expr>
+     397 IMPORT                         972 <opt nowait>
+     398 IMPURE                         973 <opt ordered list>
+     399 INBRANCH                       974 <opt par ifclause>
+     400 INCLUDE                        975 <opt par list>
+     401 INDEPENDENT                    976 <opt proc attr>
+     402 INIT_NEEDED                    977 <opt red init>
+     403 INQUIRE                        978 <opt stride>
+     404 INTEGER                        979 <opt sub>
+     405 INTENT                         980 <opt tpsl>
+     406 INTERFACE                      981 <opt type spec>
+     407 INTRINSIC                      982 <opt update list>
+     408 IOLENGTH                       983 <opt wait list>
+     409 IOMSG                          984 <optional comma>
+     410 IOSTAT                         985 <ordered attr>
+     411 IS_DEVICE_PTR                  986 <ordered list>
+     412 KERNEL                         987 <output item>
+     413 KIND                           988 <output list>
+     414 L                              989 <par attr>
+     415 LASTPRIVATE                    990 <par begin>
+     416 LAUNCHBOUNDS                   991 <par ifclause>
+     417 LEN                            992 <par list>
+     418 LINEAR                         993 <paralleldo begin>
+     419 LINK                           994 <parallelsections begin>
+     420 LOCAL                          995 <pardosimd begin>
+     421 LOCAL_INIT                     996 <parworkshare begin>
+     422 LOGICAL                        997 <pause stmt>
+     423 MANAGED                        998 <pdo begin>
+     424 MAP                            999 <pdt param list>
+     425 MERGEABLE                     1000 <pdt param>
+     426 MIRROR                        1001 <pdt>
+     427 MODULE                        1002 <pflsr list>
+     428 MOLD                          1003 <pgi begin>
+     429 MOVEDESC                      1004 <pgi compare dir>
+     430 MP_MAP                        1005 <pgm>
+     431 MP_SCHEDTYPE                  1006 <pointer assignment>
+     432 N                             1007 <post seq_cst>
+     433 NAME                          1008 <pragma declaration>
+     434 NAMED                         1009 <pragma stmt>
+     435 NAMELIST                      1010 <pre seq_cst>
+     436 NCHARACTER                    1011 <prefix spec>
+     437 NEWUNIT                       1012 <prefix>
+     438 NEXTREC                       1013 <primary>
+     439 NML                           1014 <print spec>
+     440 NOGROUP                       1015 <private list>
+     441 NOHOST                        1016 <proc attr list>
+     442 NONE                          1017 <proc attr>
+     443 NON_INTRINSIC                 1018 <proc dcl list>
+     444 NOPASS                        1019 <proc dcl>
+     445 NOSEQUENCE                    1020 <proc interf>
+     446 NOTINBRANCH                   1021 <procedure declaration>
+     447 NOWAIT                        1022 <procedure stmt>
+     448 NO_CREATE                     1023 <procedure>
+     449 NULLIFY                       1024 <prog title>
+     450 NUMBER                        1025 <psfunc>
+     451 NUM_GANGS                     1026 <ptr assoc>
+     452 NUM_TASKS                     1027 <ptr list>
+     453 NUM_TEAMS                     1028 <quiet clause>
+     454 NUM_THREADS                   1029 <range list>
+     455 NUM_WORKERS                   1030 <range>
+     456 O                             1031 <read spec2>
+     457 OPEN                          1032 <read spec3>
+     458 OPENED                        1033 <read spec4>
+     459 OPERATOR                      1034 <read>
+     460 OPTIONAL                      1035 <record dcl>
+     461 OPTIONS                       1036 <record list>
+     462 ORDERED                       1037 <record namelist>
+     463 P                             1038 <record>
+     464 PAD                           1039 <red comb>
+     465 PARALLEL                      1040 <reduc op>
+     466 PARAMETER                     1041 <reduction>
+     467 PASS                          1042 <reflabel>
+     468 PAUSE                         1043 <rel operand>
+     469 PCOPY                         1044 <relation>
+     470 PCOPYIN                       1045 <relop>
+     471 PCOPYOUT                      1046 <rename list>
+     472 PCREATE                       1047 <rename operator>
+     473 PDELETE                       1048 <rename>
+     474 PENDING                       1049 <repeat factor>
+     475 PGICOMPARE                    1050 <return>
+     476 PINNED                        1051 <routine id list>
+     477 PLOCAL                        1052 <routine id>
+     478 PNOT                          1053 <save id>
+     479 POINTER                       1054 <save list>
+     480 POS                           1055 <scale factor>
+     481 POSITION                      1056 <sched type>
+     482 PREFETCH                      1057 <schedule>
+     483 PRESENT                       1058 <sections begin>
+     484 PRINT                         1059 <select type stmt>
+     485 PRIORITY                      1060 <seq cst>
+     486 PRIVATE                       1061 <seq>
+     487 PROCEDURE                     1062 <simd begin>
+     488 PROC_BIND                     1063 <simple stmt>
+     489 PROGRAM                       1064 <single begin>
+     490 PROTECTED                     1065 <smp stmt>
+     491 PUBLIC                        1066 <spec item>
+     492 PURE                          1067 <spec list>
+     493 Q                             1068 <ssa list>
+     494 QUIET                         1069 <ssa>
+     495 RC                            1070 <star repeat>
+     496 RD                            1071 <statement>
+     497 READ                          1072 <stbeg>
+     498 READONLY                      1073 <stend>
+     499 READWRITE                     1074 <stmt>
+     500 REAL                          1075 <stop pause>
+     501 REC                           1076 <stop stmt>
+     502 RECL                          1077 <struct begin1>
+     503 RECORD                        1078 <struct begin2>
+     504 RECURSIVE                     1079 <struct name>
+     505 REDUCTION                     1080 <subr prefix>
+     506 REFLECTED                     1081 <substring>
+     507 RETURN                        1082 <target begin>
+     508 REWIND                        1083 <target list>
+     509 RN                            1084 <target>
+     510 ROUND                         1085 <targetdata begin>
+     511 ROUTINE                       1086 <targetenterdata begin>
+     512 RP                            1087 <targetexitdata begin>
+     513 RU                            1088 <targetupdate begin>
+     514 RZ                            1089 <targpar begin>
+     515 S                             1090 <targpardo begin>
+     516 SAFELEN                       1091 <targpardosimd begin>
+     517 SAVE                          1092 <targparsimd begin>
+     518 SCHEDULE                      1093 <targsimd begin>
+     519 SELECTCASE                    1094 <targteams begin>
+     520 SELECTTYPE                    1095 <targteamsdist begin>
+     521 SELF                          1096 <targteamsdistpardo begin>
+     522 SEQ                           1097 <targteamsdistpardosimd begin>
+     523 SEQUENCE                      1098 <targteamsdistsimd begin>
+     524 SEQUENTIAL                    1099 <task begin>
+     525 SEQ_CST                       1100 <taskloop begin>
+     526 SHARED                        1101 <taskloopsimd begin>
+     527 SHORTLOOP                     1102 <teams begin>
+     528 SIGN                          1103 <teamsdist begin>
+     529 SIMD                          1104 <teamsdistpardo begin>
+     530 SIMDLEN                       1105 <teamsdistpardosimd begin>
+     531 SIZE                          1106 <teamsdistsimd begin>
+     532 SOURCE                        1107 <term>
+     533 SP                            1108 <tkr id list>
+     534 SS                            1109 <tkr id>
+     535 STAT                          1110 <tkr spec>
+     536 STATIC                        1111 <tp item>
+     537 STATUS                        1112 <tp list>
+     538 STOP                          1113 <tprocedure>
+     539 STREAM                        1114 <tpv>
+     540 STRUCTURE                     1115 <typdcl item>
+     541 SUBMODULE                     1116 <typdcl list>
+     542 SUBROUTINE                    1117 <type attr list>
+     543 T                             1118 <type attr>
+     544 TARGET                        1119 <type bound procedure>
+     545 TCONTAINS                     1120 <type guard stmt>
+     546 TEXTURE                       1121 <type list>
+     547 THEN                          1122 <type name>
+     548 THREADS                       1123 <type param decl list>
+     549 THREAD_LIMIT                  1124 <type param spec list>
+     550 TL                            1125 <type param value>
+     551 TO                            1126 <type spec>
+     552 TPROCEDURE                    1127 <typeis stmt>
+     553 TR                            1128 <typespec>
+     554 TYPE                          1129 <uniform clause>
+     555 TYPEIS                        1130 <unit data list>
+     556 UNFORMATTED                   1131 <unit data>
+     557 UNIFORM                       1132 <unit id>
+     558 UNION                         1133 <unit info>
+     559 UNIT                          1134 <unlimited format item>
+     560 UNROLL                        1135 <use>
+     561 UNTIED                        1136 <var primary ssa>
+     562 UPDATE                        1137 <var primary>
+     563 USE                           1138 <var ref list>
+     564 USE_DEVICE                    1139 <var ref>
+     565 VALUE                         1140 <vol id>
+     566 VECTOR                        1141 <vol list>
+     567 VECTOR_LENGTH                 1142 <vxeqc list>
+     568 VOLATILE                      1143 <wait item>
+     569 WAIT                          1144 <where clause>
+     570 WHERE                         1145 <where construct>
+     571 WHILE                         1146 <write>
+     572 WORKER
+     573 WRITE
+     574 X
+     575 Z
+
+.GS 2 "THE PRODUCTIONS"
+
+.. code-block:: none
+
+
+       0 <SYSTEM GOAL SYMBOL> ::= END <stmt> END
+
+       1 <stmt> ::= <stbeg> <statement> <stend>
+
+       2 <stbeg> ::=
+
+       3 <stend> ::=
+
+       4 <statement> ::= <prog title>
+       5               | <nii> <nim> <entry statement>
+       6               | <declaration>
+       7               | <nii> <nim> <simple stmt>
+       8               | <nii> <nim> <GOTO stmt>
+       9               | <nii> <nim> <control stmt>
+      10               | <nii> <nim> <block stmt>
+      11               | <nii> <nim> <format stmt>
+      12               | <null stmt>
+      13               | <end> <end stmt>
+      14               | <empty file>
+      15               | INCLUDE <quoted string>
+      16               | <nii> <nim> OPTIONS
+      17               | <nis> <nii> CONTAINS
+      18               | <directive>
+
+      19 <iii> ::=
+
+      20 <nii> ::=
+
+      21 <nim> ::=
+
+      22 <pgm> ::=
+
+      23 <end> ::=
+
+      24 <prog title> ::= <routine id>
+      25                | <routine id> ( ) <func suffix>
+      26                | <routine id> ( <formal list> ) <func suffix>
+      27                | BLOCKDATA
+      28                | BLOCKDATA <id>
+      29                | MODULE <id>
+      30                | SUBMODULE ( <id> ) <id>
+      31                | SUBMODULE ( <id> : <id> ) <id>
+      32                | <module procedure stmt>
+
+      33 <ident> ::= <id>
+
+      34 <id> ::= <id name>
+
+      35 <func suffix> ::=
+      36                 | BIND <bind attr> <id name> ( <id name> )
+      37                 | BIND <bind attr>
+      38                 | <id name> ( <id name> ) BIND <bind attr>
+      39                 | <id name> ( <id name> )
+
+      40 <entry statement> ::= <entry id>
+      41                     | <entry id> ( ) <func suffix>
+      42                     | <entry id> ( <formal list> ) <func suffix>
+
+      43 <routine id> ::= <subr prefix> SUBROUTINE <id>
+      44                | <subr prefix> FUNCTION <id>
+      45                | <func prefix> FUNCTION <fcn name>
+      46                | PROGRAM <id>
+
+      47 <subr prefix> ::=
+      48                 | <prefix spec>
+
+      49 <prefix spec> ::= <prefix spec> <prefix>
+      50                 | <prefix>
+
+      51 <prefix> ::= RECURSIVE
+      52            | PURE
+      53            | ELEMENTAL
+      54            | ATTRIBUTES ( <id name list> )
+      55            | IMPURE
+      56            | MODULE
+      57            | LAUNCHBOUNDS ( <launchbound> )
+      58            | LAUNCHBOUNDS ( <launchbound> , <launchbound> )
+
+      59 <launchbound> ::= <integer>
+
+      60 <id name list> ::= <id name list> , <id name>
+      61                  | <id name>
+
+      62 <func prefix> ::= <data type>
+      63                 | <data type> <prefix spec>
+      64                 | <prefix spec> <data type>
+      65                 | <prefix spec> <data type> <prefix spec>
+
+      66 <entry id> ::= ENTRY <id>
+
+      67 <fcn name> ::= <id> <opt len spec>
+
+      68 <formal list> ::= <formal list> , <formal>
+      69                 | <formal>
+
+      70 <formal> ::= <id>
+      71            | \*
+
+      72 <ident list> ::= <ident list> , <ident>
+      73                | <ident>
+
+      74 <end stmt> ::= <END stmt>
+      75              | ENDBLOCKDATA <opt ident>
+      76              | ENDFUNCTION <opt ident>
+      77              | ENDMODULE <opt ident>
+      78              | ENDPROGRAM <opt ident>
+      79              | ENDSUBROUTINE <opt ident>
+      80              | ENDSUBMODULE <opt ident>
+      81              | ENDPROCEDURE <opt ident>
+
+      82 <opt ident> ::=
+      83               | <ident>
+
+      84 <block stmt> ::= BLOCK
+      85                | <check construct> : BLOCK
+      86                | ENDBLOCK <construct name>
+
+      87 <declaration> ::= <data type> <optional comma> <pgm>
+                              <typdcl list>
+      88                 | <dimkeyword> <opt attr> <pgm> <dcl id list>
+      89                 | <nis> IMPLICIT <pgm> <implicit type>
+      90                 | <nis> COMMON <pgm> <common list>
+      91                 | <nis> EXTERNAL <opt attr> <pgm> <ident list>
+      92                 | <nis> INTRINSIC <opt attr> <pgm> <ident list>
+      93                 | <iii> <nis> SAVE <opt attr> <save list>
+      94                 | <iii> <nis> SAVE
+      95                 | PARAMETER <pgm> ( <ideqc list> )
+      96                 | <nis> EQUIVALENCE <pgm> <equiv groups>
+      97                 | <iii> <nis> DATA <dinit list>
+      98                 | PARAMETER <pgm> <vxeqc list>
+      99                 | <iii> <nis> NAMELIST <namelist groups>
+     100                 | STRUCTURE <pgm> <struct begin1> <struct begin2>
+     101                 | ENDSTRUCTURE
+     102                 | RECORD <pgm> <record list>
+     103                 | UNION
+     104                 | ENDUNION
+     105                 | MAP
+     106                 | ENDMAP
+     107                 | TYPE <opt type spec> <opt attr> <pgm> <id>
+                              <opt tpsl>
+     108                 | ENDTYPE <opt ident>
+     109                 | VOLATILE <opt attr> <pgm> <vol list>
+     110                 | <nis> POINTER <opt attr> <pgm> <ptr list>
+     111                 | <nis> ALLOCATABLE <opt attr> <pgm>
+                              <alloc id list>
+     112                 | <data type> <opt attr list> :: <pgm>
+                              <entity decl list>
+     113                 | <intent> <opt attr> <pgm> <ident list>
+     114                 | <access spec> <opt attr> <pgm> <access list>
+     115                 | OPTIONAL <opt attr> <pgm> <ident list>
+     116                 | TARGET <opt attr> <pgm> <target list>
+     117                 | <nis> <interface>
+     118                 | <nis> <end interface>
+     119                 | <nis> <pgm> USE <use>
+     120                 | <access spec>
+     121                 | <procedure stmt>
+     122                 | <mp threadprivate> ( <tp list> )
+     123                 | <dec declaration>
+     124                 | <pragma declaration>
+     125                 | <nis> AUTOMATIC <opt attr> <pgm> <ident list>
+     126                 | <nis> STATIC <opt attr> <pgm> <ident list>
+     127                 | BIND <bind attr> <opt attr> <bind list>
+     128                 | <nis> <pgm> <import> <opt import>
+     129                 | <nis> <pgm> ENUM , BIND ( <id name> )
+     130                 | <nis> ENUMERATOR <opt attr> <enums>
+     131                 | <nis> ENDENUM
+     132                 | <procedure declaration>
+     133                 | <type bound procedure>
+     134                 | ATTRIBUTES ( <id name list> ) <opt attr> <pgm>
+                              <ident list>
+     135                 | TCONTAINS
+     136                 | <nis> PROTECTED <opt attr> <pgm> <ident list>
+     137                 | <nis> ASYNCHRONOUS <opt attr> <pgm>
+                              <ident list>
+     138                 | <nis> <accel decl begin> ACCDECL
+                              <accel decl list>
+     139                 | <nis> <accel decl begin> DECLARE
+                              <accel decl list>
+     140                 | <generic type procedure>
+     141                 | <final subroutines>
+     142                 | <nis> CONTIGUOUS <opt attr> <pgm> <ident list>
+     143                 | <nis> <accel decl begin> ROUTINE
+                              <accel routine list>
+     144                 | <nis> <accel decl begin> ROUTINE (
+                              <routine id list> ) <accel routine list>
+     145                 | <seq> <pgm>
+     146                 | <nis> <mp decl begin> <mp decl>
+     147                 | <nis> VALUE <opt attr> <pgm> <ident list>
+     148                 | <accel begin> <accel dp stmts>
+
+     149 <accel dp stmts> ::= <accel shape declstmt>
+     150                    | <accel policy declstmt>
+
+     151 <accel shape declstmt> ::= ACCSHAPE <accel shape dir>
+
+     152 <accel shape dir> ::= ( <accel dpvarlist> )
+     153                     | ( <accel dpvarlist> ) <accel shape attrs>
+     154                     | '<' <ident> '>' ( <accel dpvarlist> )
+     155                     | '<' <ident> '>' ( <accel dpvarlist> )
+                                  <accel shape attrs>
+
+     156 <accel shape attrs> ::= <accel shape attrs> <accel shape attr>
+     157                       | <accel shape attr>
+
+     158 <accel shape attr> ::= <accel dpdefault attr>
+     159                      | <accel dpinit_needed attr>
+     160                      | <accel dptype attr>
+
+     161 <accel dpdefault attr> ::= DEFAULT ( <ident> )
+
+     162 <accel dpinit_needed attr> ::= INIT_NEEDED (
+                                           <accel dpinitvar list> )
+
+     163 <accel dpinitvar list> ::= <accel dpinitvar list> , <ident>
+     164                          | <ident>
+
+     165 <accel dptype attr> ::= TYPE ( <ident> )
+
+     166 <accel policy declstmt> ::= ACCPOLICY <accel policy name>
+                                        <accel policy dir>
+
+     167 <accel policy name> ::= '<' <ident> '>'
+     168                       | '<' <ident> : <ident> '>'
+
+     169 <accel policy dir> ::= <accel policy attr list>
+
+     170 <accel policy attr list> ::= <accel policy attr list>
+                                         <accel policy attr>
+     171                            | <accel policy attr>
+
+     172 <accel policy attr> ::= CREATE ( <accel dpvarlist> )
+     173                       | NO_CREATE ( <accel dpvarlist> )
+     174                       | COPYIN ( <accel dpvarlist> )
+     175                       | COPYOUT ( <accel dpvarlist> )
+     176                       | COPY ( <accel dpvarlist> )
+     177                       | UPDATE ( <accel dpvarlist> )
+     178                       | DEVICEPTR ( <accel dpvarlist> )
+     179                       | <accel dpdefault attr>
+     180                       | <accel dptype attr>
+
+     181 <accel dpvarlist> ::= <accel dpvarlist> , <accel dpvar>
+     182                     | <accel dpvar>
+
+     183 <accel dpvar> ::= <ident>
+     184                 | <ident> '<' <ident> '>'
+     185                 | <ident> ( <accel dpvar bnds> )
+     186                 | <ident> '<' <ident> '>' ( <accel dpvar bnds> )
+
+     187 <accel dpvar bnds> ::= <accel dpvar bnds> , <accel dpvar bnd>
+     188                      | <accel dpvar bnd>
+
+     189 <accel dpvar bnd> ::= <accel dp bnd> : <accel dp bnd>
+     190                     | <accel dp bnd>
+
+     191 <accel dp bnd> ::= <accel dp sbnd>
+     192                  | <accel dp bndexp>
+     193                  | <accel dp bndexp1>
+
+     194 <accel dp bndexp> ::= <accel dp addexp>
+     195                     | <accel dp mulexp>
+
+     196 <accel dp addexp> ::= <accel dp sbnd> <accel add opr>
+                                  <accel dp sbnd>
+
+     197 <accel dp mulexp> ::= <accel dp sbnd> <accel mul opr>
+                                  <accel dp sbnd>
+
+     198 <accel add opr> ::= +
+     199                   | -
+
+     200 <accel mul opr> ::= \*
+     201                   | /
+
+     202 <accel dp bndexp1> ::= <accel dp mulexp> <accel add opr>
+                                   <accel dp sbnd>
+
+     203 <accel dp sbnd> ::= <constant>
+     204                   | <ident>
+
+     205 <routine id list> ::= <ident>
+     206                     | <routine id list> , <ident>
+
+     207 <dimkeyword> ::= DIMENSION
+     208                | <dimattr>
+
+     209 <nis> ::=
+
+     210 <data type> ::= <base type> <opt len spec>
+     211               | <base type> ( <len kind> )
+     212               | TYPE ( <id> <opt derived type spec> )
+     213               | CLASS <pgm> ( <id> <opt derived type spec> )
+     214               | CLASS <pgm> ( \* )
+
+     215 <type spec> ::= <intrinsic type>
+     216               | <ident>
+
+     217 <intrinsic type> ::= <base type> <opt len spec>
+     218                    | <base type> ( <len kind> )
+
+     219 <base type> ::= INTEGER
+     220               | REAL
+     221               | DOUBLEPRECISION
+     222               | COMPLEX
+     223               | DOUBLECOMPLEX
+     224               | LOGICAL
+     225               | CHARACTER
+     226               | NCHARACTER
+     227               | BYTE
+
+     228 <opt len spec> ::=
+     229                  | \* <len spec>
+     230                  | : <len spec>
+
+     231 <len spec> ::= <integer>
+     232              | ( <tpv> )
+
+     233 <tpv> ::= <expression>
+     234         | \*
+     235         | :
+
+     236 <len kind> ::= <tpv>
+     237              | <len kind spec>
+     238              | <tpv> , <len kind spec>
+     239              | <tpv> , <tpv>
+     240              | <len kind spec> , <len kind spec>
+
+     241 <len kind spec> ::= <id name> = <tpv>
+
+     242 <optional comma> ::=
+     243                    | ,
+
+     244 <opt attr> ::=
+     245              | ::
+
+     246 <typdcl list> ::= <typdcl list> , <typdcl item>
+     247                 | <typdcl item>
+
+     248 <typdcl item> ::= <dcl id> / <dinit const list> /
+     249                 | <dcl id>
+     250                 | %FILL
+
+     251 <dcl id list> ::= <dcl id list> , <dcl id>
+     252                 | <dcl id>
+
+     253 <dcl id> ::= <ident> <opt len spec>
+     254            | <ident> <opt len spec> <dim beg> <dimension list> )
+                         <opt len spec>
+
+     255 <dim beg> ::= (
+
+     256 <dimension list> ::= <dim list>
+
+     257 <dim list> ::= <dim list> , <dim spec>
+     258              | <dim spec>
+
+     259 <dim spec> ::= <explicit shape>
+     260              | <expression> : \*
+     261              | \*
+     262              | :
+     263              | <expression> :
+     264              | ..
+
+     265 <explicit shape> ::= <expression> : <expression>
+     266                    | <expression>
+
+     267 <implicit type> ::= <implicit list>
+     268                   | NONE
+
+     269 <implicit list> ::= <implicit list> , <data type> <implp>
+                                <range list> )
+     270                   | <data type> <implp> <range list> )
+
+     271 <range list> ::= <range list> , <range>
+     272                | <range>
+
+     273 <range> ::= <letter> - <letter>
+     274           | <letter>
+
+     275 <common list> ::= <common list> <com dcl>
+     276                 | <init com dcl>
+
+     277 <init com dcl> ::= <dcl id list>
+     278                  | <dcl id list> ,
+     279                  | <com dcl>
+
+     280 <com dcl> ::= '//' <dcl id list> <optional comma>
+     281             | / / <dcl id list> <optional comma>
+     282             | <common> <dcl id list> <optional comma>
+
+     283 <common> ::= / <ident> /
+
+     284 <save list> ::= <save list> , <save id>
+     285               | <save id>
+
+     286 <save id> ::= <common>
+     287             | <ident>
+
+     288 <ideqc list> ::= <ideqc list> , <ident> <init beg> <expression>
+     289                | <ident> <init beg> <expression>
+
+     290 <init beg> ::= =
+
+     291 <vxeqc list> ::= <vxeqc list> , <ident> = <expression>
+     292                | <ident> = <expression>
+
+     293 <enums> ::= <enums> , <enum>
+     294           | <enum>
+
+     295 <enum> ::= <ident> = <expression>
+     296          | <ident>
+
+     297 <equiv groups> ::= <equiv groups> , <equiv group>
+     298                  | <equiv group>
+
+     299 <equiv group> ::= ( <equiv list> )
+
+     300 <equiv list> ::= <equiv list> , <equiv var>
+     301                | <equiv var>
+
+     302 <equiv var> ::= <ident>
+     303               | <equiv var> ( <ssa list> )
+     304               | <equiv var> . <ident>
+
+     305 <namelist groups> ::= <namelist groups> <namelist group>
+     306                     | <namelist group>
+
+     307 <namelist group> ::= / <ident> / <namelist list>
+
+     308 <namelist list> ::= <namelist list> <namelist var>
+     309                   | <namelist var>
+
+     310 <namelist var> ::= <ident> <optional comma>
+
+     311 <struct begin1> ::=
+     312                   | / <ident> /
+
+     313 <struct begin2> ::=
+     314                   | <field namelist>
+
+     315 <field namelist> ::= <field namelist> , <field name>
+     316                    | <field name>
+
+     317 <field name> ::= <ident>
+     318                | <ident> <dim beg> <dimension list> )
+
+     319 <record list> ::= <record list> <record>
+     320                 | <record>
+
+     321 <record> ::= / <struct name> / <record namelist>
+
+     322 <struct name> ::= <ident>
+
+     323 <record namelist> ::= <record namelist> <record dcl>
+     324                     | <record dcl>
+
+     325 <record dcl> ::= <ident> <optional comma>
+     326                | <ident> <dim beg> <dimension list> )
+                             <optional comma>
+
+     327 <vol list> ::= <vol list> , <vol id>
+     328              | <vol id>
+
+     329 <vol id> ::= <common>
+     330            | <ident>
+
+     331 <dinit list> ::= <dinit list> <optional comma> <dinit>
+     332                | <dinit>
+
+     333 <dinit> ::= <dinit var list> / <dinit const list> /
+
+     334 <dinit var list> ::= <dinit var list> , <dinit var>
+     335                    | <dinit var>
+
+     336 <dinit var> ::= <dvar ref>
+     337               | ( <dinit var list> , <ident> = <expression> ,
+                            <expression> <e3> )
+
+     338 <e3> ::=
+     339        | , <expression>
+
+     340 <dinit const list> ::= <dinit const list> , <data item>
+     341                      | <data item>
+
+     342 <data item> ::= <data constant>
+     343               | <data rpt> \* <data constant>
+
+     344 <data rpt> ::= <integer>
+     345              | <int kind const>
+     346              | <ident constant>
+
+     347 <data constant> ::= <constant>
+     348                   | <addop> <constant>
+     349                   | <ident constant>
+     350                   | <addop> <ident constant>
+     351                   | <ident ssa> ( <ssa list> )
+     352                   | <ident ssa> ( )
+     353                   | <substring>
+
+     354 <ident ssa> ::= <ident>
+
+     355 <ident constant> ::= <ident>
+
+     356 <ptr list> ::= <ptr list> , <ptr assoc>
+     357              | <ptr assoc>
+
+     358 <ptr assoc> ::= ( <ident> , <dcl id> )
+     359               | <alloc id>
+
+     360 <alloc id list> ::= <alloc id list> , <alloc id>
+     361                   | <alloc id>
+
+     362 <alloc id> ::= <ident>
+     363              | <ident> <dim beg> <dimension list> )
+
+     364 <opt attr list> ::=
+     365                   | , <attr list>
+
+     366 <attr list> ::= <attr list> , <attr>
+     367               | <attr>
+
+     368 <attr> ::= PARAMETER
+     369          | <access spec>
+     370          | ALLOCATABLE
+     371          | <dimattr> <dim beg> <dimension list> )
+     372          | EXTERNAL
+     373          | <intent>
+     374          | INTRINSIC
+     375          | OPTIONAL
+     376          | POINTER
+     377          | SAVE
+     378          | TARGET
+     379          | AUTOMATIC
+     380          | STATIC
+     381          | BIND <bind attr>
+     382          | VALUE
+     383          | VOLATILE
+     384          | DEVICE
+     385          | PINNED
+     386          | SHARED
+     387          | CONSTANT
+     388          | PROTECTED
+     389          | ASYNCHRONOUS
+     390          | ABSTRACT
+     391          | TEXTURE
+     392          | KIND
+     393          | LEN
+     394          | CONTIGUOUS
+     395          | MANAGED
+
+     396 <bind attr> ::= ( <id name> )
+     397               | ( <id name> , <id name> = <quoted string> )
+
+     398 <bind list> ::= <bind list> , <bind entry>
+     399               | <bind entry>
+
+     400 <bind entry> ::= <common>
+     401                | <id>
+
+     402 <opt type spec> ::=
+     403                   | , <type attr list>
+
+     404 <type attr list> ::= <type attr list> , <type attr>
+     405                    | <type attr>
+
+     406 <type attr> ::= BIND <bind attr>
+     407               | <access spec>
+     408               | EXTENDS ( <id> )
+     409               | ABSTRACT
+
+     410 <access spec> ::= PUBLIC
+     411                 | PRIVATE
+
+     412 <access list> ::= <access list> , <access>
+     413                 | <access>
+
+     414 <access> ::= <ident>
+     415            | <id name> ( <operator> )
+     416            | <id name> ( = )
+
+     417 <seq> ::= SEQUENCE
+     418         | NOSEQUENCE
+
+     419 <intent> ::= INTENT ( <id name> )
+     420            | INTENT ( <id name> <id name> )
+
+     421 <entity decl list> ::= <entity decl list> , <entity decl>
+     422                      | <entity decl>
+
+     423 <entity decl> ::= <entity id>
+     424                 | <entity id> <init beg> <expression>
+     425                 | <entity id> '=>' <id> ( )
+
+     426 <entity id> ::= <ident> <opt len spec>
+     427               | <ident> <opt len spec> <dim beg> <dimension list>
+                            ) <opt len spec>
+
+     428 <target list> ::= <target list> , <target>
+     429                 | <target>
+
+     430 <target> ::= <dcl id>
+
+     431 <interface> ::= <begininterface>
+     432               | <begininterface> <generic spec>
+
+     433 <begininterface> ::= <pgm> INTERFACE
+     434                    | <pgm> ABSTRACT INTERFACE
+
+     435 <generic spec> ::= <generic name>
+     436                  | OPERATOR ( <operator> )
+     437                  | ASSIGNMENT ( = )
+
+     438 <generic name> ::= <ident>
+     439                  | OPERATOR
+     440                  | ASSIGNMENT
+     441                  | <ident> ( <ident> )
+
+     442 <operator> ::= <intrinsic op>
+     443              | . <ident> .
+     444              | <defined op>
+
+     445 <intrinsic op> ::= <addop>
+     446                  | <mult op>
+     447                  | \*\*
+     448                  | <n eqv op>
+     449                  | .OR.
+     450                  | .O.
+     451                  | .AND.
+     452                  | .NOT.
+     453                  | .N.
+     454                  | <relop>
+     455                  | '//'
+
+     456 <n eqv op> ::= .EQV.
+     457              | .NEQV.
+     458              | .X.
+     459              | .XOR.
+
+     460 <end interface> ::= ENDINTERFACE
+     461                   | ENDINTERFACE <generic spec>
+
+     462 <module procedure stmt> ::= MODULE PROCEDURE <ident list>
+     463                           | MODULE PROCEDURE :: <ident list>
+
+     464 <procedure stmt> ::= PROCEDURE <ident list>
+     465                    | PROCEDURE :: <ident list>
+
+     466 <use> ::= <get module>
+     467         | <get module> , <rename list>
+     468         | <get module> , <id name> : <only list>
+     469         | <get module> , <id name> :
+
+     470 <get module> ::= <id>
+     471                | , <module nature> :: <id>
+     472                | :: <id>
+
+     473 <module nature> ::= INTRINSIC
+     474                   | NON_INTRINSIC
+
+     475 <rename list> ::= <rename list> , <rename>
+     476                 | <rename>
+
+     477 <rename> ::= <ident> '=>' <ident>
+     478            | <id name> ( <rename operator> ) '=>' <id name> (
+                         <rename operator> )
+
+     479 <rename operator> ::= . <ident> .
+     480                     | <defined op>
+
+     481 <only list> ::= <only list> , <only>
+     482               | <only>
+
+     483 <only> ::= <ident>
+     484          | <ident> '=>' <ident>
+     485          | <id name> ( <only operator> )
+     486          | <id name> ( = )
+     487          | <id name> ( <only operator> ) '=>' <id name> (
+                       <only operator> )
+
+     488 <only operator> ::= <intrinsic op>
+     489                   | . <ident> .
+     490                   | <defined op>
+
+     491 <tp list> ::= <tp list> , <tp item>
+     492             | <tp item>
+
+     493 <tp item> ::= <common>
+     494             | <ident>
+
+     495 <dec declaration> ::= ATTRIBUTES <msattr list> ::
+                                  <cmn ident list>
+     496                     | ALIAS <ident> , <alt name>
+     497                     | ALIAS <ident> : <alt name>
+
+     498 <msattr list> ::= <msattr list> , <msattr>
+     499                 | <msattr>
+
+     500 <msattr> ::= <id name>
+     501            | <id name> : <alt name>
+
+     502 <alt name> ::= <quoted string>
+     503              | <id name>
+
+     504 <cmn ident list> ::= <cmn ident list> , <cmn ident>
+     505                    | <cmn ident>
+
+     506 <cmn ident> ::= <common>
+     507               | <ident>
+
+     508 <pragma declaration> ::= <nis> LOCAL ( <ident list> )
+     509                        | <nis> <ignore tkr>
+     510                        | <nis> DEFAULTKIND <dflt>
+     511                        | <nis> MOVEDESC <id name>
+
+     512 <ignore tkr> ::= IGNORE_TKR
+     513                | IGNORE_TKR <tkr id list>
+
+     514 <tkr id list> ::= <tkr id list> , <tkr id>
+     515                 | <tkr id>
+
+     516 <tkr id> ::= <tkr spec> <ident>
+
+     517 <tkr spec> ::=
+     518              | ( <id name> )
+
+     519 <dflt> ::=
+     520          | ( <ident list> )
+
+     521 <import> ::= IMPORT
+
+     522 <opt import> ::=
+     523                | <opt attr> <import name list>
+
+     524 <import name list> ::= <import name list> , <import name>
+     525                      | <import name>
+
+     526 <import name> ::= <ident>
+
+     527 <procedure declaration> ::= <procedure> <opt attr>
+                                        <proc dcl list>
+
+     528 <procedure> ::= PROCEDURE ( <proc interf> ) <opt proc attr>
+
+     529 <proc interf> ::=
+     530                 | <id>
+     531                 | <data type>
+
+     532 <opt proc attr> ::=
+     533                   | , <proc attr list>
+
+     534 <proc attr list> ::= <proc attr list> , <proc attr>
+     535                    | <proc attr>
+
+     536 <proc attr> ::= <access spec>
+     537               | BIND <bind attr>
+     538               | <intent>
+     539               | OPTIONAL
+     540               | POINTER
+     541               | SAVE
+     542               | PASS
+     543               | PASS ( <ident> )
+     544               | NOPASS
+     545               | PROTECTED
+
+     546 <proc dcl list> ::= <proc dcl list> , <proc dcl>
+     547                   | <proc dcl>
+
+     548 <proc dcl> ::= <ident>
+     549              | <ident> '=>' <id> ( )
+     550              | <ident> '=>' <id>
+
+     551 <type bound procedure> ::= <tprocedure> <opt attr>
+                                       <binding name list>
+
+     552 <tprocedure> ::= TPROCEDURE <opt interface name>
+                             <opt binding attr list>
+
+     553 <opt interface name> ::=
+     554                        | ( <id> )
+
+     555 <opt binding attr list> ::=
+     556                           | , <binding attr list>
+
+     557 <binding attr list> ::= <binding attr list> , <binding attr>
+     558                       | <binding attr>
+
+     559 <binding attr> ::= <id name>
+     560                  | <id name> ( <id> )
+
+     561 <binding name list> ::= <binding name list> , <binding name>
+     562                       | <binding name>
+
+     563 <binding name> ::= <id>
+     564                  | <id> '=>' <id>
+
+     565 <accel decl begin> ::=
+
+     566 <accel decl list> ::= <accel decl list> <opt comma>
+                                  <accel decl attr>
+     567                     | <accel decl attr>
+
+     568 <accel decl attr> ::= COPYIN ( <accel decl data list> )
+     569                     | COPYOUT ( <accel decl data list> )
+     570                     | LOCAL ( <accel decl data list> )
+     571                     | COPY ( <accel decl data list> )
+     572                     | MIRROR ( <accel mdecl data list> )
+     573                     | REFLECTED ( <accel mdecl data list> )
+     574                     | CREATE ( <accel decl data list> )
+     575                     | PRESENT ( <accel decl data list> )
+     576                     | PCOPY ( <accel decl data list> )
+     577                     | PCOPYIN ( <accel decl data list> )
+     578                     | PCOPYOUT ( <accel decl data list> )
+     579                     | PLOCAL ( <accel decl data list> )
+     580                     | PCREATE ( <accel decl data list> )
+     581                     | DEVICEPTR ( <accel mdecl data list> )
+     582                     | DEVICE_RESIDENT ( <accel decl data list> )
+     583                     | LINK ( <accel decl data list> )
+
+     584 <accel decl data list> ::= <accel decl data list> ,
+                                       <accel decl data>
+     585                          | <accel decl data>
+
+     586 <accel decl data> ::= <accel decl data name> (
+                                  <accel decl sub list> )
+     587                     | <accel decl data name>
+     588                     | <constant>
+     589                     | <common>
+
+     590 <accel mdecl data> ::= <accel mdecl data name> (
+                                   <accel decl sub list> )
+     591                      | <accel mdecl data name>
+     592                      | <constant>
+
+     593 <accel mdecl data list> ::= <accel mdecl data list> ,
+                                        <accel mdecl data>
+     594                           | <accel mdecl data>
+
+     595 <accel decl sub list> ::= <accel decl sub list> ,
+                                      <accel decl sub>
+     596                         | <accel decl sub>
+
+     597 <accel decl sub> ::= <opt sub> : <opt sub>
+     598                    | <expression>
+
+     599 <accel routine list> ::=
+     600                        | <accel routine list> <opt comma> GANG
+     601                        | <accel routine list> <opt comma> WORKER
+     602                        | <accel routine list> <opt comma> VECTOR
+     603                        | <accel routine list> <opt comma> SEQ
+     604                        | <accel routine list> <opt comma> NOHOST
+     605                        | <accel routine list> <opt comma> BIND (
+                                     <ident> )
+     606                        | <accel routine list> <opt comma> BIND (
+                                     <quoted string> )
+     607                        | <accel routine list> <opt comma>
+                                     DEVICE_TYPE ( <devtype list> )
+     608                        | <accel routine list> <opt comma> GANG (
+                                     <ident> : <expression> )
+     609                        | <accel routine list> <opt comma> EXCLUDE
+
+     610 <devtype list> ::= <devtype list> , <devtype attr>
+     611                  | <devtype attr>
+
+     612 <devtype attr> ::= \*
+     613                  | <ident>
+
+     614 <generic type procedure> ::= GENERIC <opt gen access spec> ::
+                                         <generic binding>
+
+     615 <opt gen access spec> ::=
+     616                         | , <gen access spec>
+
+     617 <gen access spec> ::= <id name>
+
+     618 <generic binding> ::= <generic spec> '=>' <generic binding list>
+
+     619 <generic binding name> ::= <id>
+
+     620 <generic binding list> ::= <generic binding name>
+     621                          | <generic binding list> ,
+                                       <generic binding name>
+
+     622 <final subroutines> ::= FINAL <opt attr> <final list>
+
+     623 <final list> ::= <final list> , <final>
+     624                | <final>
+
+     625 <final> ::= <id>
+
+     626 <opt tpsl> ::=
+     627              | ( <type param spec list> )
+
+     628 <type param spec list> ::= <type param spec list> , <id>
+     629                          | <id>
+
+     630 <opt derived type spec> ::=
+     631                           | ( <type param decl list> )
+
+     632 <type param decl list> ::= <type param value>
+     633                          | <type param decl list> ,
+                                       <type param value>
+
+     634 <type param value> ::= <expression>
+     635                      | <id name> = <expression>
+     636                      | :
+     637                      | <id name> = :
+     638                      | \*
+     639                      | <id name> = \*
+
+     640 <opt comma> ::=
+     641               | ,
+
+     642 <mp decl begin> ::=
+
+     643 <mp decl> ::= <mp declaresimd> <declare simd>
+     644             | <mp declaretarget> <declare target>
+     645             | <declarered begin> <declare reduction>
+
+     646 <declarered begin> ::= <mp declarereduction>
+
+     647 <declare reduction> ::= ( <reduc op> : <type list> : <red comb> )
+                                    <opt red init>
+
+     648 <type list> ::= <type list> , <red type>
+     649               | <red type>
+
+     650 <red comb> ::= <id name> = <expression>
+     651              | <id name> ( <ssa list> )
+
+     652 <opt red init> ::=
+     653                  | <id name> = <expression>
+     654                  | <id name> ( <ssa list> )
+
+     655 <expression> ::= <primary>
+     656                | <addition>
+     657                | <multiplication>
+     658                | <exponentiation>
+     659                | <disjunction>
+     660                | <conjunction>
+     661                | <eqv or neqv>
+     662                | <log negation>
+     663                | <concatenation>
+     664                | <relation>
+     665                | <defined binary>
+     666                | <defined unary>
+
+     667 <primary> ::= <var ref>
+     668             | <constant>
+     669             | %LOC ( <expression> )
+     670             | <elp> <expression> )
+     671             | <ac beg> <ac spec> <ac end>
+     672             | <substring>
+
+     673 <ac beg> ::= '(/'
+
+     674 <ac end> ::= '/)'
+
+     675 <elp> ::= (
+
+     676 <ac spec> ::=
+     677             | <ac list>
+     678             | <type spec> :: <ac list>
+     679             | <type spec> ::
+
+     680 <ac list> ::= <ac list> , <ac item>
+     681             | <ac item>
+
+     682 <ac item> ::= <expression>
+     683             | <elp> <ac list> , <implied do control> )
+     684             | <expression> : <expression> <opt stride>
+     685             | <elp> <ac list> , <expression> )
+
+     686 <implied do control> ::= <var ref> <idc eq> <etmp exp> ,
+                                     <etmp exp> <etmp e3>
+
+     687 <idc eq> ::= =
+
+     688 <etmp exp> ::= <etmp> <expression>
+
+     689 <etmp e3> ::=
+     690             | , <etmp exp>
+
+     691 <etmp> ::=
+
+     692 <etmp lp> ::= (
+
+     693 <var ref list> ::= <var ref list> , <var ref>
+     694                  | <var ref>
+
+     695 <dvar ref> ::= <ident>
+     696              | <dvar ref> ( <ssa list> )
+     697              | <dvar ref> . <id>
+     698              | <dvar ref> % <id>
+     699              | <dvar ref> %LOC
+
+     700 <var ref> ::= <ident>
+     701             | <var primary ssa> ( )
+     702             | <var primary ssa> ( <ssa list> )
+     703             | <var primary> . <id>
+     704             | <var primary> % <id>
+     705             | <var primary> %LOC
+
+     706 <var primary ssa> ::= <var primary>
+
+     707 <var primary> ::= <var ref>
+
+     708 <ssa list> ::= <ssa list> , <ssa>
+     709              | <ssa>
+
+     710 <ssa> ::= <expression>
+     711         | <id name> = <expression>
+     712         | <opt sub> : <opt sub> <opt stride>
+     713         | <arg builtin>
+     714         | \* <reflabel>
+     715         | & <reflabel>
+
+     716 <accel data ss> ::= <accel data name> ( <accel sub list> )
+
+     717 <accel data name> ::= <ident>
+     718                     | <accel data name> % <id>
+     719                     | <accel data ss> % <id>
+
+     720 <accel decl data ss> ::= <accel decl data name> (
+                                     <accel decl sub list> )
+
+     721 <accel mdecl data ss> ::= <accel mdecl data name> (
+                                      <accel decl sub list> )
+
+     722 <accel decl data name> ::= <ident>
+     723                          | <accel decl data name> % <id>
+     724                          | <accel decl data ss> % <id>
+
+     725 <accel mdecl data name> ::= <ident>
+     726                           | <accel mdecl data name> % <id>
+     727                           | <accel mdecl data ss> % <id>
+
+     728 <accel mdata ss> ::= <accel mdata name> ( <accel sub list> )
+
+     729 <accel mdata name> ::= <ident>
+     730                      | <accel mdata name> % <id>
+     731                      | <accel mdata ss> % <id>
+
+     732 <accel sdata name> ::= <ident>
+
+     733 <arg builtin> ::= % <id name> ( <expression> )
+
+     734 <opt sub> ::=
+     735             | <expression>
+
+     736 <opt stride> ::=
+     737                | : <expression>
+
+     738 <constant> ::= <integer>
+     739              | <int kind const>
+     740              | <half>
+     741              | <real>
+     742              | <double>
+     743              | <quad>
+     744              | <complex>
+     745              | <dcomplex>
+     746              | <qcomplex>
+     747              | <nondec const>
+     748              | <nonddec const>
+     749              | <Hollerith>
+     750              | <log const>
+     751              | <log kind const>
+     752              | <char literal>
+     753              | <kanji string>
+     754              | <elp> <expression> <cmplx comma> <expression> )
+
+     755 <char literal> ::= <quoted string>
+     756                  | <id> <underscore> <quoted string>
+     757                  | <integer> <underscore> <quoted string>
+
+     758 <substring> ::= <char literal> ( <opt sub> : <opt sub> )
+     759               | <kanji string> ( <opt sub> : <opt sub> )
+
+     760 <arith expr> ::= <addition>
+     761                | <term>
+
+     762 <addition> ::= <arith expr> <addop> <term>
+     763              | <arith expr> <addop> <new term>
+     764              | <new term>
+
+     765 <addop> ::= +
+     766           | -
+
+     767 <addop list> ::= <addop list> <addop>
+     768                | <addop>
+
+     769 <term> ::= <multiplication>
+     770          | <factor>
+
+     771 <new term> ::= <addop list> <term>
+
+     772 <multiplication> ::= <term> <mult op> <factor>
+     773                    | <term> <mult op> <new factor>
+
+     774 <mult op> ::= \*
+     775             | /
+
+     776 <factor> ::= <exponentiation>
+     777            | <primary>
+     778            | <defined unary>
+
+     779 <defined unary> ::= <defined op> <primary>
+
+     780 <new factor> ::= <addop list> <factor>
+
+     781 <exponentiation> ::= <primary> \*\* <factor>
+     782                    | <primary> \*\* <new factor>
+
+     783 <log expr> ::= <log disjunct>
+     784              | <eqv or neqv>
+
+     785 <eqv or neqv> ::= <log expr> <n eqv op> <log disjunct>
+
+     786 <log disjunct> ::= <disjunction>
+     787                  | <log term>
+
+     788 <disjunction> ::= <OR opr1> .OR. <log term>
+     789                 | <OR opr1> .O. <log term>
+
+     790 <OR opr1> ::= <log disjunct>
+
+     791 <log term> ::= <conjunction>
+     792              | <log factor>
+
+     793 <conjunction> ::= <AND opr1> .AND. <log factor>
+
+     794 <AND opr1> ::= <log term>
+
+     795 <log factor> ::= <log negation>
+     796                | <rel operand>
+     797                | <relation>
+
+     798 <log negation> ::= .NOT. <log factor>
+     799                  | .N. <log factor>
+
+     800 <relation> ::= <rel operand> <relop> <rel operand>
+
+     801 <rel operand> ::= <primary>
+     802                 | <exponentiation>
+     803                 | <multiplication>
+     804                 | <addition>
+     805                 | <concatenation>
+
+     806 <relop> ::= .EQ.
+     807           | .GE.
+     808           | .GT.
+     809           | .LE.
+     810           | .LT.
+     811           | .NE.
+
+     812 <char expr> ::= <arith expr>
+     813               | <concatenation>
+
+     814 <concatenation> ::= <char expr> '//' <arith expr>
+
+     815 <defined binary> ::= <expression> <defined op> <log expr>
+
+     816 <simple stmt> ::= <assignment>
+     817                 | <assigned GOTO>
+     818                 | <GOTO assignment>
+     819                 | <computed GOTO>
+     820                 | <arith IF>
+     821                 | <call>
+     822                 | <return>
+     823                 | CONTINUE
+     824                 | <stop stmt>
+     825                 | <pause stmt>
+     826                 | <allocation stmt>
+     827                 | <IO stmt>
+     828                 | <exit stmt>
+     829                 | <cycle stmt>
+     830                 | <pointer assignment>
+     831                 | <nullify stmt>
+     832                 | <where clause> <assignment>
+     833                 | <forall clause> <forall assn stmt>
+     834                 | <smp stmt>
+     835                 | <pragma stmt>
+     836                 | <accel stmt>
+     837                 | <kernel stmt>
+     838                 | <error stop stmt>
+
+     839 <assignment> ::= <psfunc> <var ref> <psfunc> = <expression>
+
+     840 <psfunc> ::=
+
+     841 <assigned GOTO> ::= GOTOX <ident> <optional comma> ( <label list>
+                                )
+     842                   | GOTOX <ident>
+
+     843 <label list> ::= <label list> , <reflabel>
+     844                | <reflabel>
+
+     845 <reflabel> ::= <label>
+
+     846 <label> ::= <integer>
+
+     847 <GOTO assignment> ::= ASSIGN <reflabel> TO <var ref>
+
+     848 <computed GOTO> ::= GOTOX ( <label list> ) <optional comma>
+                                <etmp exp>
+
+     849 <arith IF> ::= <arith> <reflabel> , <reflabel> <opt aif label>
+
+     850 <opt aif label> ::=
+     851                   | , <reflabel>
+
+     852 <arith> ::= <if construct> <etmp lp> <expression> )
+
+     853 <call> ::= CALL <cvar ref>
+     854          | CALL <ident> <chevron>
+     855          | CALL <ident> <chevron> ( )
+     856          | CALL <ident> <chevron> ( <arg list> )
+
+     857 <cvar ref> ::= <ident>
+     858              | <var primary ssa> ( )
+     859              | <var primary ssa> ( <ssa list> )
+     860              | <var primary> . <id>
+     861              | <var primary> % <id>
+     862              | <var primary> %LOC
+
+     863 <chevron> ::= '<<<' <expression list> '>>>'
+
+     864 <expression list> ::= <expression list> , <expression>
+     865                     | \*
+     866                     | <expression>
+
+     867 <arg list> ::= <arg list> , <arg>
+     868              | <arg>
+
+     869 <arg> ::= <expression>
+     870         | <id name> = <expression>
+     871         | \* <reflabel>
+     872         | & <reflabel>
+     873         | <arg builtin>
+
+     874 <return> ::= RETURN
+     875            | RETURN <expression>
+
+     876 <stop stmt> ::= STOP <stop pause>
+
+     877 <quiet clause> ::= QUIET = <expression>
+
+     878 <error stop stmt> ::= ERRORSTOP <error stop pause>
+     879                     | ERRORSTOP <error stop pause> ,
+                                  <quiet clause>
+
+     880 <error stop pause> ::=
+     881                      | <expression>
+
+     882 <pause stmt> ::= PAUSE <stop pause>
+
+     883 <stop pause> ::=
+     884                | <expression>
+
+     885 <GOTO stmt> ::= GOTO <reflabel>
+
+     886 <IF clause> ::= <if construct> <etmp lp> <expression> )
+
+     887 <if construct> ::= IF
+     888                  | <check construct> : IF
+
+     889 <check construct> ::= <named construct>
+
+     890 <control stmt> ::= <IF clause> <simple stmt>
+     891                  | <if construct> <etmp lp> <expression> ) GOTO
+                               <reflabel>
+     892                  | <if construct> <etmp lp> <expression> ) THEN
+     893                  | <elseif> <expression> ) THEN <construct name>
+     894                  | ELSE <construct name>
+     895                  | ENDIF <construct name>
+     896                  | <do begin> <loop control>
+     897                  | <do begin>
+     898                  | ENDDO <construct name>
+     899                  | <where clause>
+     900                  | <elsewhere clause>
+     901                  | ENDWHERE <construct name>
+     902                  | <forall clause>
+     903                  | ENDFORALL <construct name>
+     904                  | <case begin>
+     905                  | <case> <elp> <case value list> )
+                               <construct name>
+     906                  | CASEDEFAULT <construct name>
+     907                  | ENDSELECT <construct name>
+     908                  | <associate stmt>
+     909                  | ENDASSOCIATE <construct name>
+     910                  | <select type stmt>
+     911                  | <type guard stmt>
+
+     912 <associate stmt> ::= ASSOCIATE ( <association list> )
+     913                    | <check construct> : ASSOCIATE (
+                                 <association list> )
+
+     914 <association list> ::= <association>
+     915                      | <association list> , <association>
+
+     916 <association> ::= <id> '=>' <expression>
+
+     917 <select type stmt> ::= SELECTTYPE ( <assoc or selector> )
+     918                      | <check construct> : SELECTTYPE (
+                                   <assoc or selector> )
+
+     919 <assoc or selector> ::= <association>
+     920                       | <expression>
+
+     921 <type guard stmt> ::= <typeis stmt>
+     922                     | <classis stmt>
+     923                     | <classdefault stmt>
+
+     924 <typeis stmt> ::= TYPEIS ( <typespec> ) <construct name>
+
+     925 <typespec> ::= <intrinsic type>
+     926              | <derived type spec>
+
+     927 <derived type spec> ::= <type name>
+     928                       | <pdt>
+
+     929 <type name> ::= <ident>
+
+     930 <pdt> ::= <type name> ( <pdt param list> )
+
+     931 <pdt param list> ::= <pdt param list> , <pdt param>
+     932                    | <pdt param>
+
+     933 <pdt param> ::= <expression>
+     934               | <id name> = <expression>
+     935               | :
+     936               | <id name> = :
+     937               | \*
+     938               | <id name> = \*
+
+     939 <classis stmt> ::= CLASSIS ( <typespec> ) <construct name>
+
+     940 <classdefault stmt> ::= CLASSDEFAULT <construct name>
+
+     941 <elseif> ::= ELSEIF <etmp lp>
+
+     942 <do begin> ::= <do construct> <label>
+     943              | <do construct>
+
+     944 <do construct> ::= DO
+     945                  | <check construct> : DO
+
+     946 <loop control> ::= <opt comma> <var ref> = <etmp exp> ,
+                               <etmp exp> <etmp e3>
+     947                  | <dowhile> <etmp lp> <expression> )
+     948                  | <doconcurrent> <concurrent header>
+                               <concurrent locality>
+
+     949 <dowhile> ::= <opt comma> WHILE
+
+     950 <doconcurrent> ::= <opt comma> CONCURRENT
+
+     951 <concurrent header> ::= ( <concurrent type> <concurrent list>
+                                    <opt mask expr> )
+
+     952 <concurrent type> ::=
+     953                     | <intrinsic type> ::
+
+     954 <concurrent list> ::= <concurrent list> , <concurrent control>
+     955                     | <concurrent control>
+
+     956 <concurrent control> ::= <var ref> = <expression> : <expression>
+                                     <opt stride>
+
+     957 <opt mask expr> ::=
+     958                   | , <mask expr>
+
+     959 <concurrent locality> ::=
+     960                         | <locality spec list>
+
+     961 <locality spec list> ::= <locality spec list> <locality spec>
+     962                        | <locality spec>
+
+     963 <locality spec> ::= <locality kind> ( <locality name list> )
+     964                   | DEFAULT ( NONE )
+
+     965 <locality kind> ::= LOCAL
+     966                   | LOCAL_INIT
+     967                   | SHARED
+
+     968 <locality name list> ::= <locality name list> , <ident>
+     969                        | <ident>
+
+     970 <elsewhere clause> ::= ELSEWHERE <construct name>
+     971                      | ELSEWHERE ( <mask expr> ) <construct name>
+
+     972 <where clause> ::= <where construct> ( <mask expr> )
+
+     973 <where construct> ::= WHERE
+     974                     | <check construct> : WHERE
+
+     975 <mask expr> ::= <expression>
+
+     976 <allocation stmt> ::= ALLOCATE ( <alloc list> <alloc cntl> )
+     977                     | ALLOCATE ( <alloc type> :: <alloc list>
+                                  <alloc cntl> )
+     978                     | DEALLOCATE ( <alloc list> <alloc cntl> )
+
+     979 <alloc type> ::= <type spec>
+
+     980 <alloc list> ::= <alloc list> , <alloc object>
+     981                | <alloc object>
+
+     982 <alloc object> ::= <alloc obj>
+
+     983 <alloc obj> ::= <ident>
+     984               | <alloc obj> ( <ssa list> )
+     985               | <alloc obj> % <id>
+     986               | <alloc obj> %LOC
+     987               | <alloc obj> ( <ssa list> ) :: <ident>
+
+     988 <alloc cntl> ::=
+     989                | <alloc cntl list>
+
+     990 <alloc cntl list> ::= <alloc cntl list> <alloc cntl item>
+     991                     | <alloc cntl item>
+
+     992 <alloc cntl item> ::= , PINNED = <var ref>
+     993                     | , STAT = <var ref>
+     994                     | , ERRMSG = <var ref>
+     995                     | , SOURCE = <expression>
+     996                     | , MOLD = <expression>
+     997                     | , ALIGN = <expression>
+
+     998 <forall clause> ::= <forall begin> <concurrent header>
+
+     999 <forall begin> ::= <forall construct>
+
+    1000 <forall construct> ::= FORALL
+    1001                      | <check construct> : FORALL
+
+    1002 <null stmt> ::=
+
+    1003 <exit stmt> ::= EXIT <construct name>
+
+    1004 <construct name> ::=
+    1005                    | <id>
+
+    1006 <cycle stmt> ::= CYCLE <construct name>
+
+    1007 <case begin> ::= SELECTCASE <etmp lp> <expression> )
+    1008                | <check construct> : SELECTCASE <etmp lp>
+                             <expression> )
+
+    1009 <case> ::= CASE
+
+    1010 <case value list> ::= <case value list> , <case value>
+    1011                     | <case value>
+
+    1012 <case value> ::= <case expr>
+    1013                | <case expr> :
+    1014                | : <case expr>
+    1015                | <case expr> : <case expr>
+
+    1016 <case expr> ::= <expression>
+
+    1017 <pointer assignment> ::= <psfunc> <var ref> <psfunc> '=>'
+                                     <expression>
+
+    1018 <nullify stmt> ::= NULLIFY ( <nullify list> )
+
+    1019 <nullify list> ::= <nullify list> , <nullify object>
+    1020                  | <nullify object>
+
+    1021 <nullify object> ::= <var ref>
+
+    1022 <forall assn stmt> ::= <assignment>
+    1023                      | <pointer assignment>
+
+    1024 <pragma stmt> ::= PREFETCH <var ref list>
+    1025                 | DISTRIBUTEPOINT
+    1026                 | DISTRIBUTE
+
+    1027 <null> ::=
+
+    1028 <write> ::=
+
+    1029 <read> ::=
+
+    1030 <IO stmt> ::= <null> BACKSPACE <unit info>
+    1031             | <null> ENDFILE <unit info>
+    1032             | <null> REWIND <unit info>
+    1033             | <null> CLOSE <iolp> <spec list> )
+    1034             | <null> OPEN <iolp> <spec list> )
+    1035             | <null> INQUIRE <iolp> <spec list> )
+    1036             | <write> WRITE <io spec>
+    1037             | <write> WRITE <io spec> <output list>
+    1038             | <write> PRINT <print spec>
+    1039             | <write> PRINT <print spec> , <output list>
+    1040             | <read> READ <io spec> <input list>
+    1041             | <read> READ <read spec2>
+    1042             | <read> READ <read spec3> , <input list>
+    1043             | <read> ACCEPT <read spec4>
+    1044             | <read> ACCEPT <read spec3> , <input list>
+    1045             | <write> ENCODE <encode spec> <optional comma>
+                          <output list>
+    1046             | <write> ENCODE <encode spec>
+    1047             | <read> DECODE <encode spec> <optional comma>
+                          <input list>
+    1048             | <read> DECODE <encode spec>
+    1049             | <null> INQUIRE <iolp> IOLENGTH = <var ref> )
+                          <output list>
+    1050             | <null> WAIT <iolp> <spec list> )
+    1051             | <null> FLUSH <unit info>
+
+    1052 <unit info> ::= <unit id>
+    1053               | <iolp> <unit data list> )
+    1054               | <iolp> <unit id> )
+
+    1055 <unit data list> ::= <unit data list> , <unit data>
+    1056                    | <unit id> , <unit data>
+    1057                    | <unit data>
+
+    1058 <unit data> ::= UNIT = <unit id>
+    1059               | ERR = <reflabel>
+    1060               | IOSTAT = <var ref>
+    1061               | IOMSG = <var ref>
+    1062               | NEWUNIT = <var ref>
+
+    1063 <unit id> ::= <expression>
+    1064             | \*
+
+    1065 <spec list> ::= <spec list> , <spec item>
+    1066               | <spec item>
+
+    1067 <spec item> ::= <unit data>
+    1068               | STATUS = <expression>
+    1069               | FILE = <expression>
+    1070               | NAME = <expression>
+    1071               | ACCESS = <expression>
+    1072               | FORM = <expression>
+    1073               | RECL = <expression>
+    1074               | BLANK = <expression>
+    1075               | DISPOSE = <expression>
+    1076               | READONLY
+    1077               | READ = <var ref>
+    1078               | WRITE = <var ref>
+    1079               | READWRITE = <var ref>
+    1080               | ACTION = <expression>
+    1081               | DELIM = <expression>
+    1082               | PAD = <expression>
+    1083               | POSITION = <expression>
+    1084               | EXIST = <var ref>
+    1085               | OPENED = <var ref>
+    1086               | NUMBER = <var ref>
+    1087               | NAMED = <var ref>
+    1088               | SEQUENTIAL = <var ref>
+    1089               | DIRECT = <var ref>
+    1090               | FORMATTED = <var ref>
+    1091               | UNFORMATTED = <var ref>
+    1092               | NEXTREC = <var ref>
+    1093               | FMT = <format id>
+    1094               | REC = <expression>
+    1095               | End = <reflabel>
+    1096               | NML = <ident>
+    1097               | <expression>
+    1098               | \*
+    1099               | ADVANCE = <expression>
+    1100               | EOR = <reflabel>
+    1101               | CONVERT = <expression>
+    1102               | SHARED
+    1103               | ID = <var ref>
+    1104               | PENDING = <var ref>
+    1105               | POS = <expression>
+    1106               | SIZE = <var ref>
+    1107               | ASYNCHRONOUS = <expression>
+    1108               | DECIMAL = <expression>
+    1109               | ENCODING = <expression>
+    1110               | SIGN = <expression>
+    1111               | STREAM = <var ref>
+    1112               | ROUND = <expression>
+
+    1113 <format id> ::= <expression>
+    1114               | \*
+
+    1115 <fid or nid> ::= <expression>
+    1116                | \*
+
+    1117 <print spec> ::= <fid or nid>
+
+    1118 <io spec> ::= <iolp> <spec list> ) <optional comma>
+
+    1119 <read spec2> ::= <iolp> <spec list> )
+    1120                | <fid or nid>
+
+    1121 <read spec3> ::= <format id>
+
+    1122 <read spec4> ::= <fid or nid>
+
+    1123 <encode spec> ::= <iolp> <encode unit> <encode ctl> )
+
+    1124 <encode unit> ::= <expression> , <format id> , <var ref>
+
+    1125 <encode ctl> ::=
+    1126                | , <spec list>
+
+    1127 <output list> ::= <output list> , <output item>
+    1128                 | <elp> <output list> , <output item> )
+    1129                 | <output item>
+
+    1130 <output item> ::= <expression>
+    1131                 | <elp> <output list> , <implied do control> )
+
+    1132 <input list> ::= <input list> , <input item>
+    1133                | <input item>
+
+    1134 <input item> ::= <var ref>
+    1135                | <elp> <input list> )
+    1136                | <elp> <input list> , <implied do control> )
+
+    1137 <format stmt> ::= <format> ( <format list> )
+    1138                 | <format> ( )
+    1139                 | FORMAT <fmtstr>
+    1140                 | <format> ( <format list unl> )
+
+    1141 <format> ::= FORMAT
+
+    1142 <format list> ::= <format list> <format item>
+    1143                 | <format item>
+    1144                 | <format list unl> <unlimited format item>
+    1145                 | <format list unl> <format item>
+
+    1146 <format list unl> ::= <format list> <unlimited format item>
+    1147                     | <unlimited format item>
+
+    1148 <format item> ::= ,
+    1149                 | <repeat factor> /
+    1150                 | :
+    1151                 | <char literal>
+    1152                 | <kanji string>
+    1153                 | <Hollerith>
+    1154                 | <repeat factor> <F1 item>
+    1155                 | <repeat factor> <F2 item>
+    1156                 | <scale factor>
+    1157                 | <F3 item>
+
+    1158 <repeat factor> ::=
+    1159                   | <ffield>
+
+    1160 <scale factor> ::= <ffield> P
+    1161                  | <addop> <ffield> P
+
+    1162 <F1 item> ::= <flp> <format list> )
+    1163             | I <ffield>
+    1164             | I <ffield> . <ffield>
+    1165             | A <ffield>
+    1166             | N <ffield>
+    1167             | L <ffield>
+    1168             | O <ffield>
+    1169             | O <ffield> . <ffield>
+    1170             | Z <ffield>
+    1171             | Z <ffield> . <ffield>
+    1172             | <aformat>
+    1173             | <nformat>
+    1174             | <lformat>
+    1175             | <iformat>
+    1176             | <oformat>
+    1177             | <zformat>
+    1178             | B <ffield>
+    1179             | B <ffield> . <ffield>
+    1180             | <flp> <format list unl> )
+
+    1181 <flp> ::= (
+
+    1182 <F2 item> ::= F <ffield> . <ffield>
+    1183             | E <ffield> . <ffield>
+    1184             | G <ffield> . <ffield>
+    1185             | E <ffield>
+    1186             | D <ffield> . <ffield>
+    1187             | <fformat>
+    1188             | <eformat>
+    1189             | <gformat>
+    1190             | <dformat>
+    1191             | EN <ffield> . <ffield>
+    1192             | ES <ffield> . <ffield>
+    1193             | <dtformat>
+    1194             | DT <dts>
+    1195             | <g0format>
+
+    1196 <dts> ::= <char literal>
+    1197         | <char literal> <dlp> <dt vlist> )
+    1198         | <dlp> <dt vlist> )
+
+    1199 <dt vlist> ::= <dt vlist> , <addop> <integer>
+    1200              | <dt vlist> , <integer>
+    1201              | <addop> <integer>
+    1202              | <integer>
+
+    1203 <F3 item> ::= T <ffield>
+    1204             | TL <ffield>
+    1205             | TR <ffield>
+    1206             | <ffield> X
+    1207             | X
+    1208             | S
+    1209             | SP
+    1210             | SS
+    1211             | BN
+    1212             | BZ
+    1213             | DC
+    1214             | DP
+    1215             | Q
+    1216             | '$'
+    1217             | RU
+    1218             | RD
+    1219             | RZ
+    1220             | RN
+    1221             | RC
+    1222             | RP
+
+    1223 <ffield> ::= <integer>
+
+    1224 <unlimited format item> ::= <star repeat> <flp> <format list> )
+
+    1225 <star repeat> ::= \*
+
+    1226 <declare simd> ::= <declare simd name> <opt par list>
+
+    1227 <declare simd name> ::=
+    1228                       | ( <id> )
+
+    1229 <declare target> ::=
+    1230                    | ( <ident list> )
+    1231                    | <par list>
+
+    1232 <smp stmt> ::= <mp begin> <mp stmt>
+
+    1233 <mp begin> ::=
+
+    1234 <mp stmt> ::= <par begin> <opt par list>
+    1235             | <mp endparallel>
+    1236             | <mp critical> <opt csident>
+    1237             | <mp endcritical> <opt csident>
+    1238             | <single begin> <opt par list>
+    1239             | <mp endsingle> <opt endsingle list>
+    1240             | <pdo begin> <opt par list>
+    1241             | <mp endpdo> <opt nowait>
+    1242             | <mp barrier>
+    1243             | <mp master>
+    1244             | <mp endmaster>
+    1245             | <mp atomic begin> <opt atomic type>
+    1246             | <doacross begin> <opt par list>
+    1247             | <paralleldo begin> <opt par list>
+    1248             | <mp endpardo>
+    1249             | <parallelsections begin> <opt par list>
+    1250             | <mp endparsections>
+    1251             | <sections begin> <opt par list>
+    1252             | <mp section>
+    1253             | <mp endsections> <opt nowait>
+    1254             | <mp flush>
+    1255             | <mp flush> ( <ident list> )
+    1256             | <mp ordered> <opt ordered list>
+    1257             | <mp endordered>
+    1258             | <mp workshare>
+    1259             | <mp endworkshare> <opt nowait>
+    1260             | <parworkshare begin> <opt par list>
+    1261             | <mp endparworkshare>
+    1262             | <task begin> <opt par list>
+    1263             | <mp endtask>
+    1264             | <mp taskwait>
+    1265             | <mp taskyield>
+    1266             | <mp endatomic>
+    1267             | <taskloop begin> <opt par list>
+    1268             | <mp endtaskloop>
+    1269             | <taskloopsimd begin> <opt par list>
+    1270             | <mp endtaskloopsimd>
+    1271             | <mp cancel> <id name> <opt par ifclause>
+    1272             | <dosimd begin> <opt par list>
+    1273             | <mp enddosimd> <opt nowait>
+    1274             | <simd begin> <opt par list>
+    1275             | <mp endsimd>
+    1276             | <targetdata begin> <opt par list>
+    1277             | <mp endtargetdata>
+    1278             | <targetenterdata begin> <opt par list>
+    1279             | <targetexitdata begin> <opt par list>
+    1280             | <targetupdate begin> <opt par list>
+    1281             | <target begin> <opt par list>
+    1282             | <mp endtarget>
+    1283             | <teams begin> <opt par list>
+    1284             | <mp endteams>
+    1285             | <distribute begin> <opt par list>
+    1286             | <mp enddistribute>
+    1287             | <distsimd begin> <opt par list>
+    1288             | <mp enddistsimd>
+    1289             | <distpardo begin> <opt par list>
+    1290             | <mp enddistpardo>
+    1291             | <distpardosimd begin> <opt par list>
+    1292             | <mp enddistpardosimd>
+    1293             | <pardosimd begin> <opt par list>
+    1294             | <mp endpardosimd>
+    1295             | <targpar begin> <opt par list>
+    1296             | <mp endtargpar>
+    1297             | <targpardo begin> <opt par list>
+    1298             | <mp endtargpardo>
+    1299             | <targparsimd begin> <opt par list>
+    1300             | <mp endtargparsimd>
+    1301             | <targpardosimd begin> <opt par list>
+    1302             | <mp endtargpardosimd>
+    1303             | <targsimd begin> <opt par list>
+    1304             | <mp endtargsimd>
+    1305             | <targteams begin> <opt par list>
+    1306             | <mp endtargteams>
+    1307             | <teamsdist begin> <opt par list>
+    1308             | <mp endteamsdist>
+    1309             | <teamsdistsimd begin> <opt par list>
+    1310             | <mp endteamsdistsimd>
+    1311             | <targteamsdist begin> <opt par list>
+    1312             | <mp endtargteamsdist>
+    1313             | <targteamsdistsimd begin> <opt par list>
+    1314             | <mp endtargteamsdistsimd>
+    1315             | <teamsdistpardo begin> <opt par list>
+    1316             | <mp endteamsdistpardo>
+    1317             | <targteamsdistpardo begin> <opt par list>
+    1318             | <mp endtargteamsdistpardo>
+    1319             | <teamsdistpardosimd begin> <opt par list>
+    1320             | <mp endteamsdistpardosimd>
+    1321             | <targteamsdistpardosimd begin> <opt par list>
+    1322             | <mp endtargteamsdistpardosimd>
+    1323             | <mp taskgroup>
+    1324             | <mp endtaskgroup>
+    1325             | <mp cancellationpoint> <id name>
+
+    1326 <opt csident> ::=
+    1327                 | ( <id name> )
+
+    1328 <opt nowait> ::=
+    1329                | <opt comma> <nowait>
+
+    1330 <opt atomic type> ::=
+    1331                     | <pre seq_cst> UPDATE <post seq_cst>
+    1332                     | <pre seq_cst> READ <post seq_cst>
+    1333                     | <pre seq_cst> WRITE <post seq_cst>
+    1334                     | <pre seq_cst> CAPTURE <post seq_cst>
+    1335                     | <seq cst>
+
+    1336 <pre seq_cst> ::=
+    1337                 | <seq cst> <opt comma>
+
+    1338 <post seq_cst> ::=
+    1339                  | <opt comma> <seq cst>
+
+    1340 <seq cst> ::= SEQ_CST
+
+    1341 <nowait> ::= NOWAIT
+
+    1342 <opt endsingle list> ::=
+    1343                        | <opt comma> <endsingle list>
+
+    1344 <endsingle list> ::= <endsingle list> <opt comma>
+                                 <endsingle item>
+    1345                    | <endsingle item>
+
+    1346 <endsingle item> ::= <nowait>
+    1347                    | COPYPRIVATE ( <tp list> )
+
+    1348 <par begin> ::= <mp parallel>
+
+    1349 <opt par list> ::=
+    1350                  | <opt comma> <par list>
+
+    1351 <par list> ::= <par list> <opt comma> <par attr>
+    1352              | <par attr>
+
+    1353 <par attr> ::= DEFAULT ( <id name> )
+    1354              | <private list>
+    1355              | SHARED ( <pflsr list> )
+    1356              | <firstprivate>
+    1357              | <lastprivate>
+    1358              | <schedule>
+    1359              | ORDERED <opt expression>
+    1360              | REDUCTION ( <reduction> )
+    1361              | <par ifclause>
+    1362              | COPYIN ( <cmn ident list> )
+    1363              | NUM_THREADS ( <expression> )
+    1364              | COLLAPSE ( <expression> )
+    1365              | UNTIED
+    1366              | FINAL ( <expression> )
+    1367              | MERGEABLE
+    1368              | PROC_BIND ( <id name> )
+    1369              | SAFELEN ( <expression> )
+    1370              | <linear clause>
+    1371              | <aligned clause>
+    1372              | SIMDLEN ( <expression> )
+    1373              | <uniform clause>
+    1374              | INBRANCH
+    1375              | NOTINBRANCH
+    1376              | LINK ( <ident list> )
+    1377              | DEVICE ( <expression> )
+    1378              | <map clause>
+    1379              | <depend clause>
+    1380              | IS_DEVICE_PTR ( <ident list> )
+    1381              | DEFAULTMAP ( <id name> : <id name> )
+    1382              | <motion clause>
+    1383              | DIST_SCHEDULE ( <id name> <opt distchunk> )
+    1384              | GRAINSIZE ( <expression> )
+    1385              | NUM_TASKS ( <expression> )
+    1386              | PRIORITY ( <expression> )
+    1387              | NUM_TEAMS ( <expression> )
+    1388              | THREAD_LIMIT ( <expression> )
+    1389              | NOGROUP
+
+    1390 <opt expression> ::=
+    1391                    | ( <expression> )
+
+    1392 <opt ordered list> ::=
+    1393                      | <ordered list>
+
+    1394 <ordered list> ::= <ordered list> <opt comma> <ordered attr>
+    1395                  | <ordered attr>
+
+    1396 <ordered attr> ::= SIMD
+    1397                  | THREADS
+    1398                  | <depend clause>
+
+    1399 <pflsr list> ::= <pflsr list> , <cmn ident>
+    1400                | <cmn ident>
+
+    1401 <private list> ::= PRIVATE ( <pflsr list> )
+
+    1402 <firstprivate> ::= FIRSTPRIVATE ( <pflsr list> )
+
+    1403 <lastprivate> ::= LASTPRIVATE ( <pflsr list> )
+
+    1404 <schedule> ::= SCHEDULE <sched type>
+    1405              | MP_SCHEDTYPE = <id name>
+    1406              | CHUNK = <expression>
+
+    1407 <sched type> ::=
+    1408                | ( <id name> <opt chunk> )
+
+    1409 <opt chunk> ::=
+    1410               | , <expression>
+
+    1411 <opt distchunk> ::=
+    1412                   | , <expression>
+
+    1413 <reduction> ::= <reduc op> : <pflsr list>
+    1414               | <pflsr list>
+
+    1415 <reduc op> ::= <addop>
+    1416              | \*
+    1417              | .AND.
+    1418              | .OR.
+    1419              | .EQV.
+    1420              | .NEQV.
+    1421              | <ident>
+
+    1422 <par ifclause> ::= IF ( <expression> )
+    1423                  | IF ( <id name> : <expression> )
+    1424                  | IF ( <id name> <id name> : <expression> )
+    1425                  | IF ( <id name> <id name> <id name> :
+                               <expression> )
+
+    1426 <opt par ifclause> ::=
+    1427                      | <opt comma> <par ifclause>
+
+    1428 <linear clause> ::= LINEAR ( <linear expr> )
+
+    1429 <linear expr> ::= <linear modifier> <linear opt step>
+
+    1430 <linear modifier> ::= <pflsr list>
+    1431                     | <id name> ( <pflsr list> )
+
+    1432 <linear opt step> ::=
+    1433                     | : <expression>
+
+    1434 <aligned clause> ::= ALIGNED ( <aligned> )
+
+    1435 <aligned> ::= <pflsr list>
+    1436             | <pflsr list> : <expression>
+
+    1437 <uniform clause> ::= UNIFORM ( <pflsr list> )
+
+    1438 <map clause> ::= MP_MAP ( <map item> )
+
+    1439 <map item> ::= <accel data list>
+    1440              | <map type> : <accel data list>
+
+    1441 <map type> ::= <id name>
+    1442              | ALWAYS <opt comma> <id name>
+
+    1443 <depend clause> ::= DEPEND ( <depend attr> )
+
+    1444 <depend attr> ::= <id name>
+    1445                 | <id name> : <depend data list>
+
+    1446 <motion clause> ::= TO ( <var ref list> )
+    1447                   | FROM ( <var ref list> )
+
+    1448 <depend data list> ::= <var ref list>
+    1449                      | <depend data>
+
+    1450 <depend data> ::= <ident> <addop> <constant>
+
+    1451 <single begin> ::= <mp single>
+
+    1452 <pdo begin> ::= <mp pdo>
+
+    1453 <mp atomic begin> ::= <mp atomic>
+
+    1454 <doacross begin> ::= <mp doacross>
+
+    1455 <paralleldo begin> ::= <mp pardo>
+
+    1456 <parallelsections begin> ::= <mp parsections>
+
+    1457 <sections begin> ::= <mp sections>
+
+    1458 <parworkshare begin> ::= <mp parworkshare>
+
+    1459 <task begin> ::= <mp task>
+
+    1460 <dosimd begin> ::= <mp dosimd>
+
+    1461 <simd begin> ::= <mp simd>
+
+    1462 <targetdata begin> ::= <mp targetdata>
+
+    1463 <targetenterdata begin> ::= <mp targetenterdata>
+
+    1464 <targetexitdata begin> ::= <mp targetexitdata>
+
+    1465 <target begin> ::= <mp target>
+
+    1466 <targetupdate begin> ::= <mp targetupdate>
+
+    1467 <teams begin> ::= <mp teams>
+
+    1468 <distribute begin> ::= <mp distribute>
+
+    1469 <distsimd begin> ::= <mp distsimd>
+
+    1470 <distpardo begin> ::= <mp distpardo>
+
+    1471 <distpardosimd begin> ::= <mp distpardosimd>
+
+    1472 <pardosimd begin> ::= <mp pardosimd>
+
+    1473 <targpar begin> ::= <mp targpar>
+
+    1474 <targpardo begin> ::= <mp targpardo>
+
+    1475 <targparsimd begin> ::= <mp targparsimd>
+
+    1476 <targpardosimd begin> ::= <mp targpardosimd>
+
+    1477 <targsimd begin> ::= <mp targsimd>
+
+    1478 <targteams begin> ::= <mp targteams>
+
+    1479 <teamsdist begin> ::= <mp teamsdist>
+
+    1480 <teamsdistsimd begin> ::= <mp teamsdistsimd>
+
+    1481 <targteamsdist begin> ::= <mp targteamsdist>
+
+    1482 <targteamsdistsimd begin> ::= <mp targteamsdistsimd>
+
+    1483 <teamsdistpardo begin> ::= <mp teamsdistpardo>
+
+    1484 <targteamsdistpardo begin> ::= <mp targteamsdistpardo>
+
+    1485 <teamsdistpardosimd begin> ::= <mp teamsdistpardosimd>
+
+    1486 <targteamsdistpardosimd begin> ::= <mp targteamsdistpardosimd>
+
+    1487 <taskloop begin> ::= <mp taskloop>
+
+    1488 <taskloopsimd begin> ::= <mp taskloopsimd>
+
+    1489 <accel stmt> ::= <accel begin> ACCREGION <opt accel list>
+    1490                | <accel begin> ACCKERNELS <opt accel list>
+    1491                | <accel begin> PARALLEL <opt accel list>
+    1492                | <accel begin> ACCDATA <opt accel list>
+    1493                | <accel begin> ACCDATAREGION <opt accel list>
+    1494                | <accel begin> ACCDO <opt accel list>
+    1495                | <accel begin> ACCLOOP <opt accel list>
+    1496                | <accel begin> ACCREGIONDO <opt accel list>
+    1497                | <accel begin> ACCREGIONLOOP <opt accel list>
+    1498                | <accel begin> ACCKERNELSDO <opt accel list>
+    1499                | <accel begin> ACCKERNELSLOOP <opt accel list>
+    1500                | <accel begin> ACCPARALLELDO <opt accel list>
+    1501                | <accel begin> ACCPARALLELLOOP <opt accel list>
+    1502                | <accel begin> <accel update dir>
+    1503                | <accel begin> ACCENDREGION <opt end accel list>
+    1504                | <accel begin> ACCENDKERNELS
+    1505                | <accel begin> ACCENDKERNDO
+    1506                | <accel begin> ACCENDKERNLOOP
+    1507                | <accel begin> ACCENDPARALLEL
+    1508                | <accel begin> ACCENDPARDO
+    1509                | <accel begin> ACCENDPARLOOP
+    1510                | ACCENDDATAREGION
+    1511                | ACCENDDATA
+    1512                | <accel begin> ACCSCALARREGION <opt accel list>
+    1513                | <accel begin> ACCENDSCALARREGION
+    1514                | <accel begin> ACCSCALAR ACCREGION
+                             <opt accel list>
+    1515                | ACCENDSCALAR
+    1516                | <accel begin> ACCWAIT <opt wait list>
+    1517                | <accel begin> CACHE ( <accel data list> )
+    1518                | <accel begin> ACCHOSTDATA <opt accel list>
+    1519                | ACCENDHOSTDATA
+    1520                | <accel begin> ACCENTER ACCDATA <opt accel list>
+    1521                | <accel begin> ACCEXIT ACCDATA <opt accel list>
+    1522                | <accel begin> ACCENDLOOP
+    1523                | <accel begin> ACCENDDO
+    1524                | <accel begin> ACCATOMIC
+    1525                | <accel begin> ACCATOMICUPDATE
+    1526                | <accel begin> ACCATOMICREAD
+    1527                | <accel begin> ACCATOMICWRITE
+    1528                | <accel begin> ACCATOMICCAPTURE
+    1529                | <accel begin> ACCENDATOMIC
+    1530                | <accel begin> ACCINIT <opt accel init list>
+    1531                | <accel begin> ACCSHUTDOWN
+                             <opt accel shutdown list>
+    1532                | <accel begin> <accel setdev dir>
+    1533                | <accel begin> CACHE ( <ident> :
+                             <accel sdata list> )
+    1534                | <accel begin> ACCSERIAL <opt accel list>
+    1535                | <accel begin> ACCENDSERIAL
+    1536                | <accel begin> ACCSERIALLOOP <opt accel list>
+    1537                | <accel begin> ACCENDSERIALLOOP
+    1538                | <accel begin> <accel compare dir>
+    1539                | <pgi begin> <pgi compare dir>
+
+    1540 <accel begin> ::=
+
+    1541 <pgi begin> ::=
+
+    1542 <opt accel list> ::=
+    1543                    | <opt comma> <accel list>
+
+    1544 <accel list> ::= <accel list> <opt comma> <accel attr>
+    1545                | <accel attr>
+
+    1546 <accel attr> ::= COPYIN ( <accel data list> )
+    1547                | COPYOUT ( <accel data list> )
+    1548                | LOCAL ( <accel data list> )
+    1549                | CREATE ( <accel data list> )
+    1550                | PRESENT ( <accel data list> )
+    1551                | PCOPY ( <accel data list> )
+    1552                | PCOPYIN ( <accel data list> )
+    1553                | PCOPYOUT ( <accel data list> )
+    1554                | PLOCAL ( <accel data list> )
+    1555                | PCREATE ( <accel data list> )
+    1556                | DEVICEPTR ( <accel mdata list> )
+    1557                | PRIVATE ( <accel mdata list> )
+    1558                | FIRSTPRIVATE ( <accel mdata list> )
+    1559                | CACHE ( <accel mdata list> )
+    1560                | SHORTLOOP
+    1561                | VECTOR ( <ident> : <expression> )
+    1562                | VECTOR ( <expression> )
+    1563                | VECTOR
+    1564                | PARALLEL ( <expression> )
+    1565                | PARALLEL
+    1566                | SEQ ( <expression> )
+    1567                | SEQ
+    1568                | HOST ( <expression> )
+    1569                | HOST
+    1570                | IF ( <expression> )
+    1571                | UNROLL ( <expression> )
+    1572                | INDEPENDENT
+    1573                | KERNEL
+    1574                | COPY ( <accel data list> )
+    1575                | MIRROR ( <accel mdata list> )
+    1576                | ACCUPDATE HOST ( <accel data list> )
+    1577                | ACCUPDATE SELF ( <accel data list> )
+    1578                | ACCUPDATE DEVICE ( <accel data list> )
+    1579                | <accel short update>
+    1580                | ACCUPDATE ACCIN ( <accel data list> )
+    1581                | ACCUPDATE ACCOUT ( <accel data list> )
+    1582                | ACCWAIT
+    1583                | NOWAIT
+    1584                | WORKER ( <ident> : <expression> )
+    1585                | WORKER ( <expression> )
+    1586                | WORKER
+    1587                | GANG ( <acc gang args> )
+    1588                | GANG
+    1589                | COLLAPSE ( <expression> )
+    1590                | ASYNC
+    1591                | ASYNC ( <expression> )
+    1592                | REDUCTION ( <reduction> )
+    1593                | NUM_WORKERS ( <expression> )
+    1594                | NUM_GANGS ( <gangsizes> )
+    1595                | VECTOR_LENGTH ( <expression> )
+    1596                | USE_DEVICE ( <accel mdata list> )
+    1597                | DEVICEID ( <expression> )
+    1598                | DELETE ( <accel data list> )
+    1599                | PDELETE ( <accel data list> )
+    1600                | ACCWAIT ( <accel wait list> )
+    1601                | DEVICE_TYPE ( <devtype list> )
+    1602                | AUTO
+    1603                | ACCTILE ( <accsizelist> )
+    1604                | DEFAULT ( <ident> )
+    1605                | PNOT ( <accel data list> )
+    1606                | COLLAPSE ( <ident> : <expression> )
+    1607                | ACCFINALIZE
+    1608                | ACCIFPRESENT
+    1609                | ACCATTACH ( <accel data list> )
+    1610                | ACCDETACH ( <accel data list> )
+    1611                | NO_CREATE ( <accel data list> )
+    1612                | COMPARE ( <accel data list> )
+
+    1613 <acc gang args> ::= <acc gang arg>
+    1614                   | <acc gang args> , <acc gang arg>
+
+    1615 <acc gang arg> ::= <expression>
+    1616                  | <ident> : <accsize>
+
+    1617 <gangsizes> ::= <expression>
+    1618               | <expression> , <gangsize2>
+
+    1619 <gangsize2> ::= <expression>
+    1620               | <expression> , <gangsize3>
+
+    1621 <gangsize3> ::= <expression>
+
+    1622 <accsizelist> ::= <accsize>
+    1623                 | <accsizelist> , <accsize>
+
+    1624 <accsize> ::= <expression>
+    1625             | \*
+
+    1626 <opt end accel list> ::=
+    1627                        | <end accel list>
+
+    1628 <end accel list> ::= <end accel list> <opt comma>
+                                 <end accel attr>
+    1629                    | <end accel attr>
+
+    1630 <end accel attr> ::= ACCWAIT
+    1631                    | NOWAIT
+
+    1632 <accel data list> ::= <accel data list> , <accel data>
+    1633                     | <accel data>
+
+    1634 <accel data> ::= <accel data name> ( <accel sub list> )
+    1635                | <accel data name>
+    1636                | <constant>
+    1637                | <common>
+    1638                | <accel data name> '<' <ident> '>' (
+                             <accel sub list> )
+    1639                | <accel data name> '<' <ident> '>'
+
+    1640 <accel mdata list> ::= <accel mdata list> , <accel mdata>
+    1641                      | <accel mdata>
+
+    1642 <accel mdata> ::= <accel mdata name> ( <accel sub list> )
+    1643                 | <accel mdata name>
+    1644                 | <constant>
+
+    1645 <accel sdata list> ::= <accel sdata list> , <accel sdata>
+    1646                      | <accel sdata>
+
+    1647 <accel sdata> ::= <accel sdata name>
+    1648                 | <constant>
+
+    1649 <accel sub list> ::= <accel sub list> , <accel sub>
+    1650                    | <accel sub>
+
+    1651 <accel sub> ::= <opt sub> : <opt sub>
+    1652               | <expression>
+
+    1653 <accel update dir> ::= ACCUPDATE <accel update list>
+    1654                      | ACCUPDATEHOST ( <accel data list> )
+                                   <opt update list>
+    1655                      | ACCUPDATESELF ( <accel data list> )
+                                   <opt update list>
+    1656                      | ACCUPDATEDEV ( <accel data list> )
+                                   <opt update list>
+    1657                      | ACCUPDATEIN ( <accel data list> )
+                                   <opt update list>
+    1658                      | ACCUPDATEOUT ( <accel data list> )
+                                   <opt update list>
+
+    1659 <opt update list> ::=
+    1660                     | <accel update list>
+
+    1661 <accel update list> ::= <accel update attr>
+    1662                       | <accel update list> <opt comma>
+                                    <accel update attr>
+
+    1663 <accel update attr> ::= HOST ( <accel data list> )
+    1664                       | SELF ( <accel data list> )
+    1665                       | DEVICE ( <accel data list> )
+    1666                       | ACCIN ( <accel data list> )
+    1667                       | ACCOUT ( <accel data list> )
+    1668                       | IF ( <expression> )
+    1669                       | ASYNC
+    1670                       | ASYNC ( <expression> )
+    1671                       | DEVICEID ( <expression> )
+    1672                       | ACCWAIT
+    1673                       | ACCWAIT ( <accel wait list> )
+    1674                       | ACCIFPRESENT
+
+    1675 <accel short update> ::= ACCUPDATEHOST ( <accel data list> )
+    1676                        | ACCUPDATESELF ( <accel data list> )
+    1677                        | ACCUPDATEDEV ( <accel data list> )
+    1678                        | ACCUPDATEIN ( <accel data list> )
+    1679                        | ACCUPDATEOUT ( <accel data list> )
+
+    1680 <opt wait list> ::=
+    1681                   | ( <accel wait list> )
+    1682                   | <opt wait list> <wait item>
+
+    1683 <wait item> ::= IF ( <expression> )
+    1684               | DEVICEID ( <expression> )
+    1685               | ASYNC
+    1686               | ASYNC ( <expression> )
+
+    1687 <accel wait list> ::= <expression>
+    1688                     | <accel wait list> , <expression>
+
+    1689 <kernel stmt> ::= <kernel begin> KERNEL DO <kernel do list>
+
+    1690 <kernel begin> ::=
+
+    1691 <kernel do list> ::= <kernel do nest> <kernel do shape>
+
+    1692 <kernel do nest> ::=
+    1693                    | ( )
+    1694                    | ( <expression> )
+
+    1695 <kernel do shape> ::=
+    1696                     | '<<<' '>>>'
+    1697                     | '<<<' <kernel do grid shape> ,
+                                  <kernel do block shape> <kernel do args>
+                                  '>>>'
+
+    1698 <kernel do grid shape> ::=
+    1699                          | \*
+    1700                          | <expression>
+    1701                          | <elp> )
+    1702                          | <elp> \* )
+    1703                          | <elp> <kernel shape list> )
+
+    1704 <kernel do block shape> ::=
+    1705                           | \*
+    1706                           | <expression>
+    1707                           | <elp> )
+    1708                           | <elp> \* )
+    1709                           | <elp> <kernel shape list> )
+
+    1710 <kernel shape list> ::= <kernel shape expr> , <kernel shape expr>
+    1711                       | <kernel shape list> , <kernel shape expr>
+
+    1712 <kernel shape expr> ::=
+    1713                       | \*
+    1714                       | <expression>
+
+    1715 <kernel do args> ::=
+    1716                    | <kernel do args> , <kernel do arg>
+
+    1717 <kernel do arg> ::=
+    1718                   | <expression>
+    1719                   | <id name> = <expression>
+
+    1720 <opt accel init list> ::=
+    1721                         | <opt accel init list> <opt comma>
+                                      <acc init attr>
+
+    1722 <acc init attr> ::= DEVICE_NUM ( <expression> )
+    1723                   | DEVICE_TYPE ( <devtype list> )
+
+    1724 <accel setdev dir> ::= ACCSET <accel setdev list>
+
+    1725 <accel setdev list> ::= <accel setdev attr>
+    1726                       | <accel setdev list> <opt comma>
+                                    <accel setdev attr>
+
+    1727 <accel setdev attr> ::= DEVICE_TYPE ( <ident> )
+    1728                       | DEVICE_NUM ( <expression> )
+    1729                       | DEFAULT_ASYNC ( <expression> )
+
+    1730 <opt accel shutdown list> ::=
+    1731                             | <opt accel shutdown list>
+                                          <opt comma> <acc shutdown attr>
+
+    1732 <acc shutdown attr> ::= DEVICE_NUM ( <expression> )
+    1733                       | DEVICE_TYPE ( <devtype list> )
+
+    1734 <accel compare dir> ::= COMPARE ( <accel data list> )
+
+    1735 <pgi compare dir> ::= PGICOMPARE ( <accel data list> )
+
+.CE
+.GS 2 "CROSS REFERENCE OF SYMBOLS"
+
+.. code-block:: none
+
+
+    %    698  704  718  719  723  724  726  727  730  731  733  861  985
+    %FILL     250
+    %LOC      669  699  705  862  986
+    &    715  872
+    '$' 1216
+    '(/'      673
+    '/)'      674
+    '//'      280  455  814
+    '<'  154  155  167  168  184  186 1638 1639
+    '<<<'     863 1696 1697
+    '=>'      425  477  478  484  487  549  550  564  618  916 1017
+    '>'  154  155  167  168  184  186 1638 1639
+    '>>>'     863 1696 1697
+    (     25   26   30   31   36   38   39   41   42   54   57   58   95
+         122  129  134  144  152  153  154  155  161  162  165  172  173
+         174  175  176  177  178  185  186  211  212  213  214  218  232
+         255  299  303  337  351  352  358  396  397  408  415  416  419
+         420  425  436  437  441  478  478  485  486  487  487  508  518
+         520  528  543  549  554  560  568  569  570  571  572  573  574
+         575  576  577  578  579  580  581  582  583  586  590  605  606
+         607  608  627  631  647  651  654  669  675  692  696  701  702
+         716  720  721  728  733  758  759  841  848  855  856  858  859
+         912  913  917  918  924  930  939  951  963  964  971  972  976
+         977  978  984  987 1018 1137 1138 1140 1181 1228 1230 1255 1327
+        1347 1353 1355 1360 1362 1363 1364 1366 1368 1369 1372 1376 1377
+        1380 1381 1383 1384 1385 1386 1387 1388 1391 1401 1402 1403 1408
+        1422 1423 1424 1425 1428 1431 1434 1437 1438 1443 1446 1447 1517
+        1533 1546 1547 1548 1549 1550 1551 1552 1553 1554 1555 1556 1557
+        1558 1559 1561 1562 1564 1566 1568 1570 1571 1574 1575 1576 1577
+        1578 1580 1581 1584 1585 1587 1589 1591 1592 1593 1594 1595 1596
+        1597 1598 1599 1600 1601 1603 1604 1605 1606 1609 1610 1611 1612
+        1634 1638 1642 1654 1655 1656 1657 1658 1663 1664 1665 1666 1667
+        1668 1670 1671 1673 1675 1676 1677 1678 1679 1681 1683 1684 1686
+        1693 1694 1722 1723 1727 1728 1729 1732 1733 1734 1735
+    )     25   26   30   31   36   38   39   41   42   54   57   58   95
+         122  129  134  144  152  153  154  155  161  162  165  172  173
+         174  175  176  177  178  185  186  211  212  213  214  218  232
+         254  269  270  299  303  318  326  337  351  352  358  363  371
+         396  397  408  415  416  419  420  425  427  436  437  441  478
+         478  485  486  487  487  508  518  520  528  543  549  554  560
+         568  569  570  571  572  573  574  575  576  577  578  579  580
+         581  582  583  586  590  605  606  607  608  627  631  647  651
+         654  669  670  683  685  696  701  702  716  720  721  728  733
+         754  758  759  841  848  852  855  856  858  859  886  891  892
+         893  905  912  913  917  918  924  930  939  947  951  963  964
+         971  972  976  977  978  984  987 1007 1008 1018 1033 1034 1035
+        1049 1050 1053 1054 1118 1119 1123 1128 1131 1135 1136 1137 1138
+        1140 1162 1180 1197 1198 1224 1228 1230 1255 1327 1347 1353 1355
+        1360 1362 1363 1364 1366 1368 1369 1372 1376 1377 1380 1381 1383
+        1384 1385 1386 1387 1388 1391 1401 1402 1403 1408 1422 1423 1424
+        1425 1428 1431 1434 1437 1438 1443 1446 1447 1517 1533 1546 1547
+        1548 1549 1550 1551 1552 1553 1554 1555 1556 1557 1558 1559 1561
+        1562 1564 1566 1568 1570 1571 1574 1575 1576 1577 1578 1580 1581
+        1584 1585 1587 1589 1591 1592 1593 1594 1595 1596 1597 1598 1599
+        1600 1601 1603 1604 1605 1606 1609 1610 1611 1612 1634 1638 1642
+        1654 1655 1656 1657 1658 1663 1664 1665 1666 1667 1668 1670 1671
+        1673 1675 1676 1677 1678 1679 1681 1683 1684 1686 1693 1694 1701
+        1702 1703 1707 1708 1709 1722 1723 1727 1728 1729 1732 1733 1734
+        1735
+    \*     71  200  214  229  234  260  261  343  612  638  639  714  774
+         865  871  937  938 1064 1098 1114 1116 1225 1416 1625 1699 1702
+        1705 1708 1713
+    \*\*   447  781  782
+    +    198  765
+    ,     58   60   68   72  129  163  181  187  206  238  239  240  243
+         246  251  257  269  271  278  284  288  291  293  297  300  315
+         327  334  337  337  339  340  356  358  360  365  366  397  398
+         403  404  412  421  428  467  468  469  471  475  481  491  496
+         498  504  514  524  533  534  546  556  557  561  584  593  595
+         610  616  621  623  628  633  641  648  680  683  685  686  690
+         693  708  843  849  851  864  867  879  915  931  946  954  958
+         968  980  992  993  994  995  996  997 1010 1019 1039 1042 1044
+        1055 1056 1065 1124 1124 1126 1127 1128 1131 1132 1136 1148 1199
+        1200 1399 1410 1412 1614 1618 1620 1623 1632 1640 1645 1649 1688
+        1697 1710 1711 1716
+    -    199  273  766
+    .    304  443  443  479  479  489  489  697  703  860 1164 1169 1171
+        1179 1182 1183 1184 1186 1191 1192
+    ..   264
+    .AND.     451  793 1417
+    .EQ.      806
+    .EQV.     456 1419
+    .GE.      807
+    .GT.      808
+    .LE.      809
+    .LT.      810
+    .N.  453  799
+    .NE.      811
+    .NEQV.    457 1420
+    .NOT.     452  798
+    .O.  450  789
+    .OR.      449  788 1418
+    .X.  458
+    .XOR.     459
+    /    201  248  248  281  281  283  283  307  307  312  312  321  321
+         333  333  775 1149
+    :     31   85  168  189  230  235  260  262  263  265  468  469  497
+         501  597  608  636  637  647  647  684  712  737  758  759  888
+         913  918  935  936  945  956  974 1001 1008 1013 1014 1015 1150
+        1381 1413 1423 1424 1425 1433 1436 1440 1445 1533 1561 1584 1606
+        1616 1651
+    ::   112  245  463  465  471  472  495  614  678  679  953  977  987
+    <END stmt>      74
+    <Hollerith>    749 1153
+    <aformat>     1172
+    <cmplx comma>  754
+    <complex>      744
+    <dcomplex>     745
+    <defined op>   444  480  490  779  815
+    <dformat>     1190
+    <dimattr>      208  371
+    <directive>     18
+    <dlp>    1197 1198
+    <double>  742
+    <dtformat>    1193
+    <eformat>     1188
+    <empty file>    14
+    <fformat>     1187
+    <fmtstr> 1139
+    <g0format>    1195
+    <gformat>     1189
+    <half>    740
+    <id name>       34   36   36   38   38   39   39   60   61  129  241
+                   396  397  397  415  416  419  420  420  468  469  478
+                   478  485  486  487  487  500  501  503  511  518  559
+                   560  617  635  637  639  650  651  653  654  711  733
+                   870  934  936  938 1271 1325 1327 1353 1368 1381 1381
+                  1383 1405 1408 1423 1424 1424 1425 1425 1425 1431 1441
+                  1442 1444 1445 1719
+    <iformat>     1175
+    <implp>   269  270
+    <int kind const>    345  739
+    <integer>       59  231  344  738  757  846 1199 1200 1201 1202 1223
+    <iolp>   1033 1034 1035 1049 1050 1053 1054 1118 1119 1123
+    <kanji string>      753  759 1152
+    <letter>  273  273  274
+    <lformat>     1174
+    <log const>    750
+    <log kind const>    751
+    <mp atomic>   1453
+    <mp barrier>  1242
+    <mp cancel>   1271
+    <mp cancellationpoint>  1325
+    <mp critical> 1236
+    <mp declarereduction>    646
+    <mp declaresimd>    643
+    <mp declaretarget>  644
+    <mp distpardo>     1470
+    <mp distpardosimd> 1471
+    <mp distribute>    1468
+    <mp distsimd> 1469
+    <mp doacross> 1454
+    <mp dosimd>   1460
+    <mp endatomic>     1266
+    <mp endcritical>   1237
+    <mp enddistpardo>  1290
+    <mp enddistpardosimd>   1292
+    <mp enddistribute> 1286
+    <mp enddistsimd>   1288
+    <mp enddosimd>     1273
+    <mp endmaster>     1244
+    <mp endordered>    1257
+    <mp endparallel>   1235
+    <mp endpardo> 1248
+    <mp endpardosimd>  1294
+    <mp endparsections>     1250
+    <mp endparworkshare>    1261
+    <mp endpdo>   1241
+    <mp endsections>   1253
+    <mp endsimd>  1275
+    <mp endsingle>     1239
+    <mp endtarget>     1282
+    <mp endtargetdata> 1277
+    <mp endtargpar>    1296
+    <mp endtargpardo>  1298
+    <mp endtargpardosimd>   1302
+    <mp endtargparsimd>     1300
+    <mp endtargsimd>   1304
+    <mp endtargteams>  1306
+    <mp endtargteamsdist>   1312
+    <mp endtargteamsdistpardo>   1318
+    <mp endtargteamsdistpardosimd>    1322
+    <mp endtargteamsdistsimd>    1314
+    <mp endtask>  1263
+    <mp endtaskgroup>  1324
+    <mp endtaskloop>   1268
+    <mp endtaskloopsimd>    1270
+    <mp endteams> 1284
+    <mp endteamsdist>  1308
+    <mp endteamsdistpardo>  1316
+    <mp endteamsdistpardosimd>   1320
+    <mp endteamsdistsimd>   1310
+    <mp endworkshare>  1259
+    <mp flush>    1254 1255
+    <mp master>   1243
+    <mp ordered>  1256
+    <mp parallel> 1348
+    <mp pardo>    1455
+    <mp pardosimd>     1472
+    <mp parsections>   1456
+    <mp parworkshare>  1458
+    <mp pdo> 1452
+    <mp section>  1252
+    <mp sections> 1457
+    <mp simd>     1461
+    <mp single>   1451
+    <mp target>   1465
+    <mp targetdata>    1462
+    <mp targetenterdata>    1463
+    <mp targetexitdata>     1464
+    <mp targetupdate>  1466
+    <mp targpar>  1473
+    <mp targpardo>     1474
+    <mp targpardosimd> 1476
+    <mp targparsimd>   1475
+    <mp targsimd> 1477
+    <mp targteams>     1478
+    <mp targteamsdist> 1481
+    <mp targteamsdistpardo> 1484
+    <mp targteamsdistpardosimd>  1486
+    <mp targteamsdistsimd>  1482
+    <mp task>     1459
+    <mp taskgroup>     1323
+    <mp taskloop> 1487
+    <mp taskloopsimd>  1488
+    <mp taskwait> 1264
+    <mp taskyield>     1265
+    <mp teams>    1467
+    <mp teamsdist>     1479
+    <mp teamsdistpardo>     1483
+    <mp teamsdistpardosimd> 1485
+    <mp teamsdistsimd> 1480
+    <mp threadprivate>  122
+    <mp workshare>     1258
+    <named construct>   889
+    <nformat>     1173
+    <nonddec const>     748
+    <nondec const>      747
+    <oformat>     1176
+    <qcomplex>     746
+    <quad>    743
+    <quoted string>      15  397  502  606  755  756  757
+    <real>    741
+    <red type>     648  649
+    <underscore>   756  757
+    <zformat>     1177
+    =    241  290  291  292  295  337  397  416  437  486  635  637  639
+         650  653  687  711  839  870  877  934  936  938  946  956  992
+         993  994  995  996  997 1049 1058 1059 1060 1061 1062 1068 1069
+        1070 1071 1072 1073 1074 1075 1077 1078 1079 1080 1081 1082 1083
+        1084 1085 1086 1087 1088 1089 1090 1091 1092 1093 1094 1095 1096
+        1099 1100 1101 1103 1104 1105 1106 1107 1108 1109 1110 1111 1112
+        1405 1406 1719
+    A   1165
+    ABSTRACT  390  409  434
+    ACCATOMIC     1524
+    ACCATOMICCAPTURE   1528
+    ACCATOMICREAD 1526
+    ACCATOMICUPDATE    1525
+    ACCATOMICWRITE     1527
+    ACCATTACH     1609
+    ACCDATA  1492 1520 1521
+    ACCDATAREGION 1493
+    ACCDECL   138
+    ACCDETACH     1610
+    ACCDO    1494
+    ACCENDATOMIC  1529
+    ACCENDDATA    1511
+    ACCENDDATAREGION   1510
+    ACCENDDO 1523
+    ACCENDHOSTDATA     1519
+    ACCENDKERNDO  1505
+    ACCENDKERNELS 1504
+    ACCENDKERNLOOP     1506
+    ACCENDLOOP    1522
+    ACCENDPARALLEL     1507
+    ACCENDPARDO   1508
+    ACCENDPARLOOP 1509
+    ACCENDREGION  1503
+    ACCENDSCALAR  1515
+    ACCENDSCALARREGION 1513
+    ACCENDSERIAL  1535
+    ACCENDSERIALLOOP   1537
+    ACCENTER 1520
+    ACCEPT   1043 1044
+    ACCESS   1071
+    ACCEXIT  1521
+    ACCFINALIZE   1607
+    ACCHOSTDATA   1518
+    ACCIFPRESENT  1608 1674
+    ACCIN    1580 1666
+    ACCINIT  1530
+    ACCKERNELS    1490
+    ACCKERNELSDO  1498
+    ACCKERNELSLOOP     1499
+    ACCLOOP  1495
+    ACCOUT   1581 1667
+    ACCPARALLELDO 1500
+    ACCPARALLELLOOP    1501
+    ACCPOLICY      166
+    ACCREGION     1489 1514
+    ACCREGIONDO   1496
+    ACCREGIONLOOP 1497
+    ACCSCALAR     1514
+    ACCSCALARREGION    1512
+    ACCSERIAL     1534
+    ACCSERIALLOOP 1536
+    ACCSET   1724
+    ACCSHAPE  151
+    ACCSHUTDOWN   1531
+    ACCTILE  1603
+    ACCUPDATE     1576 1577 1578 1580 1581 1653
+    ACCUPDATEDEV  1656 1677
+    ACCUPDATEHOST 1654 1675
+    ACCUPDATEIN   1657 1678
+    ACCUPDATEOUT  1658 1679
+    ACCUPDATESELF 1655 1676
+    ACCWAIT  1516 1582 1600 1630 1672 1673
+    ACTION   1080
+    ADVANCE  1099
+    ALIAS     496  497
+    ALIGN     997
+    ALIGNED  1434
+    ALLOCATABLE    111  370
+    ALLOCATE  976  977
+    ALWAYS   1442
+    ASSIGN    847
+    ASSIGNMENT     437  440
+    ASSOCIATE      912  913
+    ASYNC    1590 1591 1669 1670 1685 1686
+    ASYNCHRONOUS   137  389 1107
+    ATTRIBUTES      54  134  495
+    AUTO     1602
+    AUTOMATIC      125  379
+    B   1178 1179
+    BACKSPACE     1030
+    BIND       36   37   38  127  129  381  406  537  605  606
+    BLANK    1074
+    BLOCK      84   85
+    BLOCKDATA       27   28
+    BN  1211
+    BYTE      227
+    BZ  1212
+    CACHE    1517 1533 1559
+    CALL      853  854  855  856
+    CAPTURE  1334
+    CASE     1009
+    CASEDEFAULT    906
+    CHARACTER      225
+    CHUNK    1406
+    CLASS     213  214
+    CLASSDEFAULT   940
+    CLASSIS   939
+    CLOSE    1033
+    COLLAPSE 1364 1589 1606
+    COMMON     90
+    COMPARE  1612 1734
+    COMPLEX   222
+    CONCURRENT     950
+    CONSTANT  387
+    CONTAINS   17
+    CONTIGUOUS     142  394
+    CONTINUE  823
+    CONVERT  1101
+    COPY      176  571 1574
+    COPYIN    174  568 1362 1546
+    COPYOUT   175  569 1547
+    COPYPRIVATE   1347
+    CREATE    172  574 1549
+    CYCLE    1006
+    D   1186
+    DATA       97
+    DC  1213
+    DEALLOCATE     978
+    DECIMAL  1108
+    DECLARE   139
+    DECODE   1047 1048
+    DEFAULT   161  964 1353 1604
+    DEFAULTKIND    510
+    DEFAULTMAP    1381
+    DEFAULT_ASYNC 1729
+    DELETE   1598
+    DELIM    1081
+    DEPEND   1443
+    DEVICE    384 1377 1578 1665
+    DEVICEID 1597 1671 1684
+    DEVICEPTR      178  581 1556
+    DEVICE_NUM    1722 1728 1732
+    DEVICE_RESIDENT     582
+    DEVICE_TYPE    607 1601 1723 1727 1733
+    DIMENSION      207
+    DIRECT   1089
+    DISPOSE  1075
+    DISTRIBUTE    1026
+    DISTRIBUTEPOINT    1025
+    DIST_SCHEDULE 1383
+    DO   944  945 1689
+    DOUBLECOMPLEX  223
+    DOUBLEPRECISION     221
+    DP  1214
+    DT  1194
+    E   1183 1185
+    ELEMENTAL       53
+    ELSE      894
+    ELSEIF    941
+    ELSEWHERE      970  971
+    EN  1191
+    ENCODE   1045 1046
+    ENCODING 1109
+    END    0    0
+    ENDASSOCIATE   909
+    ENDBLOCK   86
+    ENDBLOCKDATA    75
+    ENDDO     898
+    ENDENUM   131
+    ENDFILE  1031
+    ENDFORALL      903
+    ENDFUNCTION     76
+    ENDIF     895
+    ENDINTERFACE   460  461
+    ENDMAP    106
+    ENDMODULE       77
+    ENDPROCEDURE    81
+    ENDPROGRAM      78
+    ENDSELECT      907
+    ENDSTRUCTURE   101
+    ENDSUBMODULE    80
+    ENDSUBROUTINE   79
+    ENDTYPE   108
+    ENDUNION  104
+    ENDWHERE  901
+    ENTRY      66
+    ENUM      129
+    ENUMERATOR     130
+    EOR 1100
+    EQUIVALENCE     96
+    ERR 1059
+    ERRMSG    994
+    ERRORSTOP      878  879
+    ES  1192
+    EXCLUDE   609
+    EXIST    1084
+    EXIT     1003
+    EXTENDS   408
+    EXTERNAL   91  372
+    End 1095
+    F   1182
+    FILE     1069
+    FINAL     622 1366
+    FIRSTPRIVATE  1402 1558
+    FLUSH    1051
+    FMT 1093
+    FORALL   1000 1001
+    FORM     1072
+    FORMAT   1139 1141
+    FORMATTED     1090
+    FROM     1447
+    FUNCTION   44   45
+    G   1184
+    GANG      600  608 1587 1588
+    GENERIC   614
+    GOTO      885  891
+    GOTOX     841  842  848
+    GRAINSIZE     1384
+    HOST     1568 1569 1576 1663
+    I   1163 1164
+    ID  1103
+    IF   887  888 1422 1423 1424 1425 1570 1668 1683
+    IGNORE_TKR     512  513
+    IMPLICIT   89
+    IMPORT    521
+    IMPURE     55
+    INBRANCH 1374
+    INCLUDE    15
+    INDEPENDENT   1572
+    INIT_NEEDED    162
+    INQUIRE  1035 1049
+    INTEGER   219
+    INTENT    419  420
+    INTERFACE      433  434
+    INTRINSIC       92  374  473
+    IOLENGTH 1049
+    IOMSG    1061
+    IOSTAT   1060
+    IS_DEVICE_PTR 1380
+    KERNEL   1573 1689
+    KIND      392
+    L   1167
+    LASTPRIVATE   1403
+    LAUNCHBOUNDS    57   58
+    LEN  393
+    LINEAR   1428
+    LINK      583 1376
+    LOCAL     508  570  965 1548
+    LOCAL_INIT     966
+    LOGICAL   224
+    MANAGED   395
+    MAP  105
+    MERGEABLE     1367
+    MIRROR    572 1575
+    MODULE     29   56  462  463
+    MOLD      996
+    MOVEDESC  511
+    MP_MAP   1438
+    MP_SCHEDTYPE  1405
+    N   1166
+    NAME     1070
+    NAMED    1087
+    NAMELIST   99
+    NCHARACTER     226
+    NEWUNIT  1062
+    NEXTREC  1092
+    NML 1096
+    NOGROUP  1389
+    NOHOST    604
+    NONE      268  964
+    NON_INTRINSIC  474
+    NOPASS    544
+    NOSEQUENCE     418
+    NOTINBRANCH   1375
+    NOWAIT   1341 1583 1631
+    NO_CREATE      173 1611
+    NULLIFY  1018
+    NUMBER   1086
+    NUM_GANGS     1594
+    NUM_TASKS     1385
+    NUM_TEAMS     1387
+    NUM_THREADS   1363
+    NUM_WORKERS   1593
+    O   1168 1169
+    OPEN     1034
+    OPENED   1085
+    OPERATOR  436  439
+    OPTIONAL  115  375  539
+    OPTIONS    16
+    ORDERED  1359
+    P   1160 1161
+    PAD 1082
+    PARALLEL 1491 1564 1565
+    PARAMETER       95   98  368
+    PASS      542  543
+    PAUSE     882
+    PCOPY     576 1551
+    PCOPYIN   577 1552
+    PCOPYOUT  578 1553
+    PCREATE   580 1555
+    PDELETE  1599
+    PENDING  1104
+    PGICOMPARE    1735
+    PINNED    385  992
+    PLOCAL    579 1554
+    PNOT     1605
+    POINTER   110  376  540
+    POS 1105
+    POSITION 1083
+    PREFETCH 1024
+    PRESENT   575 1550
+    PRINT    1038 1039
+    PRIORITY 1386
+    PRIVATE   411 1401 1557
+    PROCEDURE      462  463  464  465  528
+    PROC_BIND     1368
+    PROGRAM    46
+    PROTECTED      136  388  545
+    PUBLIC    410
+    PURE       52
+    Q   1215
+    QUIET     877
+    RC  1221
+    RD  1218
+    READ     1040 1041 1042 1077 1332
+    READONLY 1076
+    READWRITE     1079
+    REAL      220
+    REC 1094
+    RECL     1073
+    RECORD    102
+    RECURSIVE       51
+    REDUCTION     1360 1592
+    REFLECTED      573
+    RETURN    874  875
+    REWIND   1032
+    RN  1220
+    ROUND    1112
+    ROUTINE   143  144
+    RP  1222
+    RU  1217
+    RZ  1219
+    S   1208
+    SAFELEN  1369
+    SAVE       93   94  377  541
+    SCHEDULE 1404
+    SELECTCASE    1007 1008
+    SELECTTYPE     917  918
+    SELF     1577 1664
+    SEQ  603 1566 1567
+    SEQUENCE  417
+    SEQUENTIAL    1088
+    SEQ_CST  1340
+    SHARED    386  967 1102 1355
+    SHORTLOOP     1560
+    SIGN     1110
+    SIMD     1396
+    SIMDLEN  1372
+    SIZE     1106
+    SOURCE    995
+    SP  1209
+    SS  1210
+    STAT      993
+    STATIC    126  380
+    STATUS   1068
+    STOP      876
+    STREAM   1111
+    STRUCTURE      100
+    SUBMODULE       30   31
+    SUBROUTINE      43
+    T   1203
+    TARGET    116  378
+    TCONTAINS      135
+    TEXTURE   391
+    THEN      892  893
+    THREADS  1397
+    THREAD_LIMIT  1388
+    TL  1204
+    TO   847 1446
+    TPROCEDURE     552
+    TR  1205
+    TYPE      107  165  212
+    TYPEIS    924
+    UNFORMATTED   1091
+    UNIFORM  1437
+    UNION     103
+    UNIT     1058
+    UNROLL   1571
+    UNTIED   1365
+    UPDATE    177 1331
+    USE  119
+    USE_DEVICE    1596
+    VALUE     147  382
+    VECTOR    602 1561 1562 1563
+    VECTOR_LENGTH 1595
+    VOLATILE  109  383
+    WAIT     1050
+    WHERE     973  974
+    WHILE     949
+    WORKER    601 1584 1585 1586
+    WRITE    1036 1037 1078 1333
+    X   1206 1207
+    Z   1170 1171
+    <AND opr1>     793 -794
+    <F1 item>     1154-1162-1163-1164-1165-1166-1167-1168-1169-1170-1171
+                 -1172-1173-1174-1175-1176-1177-1178-1179-1180
+    <F2 item>     1155-1182-1183-1184-1185-1186-1187-1188-1189-1190-1191
+                 -1192-1193-1194-1195
+    <F3 item>     1157-1203-1204-1205-1206-1207-1208-1209-1210-1211-1212
+                 -1213-1214-1215-1216-1217-1218-1219-1220-1221-1222
+    <GOTO assignment>   818 -847
+    <GOTO stmt>      8 -885
+    <IF clause>   -886  890
+    <IO stmt>      827-1030-1031-1032-1033-1034-1035-1036-1037-1038-1039
+                 -1040-1041-1042-1043-1044-1045-1046-1047-1048-1049-1050
+                 -1051
+    <OR opr1>      788  789 -790
+    <SYSTEM GOAL SYMBOL>       0
+    <ac beg>  671 -673
+    <ac end>  671 -674
+    <ac item>      680  681 -682 -683 -684 -685
+    <ac list>      677  678  680 -680 -681  683  685
+    <ac spec>      671 -676 -677 -678 -679
+    <acc gang arg>     1613 1614-1615-1616
+    <acc gang args>    1587-1613 1614-1614
+    <acc init attr>    1721-1722-1723
+    <acc shutdown attr>     1731-1732-1733
+    <accel add opr>     196 -198 -199  202
+    <accel attr>  1544 1545-1546-1547-1548-1549-1550-1551-1552-1553-1554
+                 -1555-1556-1557-1558-1559-1560-1561-1562-1563-1564-1565
+                 -1566-1567-1568-1569-1570-1571-1572-1573-1574-1575-1576
+                 -1577-1578-1579-1580-1581-1582-1583-1584-1585-1586-1587
+                 -1588-1589-1590-1591-1592-1593-1594-1595-1596-1597-1598
+                 -1599-1600-1601-1602-1603-1604-1605-1606-1607-1608-1609
+                 -1610-1611-1612
+    <accel begin>  148 1489 1490 1491 1492 1493 1494 1495 1496 1497 1498
+                  1499 1500 1501 1502 1503 1504 1505 1506 1507 1508 1509
+                  1512 1513 1514 1516 1517 1518 1520 1521 1522 1523 1524
+                  1525 1526 1527 1528 1529 1530 1531 1532 1533 1534 1535
+                  1536 1537 1538-1540
+    <accel compare dir>     1538-1734
+    <accel data list>  1439 1440 1517 1546 1547 1548 1549 1550 1551 1552
+                       1553 1554 1555 1574 1576 1577 1578 1580 1581 1598
+                       1599 1605 1609 1610 1611 1612 1632-1632-1633 1654
+                       1655 1656 1657 1658 1663 1664 1665 1666 1667 1675
+                       1676 1677 1678 1679 1734 1735
+    <accel data name>   716 -717  718 -718 -719 1634 1635 1638 1639
+    <accel data ss>    -716  719
+    <accel data>  1632 1633-1634-1635-1636-1637-1638-1639
+    <accel decl attr>   566  567 -568 -569 -570 -571 -572 -573 -574 -575
+                       -576 -577 -578 -579 -580 -581 -582 -583
+    <accel decl begin>  138  139  143  144 -565
+    <accel decl data list>   568  569  570  571  574  575  576  577  578
+                        579  580  582  583  584 -584 -585
+    <accel decl data name>   586  587  720 -722  723 -723 -724
+    <accel decl data ss>    -720  724
+    <accel decl data>   584  585 -586 -587 -588 -589
+    <accel decl list>   138  139  566 -566 -567
+    <accel decl sub list>    586  590  595 -595 -596  720  721
+    <accel decl sub>    595  596 -597 -598
+    <accel dp addexp>   194 -196
+    <accel dp bnd>      189  189  190 -191 -192 -193
+    <accel dp bndexp1>  193 -202
+    <accel dp bndexp>   192 -194 -195
+    <accel dp mulexp>   195 -197  202
+    <accel dp sbnd>     191  196  196  197  197  202 -203 -204
+    <accel dp stmts>    148 -149 -150
+    <accel dpdefault attr>   158 -161  179
+    <accel dpinit_needed attr>    159 -162
+    <accel dpinitvar list>   162  163 -163 -164
+    <accel dptype attr>      160 -165  180
+    <accel dpvar bnd>   187  188 -189 -190
+    <accel dpvar bnds>  185  186  187 -187 -188
+    <accel dpvar>  181  182 -183 -184 -185 -186
+    <accel dpvarlist>   152  153  154  155  172  173  174  175  176  177
+                        178  181 -181 -182
+    <accel list>  1543 1544-1544-1545
+    <accel mdata list> 1556 1557 1558 1559 1575 1596 1640-1640-1641
+    <accel mdata name>  728 -729  730 -730 -731 1642 1643
+    <accel mdata ss>   -728  731
+    <accel mdata> 1640 1641-1642-1643-1644
+    <accel mdecl data list>  572  573  581  593 -593 -594
+    <accel mdecl data name>  590  591  721 -725  726 -726 -727
+    <accel mdecl data ss>   -721  727
+    <accel mdecl data> -590 -591 -592  593  594
+    <accel mul opr>     197 -200 -201
+    <accel policy attr list>      169  170 -170 -171
+    <accel policy attr>      170  171 -172 -173 -174 -175 -176 -177 -178
+                       -179 -180
+    <accel policy declstmt>  150 -166
+    <accel policy dir>  166 -169
+    <accel policy name>      166 -167 -168
+    <accel routine list>     143  144 -599  600 -600  601 -601  602 -602
+                        603 -603  604 -604  605 -605  606 -606  607 -607
+                        608 -608  609 -609
+    <accel sdata list> 1533 1645-1645-1646
+    <accel sdata name> -732 1647
+    <accel sdata> 1645 1646-1647-1648
+    <accel setdev attr>     1725 1726-1727-1728-1729
+    <accel setdev dir> 1532-1724
+    <accel setdev list>     1724-1725 1726-1726
+    <accel shape attr>  156  157 -158 -159 -160
+    <accel shape attrs>      153  155  156 -156 -157
+    <accel shape declstmt>   149 -151
+    <accel shape dir>   151 -152 -153 -154 -155
+    <accel short update>    1579-1675-1676-1677-1678-1679
+    <accel stmt>   836-1489-1490-1491-1492-1493-1494-1495-1496-1497-1498
+                 -1499-1500-1501-1502-1503-1504-1505-1506-1507-1508-1509
+                 -1510-1511-1512-1513-1514-1515-1516-1517-1518-1519-1520
+                 -1521-1522-1523-1524-1525-1526-1527-1528-1529-1530-1531
+                 -1532-1533-1534-1535-1536-1537-1538-1539
+    <accel sub list>    716  728 1634 1638 1642 1649-1649-1650
+    <accel sub>   1649 1650-1651-1652
+    <accel update attr>     1661 1662-1663-1664-1665-1666-1667-1668-1669
+                      -1670-1671-1672-1673-1674
+    <accel update dir> 1502-1653-1654-1655-1656-1657-1658
+    <accel update list>     1653 1660-1661 1662-1662
+    <accel wait list>  1600 1673 1681-1687 1688-1688
+    <access list>  114  412 -412 -413
+    <access spec>  114  120  369  407 -410 -411  536
+    <access>  412  413 -414 -415 -416
+    <accsize>     1616 1622 1623-1624-1625
+    <accsizelist> 1603-1622 1623-1623
+    <addition>     656  760 -762 -763 -764  804
+    <addop list>   767 -767 -768  771  780
+    <addop>   348  350  445  762  763 -765 -766  767  768 1161 1199 1201
+             1415 1450
+    <aligned clause>   1371-1434
+    <aligned>     1434-1435-1436
+    <alloc cntl item>   990  991 -992 -993 -994 -995 -996 -997
+    <alloc cntl list>   989  990 -990 -991
+    <alloc cntl>   976  977  978 -988 -989
+    <alloc id list>     111  360 -360 -361
+    <alloc id>     359  360  361 -362 -363
+    <alloc list>   976  977  978  980 -980 -981
+    <alloc obj>    982 -983  984 -984  985 -985  986 -986  987 -987
+    <alloc object>      980  981 -982
+    <alloc type>   977 -979
+    <allocation stmt>   826 -976 -977 -978
+    <alt name>     496  497  501 -502 -503
+    <arg builtin>  713 -733  873
+    <arg list>     856  867 -867 -868
+    <arg>     867  868 -869 -870 -871 -872 -873
+    <arith IF>     820 -849
+    <arith expr>  -760 -761  762  763  812  814
+    <arith>   849 -852
+    <assigned GOTO>     817 -841 -842
+    <assignment>   816  832 -839 1022
+    <assoc or selector>      917  918 -919 -920
+    <associate stmt>    908 -912 -913
+    <association list>  912  913 -914  915 -915
+    <association>  914  915 -916  919
+    <attr list>    365  366 -366 -367
+    <attr>    366  367 -368 -369 -370 -371 -372 -373 -374 -375 -376 -377
+             -378 -379 -380 -381 -382 -383 -384 -385 -386 -387 -388 -389
+             -390 -391 -392 -393 -394 -395
+    <base type>    210  211  217  218 -219 -220 -221 -222 -223 -224 -225
+                  -226 -227
+    <begininterface>    431  432 -433 -434
+    <bind attr>     36   37   38  127  381 -396 -397  406  537
+    <bind entry>   398  399 -400 -401
+    <bind list>    127  398 -398 -399
+    <binding attr list>      556  557 -557 -558
+    <binding attr>      557  558 -559 -560
+    <binding name list>      551  561 -561 -562
+    <binding name>      561  562 -563 -564
+    <block stmt>    10  -84  -85  -86
+    <call>    821 -853 -854 -855 -856
+    <case begin>   904-1007-1008
+    <case expr>   1012 1013 1014 1015 1015-1016
+    <case value list>   905 1010-1010-1011
+    <case value>  1010 1011-1012-1013-1014-1015
+    <case>    905-1009
+    <char expr>   -812 -813  814
+    <char literal>      752 -755 -756 -757  758 1151 1196 1197
+    <check construct>    85  888 -889  913  918  945  974 1001 1008
+    <chevron>      854  855  856 -863
+    <classdefault stmt>      923 -940
+    <classis stmt>      922 -939
+    <cmn ident list>    495  504 -504 -505 1362
+    <cmn ident>    504  505 -506 -507 1399 1400
+    <com dcl>      275  279 -280 -281 -282
+    <common list>   90  275 -275 -276
+    <common>  282 -283  286  329  400  493  506  589 1637
+    <computed GOTO>     819 -848
+    <concatenation>     663  805  813 -814
+    <concurrent control>     954  955 -956
+    <concurrent header>      948 -951  998
+    <concurrent list>   951  954 -954 -955
+    <concurrent locality>    948 -959 -960
+    <concurrent type>   951 -952 -953
+    <conjunction>  660  791 -793
+    <constant>     203  347  348  588  592  668 -738 -739 -740 -741 -742
+                  -743 -744 -745 -746 -747 -748 -749 -750 -751 -752 -753
+                  -754 1450 1636 1644 1648
+    <construct name>     86  893  894  895  898  901  903  905  906  907
+                        909  924  939  940  970  971 1003-1004-1005 1006
+    <control stmt>        9 -890 -891 -892 -893 -894 -895 -896 -897 -898
+                       -899 -900 -901 -902 -903 -904 -905 -906 -907 -908
+                       -909 -910 -911
+    <cvar ref>     853 -857 -858 -859 -860 -861 -862
+    <cycle stmt>   829-1006
+    <data constant>     342  343 -347 -348 -349 -350 -351 -352 -353
+    <data item>    340  341 -342 -343
+    <data rpt>     343 -344 -345 -346
+    <data type>     62   63   64   65   87  112 -210 -211 -212 -213 -214
+                   269  270  531
+    <dcl id list>   88  251 -251 -252  277  278  280  281  282
+    <dcl id>  248  249  251  252 -253 -254  358  430
+    <dec declaration>   123 -495 -496 -497
+    <declaration>    6  -87  -88  -89  -90  -91  -92  -93  -94  -95  -96
+                   -97  -98  -99 -100 -101 -102 -103 -104 -105 -106 -107
+                  -108 -109 -110 -111 -112 -113 -114 -115 -116 -117 -118
+                  -119 -120 -121 -122 -123 -124 -125 -126 -127 -128 -129
+                  -130 -131 -132 -133 -134 -135 -136 -137 -138 -139 -140
+                  -141 -142 -143 -144 -145 -146 -147 -148
+    <declare reduction>      645 -647
+    <declare simd name>     1226-1227-1228
+    <declare simd>      643-1226
+    <declare target>    644-1229-1230-1231
+    <declarered begin>  645 -646
+    <defined binary>    665 -815
+    <defined unary>     666  778 -779
+    <depend attr> 1443-1444-1445
+    <depend clause>    1379 1398-1443
+    <depend data list> 1445-1448-1449
+    <depend data> 1449-1450
+    <derived type spec>      926 -927 -928
+    <devtype attr>      610  611 -612 -613
+    <devtype list>      607  610 -610 -611 1601 1723 1733
+    <dflt>    510 -519 -520
+    <dim beg>      254 -255  318  326  363  371  427
+    <dim list>     256  257 -257 -258
+    <dim spec>     257  258 -259 -260 -261 -262 -263 -264
+    <dimension list>    254 -256  318  326  363  371  427
+    <dimkeyword>    88 -207 -208
+    <dinit const list>  248  333  340 -340 -341
+    <dinit list>    97  331 -331 -332
+    <dinit var list>    333  334 -334 -335  337
+    <dinit var>    334  335 -336 -337
+    <dinit>   331  332 -333
+    <disjunction>  659  786 -788 -789
+    <distpardo begin>  1289-1470
+    <distpardosimd begin>   1291-1471
+    <distribute begin> 1285-1468
+    <distsimd begin>   1287-1469
+    <do begin>     896  897 -942 -943
+    <do construct>      942  943 -944 -945
+    <doacross begin>   1246-1454
+    <doconcurrent>      948 -950
+    <dosimd begin>     1272-1460
+    <dowhile>      947 -949
+    <dt vlist>    1197 1198 1199-1199 1200-1200-1201-1202
+    <dts>    1194-1196-1197-1198
+    <dvar ref>     336 -695  696 -696  697 -697  698 -698  699 -699
+    <e3>      337 -338 -339
+    <elp>     670 -675  683  685  754  905 1128 1131 1135 1136 1701 1702
+             1703 1707 1708 1709
+    <elseif>  893 -941
+    <elsewhere clause>  900 -970 -971
+    <encode ctl>  1123-1125-1126
+    <encode spec> 1045 1046 1047 1048-1123
+    <encode unit> 1123-1124
+    <end accel attr>   1628 1629-1630-1631
+    <end accel list>   1627 1628-1628-1629
+    <end interface>     118 -460 -461
+    <end stmt>      13  -74  -75  -76  -77  -78  -79  -80  -81
+    <end>      13  -23
+    <endsingle item>   1344 1345-1346-1347
+    <endsingle list>   1343 1344-1344-1345
+    <entity decl list>  112  421 -421 -422
+    <entity decl>  421  422 -423 -424 -425
+    <entity id>    423  424  425 -426 -427
+    <entry id>      40   41   42  -66
+    <entry statement>     5  -40  -41  -42
+    <enum>    293  294 -295 -296
+    <enums>   130  293 -293 -294
+    <equiv group>  297  298 -299
+    <equiv groups>       96  297 -297 -298
+    <equiv list>   299  300 -300 -301
+    <equiv var>    300  301 -302  303 -303  304 -304
+    <eqv or neqv>  661  784 -785
+    <error stop pause>  878  879 -880 -881
+    <error stop stmt>   838 -878 -879
+    <etmp e3>      686 -689 -690  946
+    <etmp exp>     686  686 -688  690  848  946  946
+    <etmp lp>     -692  852  886  891  892  941  947 1007 1008
+    <etmp>    688 -691
+    <exit stmt>    828-1003
+    <explicit shape>    259 -265 -266
+    <exponentiation>    658  776 -781 -782  802
+    <expression list>   863  864 -864 -865 -866
+    <expression>   233  260  263  265  265  266  288  289  291  292  295
+                   337  337  339  424  598  608  634  635  650  653 -655
+                  -656 -657 -658 -659 -660 -661 -662 -663 -664 -665 -666
+                   669  670  682  684  684  685  688  710  711  733  735
+                   737  754  754  815  839  852  864  866  869  870  875
+                   877  881  884  886  891  892  893  916  920  933  934
+                   947  956  956  975  995  996  997 1007 1008 1016 1017
+                  1063 1068 1069 1070 1071 1072 1073 1074 1075 1080 1081
+                  1082 1083 1094 1097 1099 1101 1105 1107 1108 1109 1110
+                  1112 1113 1115 1124 1130 1363 1364 1366 1369 1372 1377
+                  1384 1385 1386 1387 1388 1391 1406 1410 1412 1422 1423
+                  1424 1425 1433 1436 1561 1562 1564 1566 1568 1570 1571
+                  1584 1585 1589 1591 1593 1595 1597 1606 1615 1617 1618
+                  1619 1620 1621 1624 1652 1668 1670 1671 1683 1684 1686
+                  1687 1688 1694 1700 1706 1714 1718 1719 1722 1728 1729
+                  1732
+    <factor>  770  772 -776 -777 -778  780  781
+    <fcn name>      45  -67
+    <ffield> 1159 1160 1161 1163 1164 1164 1165 1166 1167 1168 1169 1169
+             1170 1171 1171 1178 1179 1179 1182 1182 1183 1183 1184 1184
+             1185 1186 1186 1191 1191 1192 1192 1203 1204 1205 1206-1223
+    <fid or nid> -1115-1116 1117 1120 1122
+    <field name>   315  316 -317 -318
+    <field namelist>    314  315 -315 -316
+    <final list>   622  623 -623 -624
+    <final subroutines>      141 -622
+    <final>   623  624 -625
+    <firstprivate>     1356-1402
+    <flp>    1162 1180-1181 1224
+    <forall assn stmt>  833-1022-1023
+    <forall begin>      998 -999
+    <forall clause>     833  902 -998
+    <forall construct>  999-1000-1001
+    <formal list>   26   42   68  -68  -69
+    <formal>   68   69  -70  -71
+    <format id>   1093-1113-1114 1121 1124
+    <format item> 1142 1143 1145-1148-1149-1150-1151-1152-1153-1154-1155
+                 -1156-1157
+    <format list unl>  1140 1144 1145-1146-1147 1180
+    <format list> 1137 1142-1142-1143-1144-1145 1146 1162 1224
+    <format stmt>   11-1137-1138-1139-1140
+    <format> 1137 1138 1140-1141
+    <func prefix>   45  -62  -63  -64  -65
+    <func suffix>   25   26  -35  -36  -37  -38  -39   41   42
+    <gangsize2>   1618-1619-1620
+    <gangsize3>   1620-1621
+    <gangsizes>   1594-1617-1618
+    <gen access spec>   616 -617
+    <generic binding list>   618 -620  621 -621
+    <generic binding name>  -619  620  621
+    <generic binding>   614 -618
+    <generic name>      435 -438 -439 -440 -441
+    <generic spec>      432 -435 -436 -437  461  618
+    <generic type procedure>      140 -614
+    <get module>   466  467  468  469 -470 -471 -472
+    <id name list>       54   60  -60  -61  134
+    <id>       28   29   30   30   31   31   31   33  -34   43   44   46
+               66   67   70  107  212  213  401  408  425  470  471  472
+              530  549  550  554  560  563  564  564  619  625  628  629
+              697  698  703  704  718  719  723  724  726  727  730  731
+              756  860  861  916  985 1005 1228
+    <idc eq>  686 -687
+    <ident constant>    346  349  350 -355
+    <ident list>    72  -72  -73   91   92  113  115  125  126  134  136
+                   137  142  147  462  463  464  465  508  520 1230 1255
+                  1376 1380
+    <ident ssa>    351  352 -354
+    <ident>   -33   72   73   83  154  155  161  163  164  165  167  168
+              168  183  184  184  185  186  186  204  205  206  216  253
+              254  283  287  288  289  291  292  295  296  302  304  307
+              310  312  317  318  322  325  326  330  337  354  355  358
+              362  363  414  426  427  438  441  441  443  477  477  479
+              483  484  484  489  494  496  497  507  516  526  543  548
+              549  550  605  608  613  695  700  717  722  725  729  732
+              841  842  854  855  856  857  929  968  969  983  987 1096
+             1421 1450 1533 1561 1584 1604 1606 1616 1638 1639 1727
+    <ideqc list>    95  288 -288 -289
+    <if construct>      852  886 -887 -888  891  892
+    <ignore tkr>   509 -512 -513
+    <iii>     -19   93   94   97   99
+    <implicit list>     267  269 -269 -270
+    <implicit type>      89 -267 -268
+    <implied do control>     683 -686 1131 1136
+    <import name list>  523  524 -524 -525
+    <import name>  524  525 -526
+    <import>  128 -521
+    <init beg>     288  289 -290  424
+    <init com dcl>      276 -277 -278 -279
+    <input item>  1132 1133-1134-1135-1136
+    <input list>  1040 1042 1044 1047 1132-1132-1133 1135 1136
+    <intent>  113  373 -419 -420  538
+    <interface>    117 -431 -432
+    <intrinsic op>      442 -445 -446 -447 -448 -449 -450 -451 -452 -453
+                       -454 -455  488
+    <intrinsic type>    215 -217 -218  925  953
+    <io spec>     1036 1037 1040-1118
+    <kernel begin>     1689-1690
+    <kernel do arg>    1716-1717-1718-1719
+    <kernel do args>   1697-1715 1716-1716
+    <kernel do block shape> 1697-1704-1705-1706-1707-1708-1709
+    <kernel do grid shape>  1697-1698-1699-1700-1701-1702-1703
+    <kernel do list>   1689-1691
+    <kernel do nest>   1691-1692-1693-1694
+    <kernel do shape>  1691-1695-1696-1697
+    <kernel shape expr>     1710 1710 1711-1712-1713-1714
+    <kernel shape list>     1703 1709-1710 1711-1711
+    <kernel stmt>  837-1689
+    <label list>   841  843 -843 -844  848
+    <label>   845 -846  942
+    <lastprivate> 1357-1403
+    <launchbound>   57   58   58  -59
+    <len kind spec>     237  238  240  240 -241
+    <len kind>     211  218 -236 -237 -238 -239 -240
+    <len spec>     229  230 -231 -232
+    <linear clause>    1370-1428
+    <linear expr> 1428-1429
+    <linear modifier>  1429-1430-1431
+    <linear opt step>  1429-1432-1433
+    <locality kind>     963 -965 -966 -967
+    <locality name list>     963  968 -968 -969
+    <locality spec list>     960  961 -961 -962
+    <locality spec>     961  962 -963 -964
+    <log disjunct>      783  785 -786 -787  790
+    <log expr>    -783 -784  785  815
+    <log factor>   792  793 -795 -796 -797  798  799
+    <log negation>      662  795 -798 -799
+    <log term>     787  788  789 -791 -792  794
+    <loop control>      896 -946 -947 -948
+    <map clause>  1378-1438
+    <map item>    1438-1439-1440
+    <map type>    1440-1441-1442
+    <mask expr>    958  971  972 -975
+    <module nature>     471 -473 -474
+    <module procedure stmt>   32 -462 -463
+    <motion clause>    1382-1446-1447
+    <mp atomic begin>  1245-1453
+    <mp begin>    1232-1233
+    <mp decl begin>     146 -642
+    <mp decl>      146 -643 -644 -645
+    <mp stmt>     1232-1234-1235-1236-1237-1238-1239-1240-1241-1242-1243
+                 -1244-1245-1246-1247-1248-1249-1250-1251-1252-1253-1254
+                 -1255-1256-1257-1258-1259-1260-1261-1262-1263-1264-1265
+                 -1266-1267-1268-1269-1270-1271-1272-1273-1274-1275-1276
+                 -1277-1278-1279-1280-1281-1282-1283-1284-1285-1286-1287
+                 -1288-1289-1290-1291-1292-1293-1294-1295-1296-1297-1298
+                 -1299-1300-1301-1302-1303-1304-1305-1306-1307-1308-1309
+                 -1310-1311-1312-1313-1314-1315-1316-1317-1318-1319-1320
+                 -1321-1322-1323-1324-1325
+    <msattr list>  495  498 -498 -499
+    <msattr>  498  499 -500 -501
+    <mult op>      446  772  773 -774 -775
+    <multiplication>    657  769 -772 -773  803
+    <n eqv op>     448 -456 -457 -458 -459  785
+    <namelist group>    305  306 -307
+    <namelist groups>    99  305 -305 -306
+    <namelist list>     307  308 -308 -309
+    <namelist var>      308  309 -310
+    <new factor>   773 -780  782
+    <new term>     763  764 -771
+    <nii>       5    7    8    9   10   11   16   17  -20
+    <nim>       5    7    8    9   10   11   16  -21
+    <nis>      17   89   90   91   92   93   94   96   97   99  110  111
+              117  118  119  125  126  128  129  130  131  136  137  138
+              139  142  143  144  146  147 -209  508  509  510  511
+    <nowait> 1329-1341 1346
+    <null stmt>     12-1002
+    <null>  -1027 1030 1031 1032 1033 1034 1035 1049 1050 1051
+    <nullify list>     1018 1019-1019-1020
+    <nullify object>   1019 1020-1021
+    <nullify stmt>      831-1018
+    <only list>    468  481 -481 -482
+    <only operator>     485  487  487 -488 -489 -490
+    <only>    481  482 -483 -484 -485 -486 -487
+    <operator>     415  436 -442 -443 -444
+    <opt accel init list>   1530-1720 1721-1721
+    <opt accel list>   1489 1490 1491 1492 1493 1494 1495 1496 1497 1498
+                       1499 1500 1501 1512 1514 1518 1520 1521 1534 1536
+                      -1542-1543
+    <opt accel shutdown list>    1531-1730 1731-1731
+    <opt aif label>     849 -850 -851
+    <opt atomic type>  1245-1330-1331-1332-1333-1334-1335
+    <opt attr list>     112 -364 -365
+    <opt attr>      88   91   92   93  107  109  110  111  113  114  115
+                   116  125  126  127  130  134  136  137  142  147 -244
+                  -245  523  527  551  622
+    <opt binding attr list>  552 -555 -556
+    <opt chunk>   1408-1409-1410
+    <opt comma>    566  600  601  602  603  604  605  606  607  608  609
+                  -640 -641  946  949  950 1329 1337 1339 1343 1344 1350
+                  1351 1394 1427 1442 1543 1544 1628 1662 1721 1726 1731
+    <opt csident> 1236 1237-1326-1327
+    <opt derived type spec>  212  213 -630 -631
+    <opt distchunk>    1383-1411-1412
+    <opt end accel list>    1503-1626-1627
+    <opt endsingle list>    1239-1342-1343
+    <opt expression>   1359-1390-1391
+    <opt gen access spec>    614 -615 -616
+    <opt ident>     75   76   77   78   79   80   81  -82  -83  108
+    <opt import>   128 -522 -523
+    <opt interface name>     552 -553 -554
+    <opt len spec>       67  210  217 -228 -229 -230  253  254  254  426
+                        427  427
+    <opt mask expr>     951 -957 -958
+    <opt nowait>  1241 1253 1259 1273-1328-1329
+    <opt ordered list> 1256-1392-1393
+    <opt par ifclause> 1271-1426-1427
+    <opt par list>     1226 1234 1238 1240 1246 1247 1249 1251 1260 1262
+                       1267 1269 1272 1274 1276 1278 1279 1280 1281 1283
+                       1285 1287 1289 1291 1293 1295 1297 1299 1301 1303
+                       1305 1307 1309 1311 1313 1315 1317 1319 1321-1349
+                      -1350
+    <opt proc attr>     528 -532 -533
+    <opt red init>      647 -652 -653 -654
+    <opt stride>   684  712 -736 -737  956
+    <opt sub>      597  597  712  712 -734 -735  758  758  759  759 1651
+                  1651
+    <opt tpsl>     107 -626 -627
+    <opt type spec>     107 -402 -403
+    <opt update list>  1654 1655 1656 1657 1658-1659-1660
+    <opt wait list>    1516-1680-1681 1682-1682
+    <optional comma>     87 -242 -243  280  281  282  310  325  326  331
+                        841  848 1045 1047 1118
+    <ordered attr>     1394 1395-1396-1397-1398
+    <ordered list>     1393 1394-1394-1395
+    <output item> 1127 1128 1129-1130-1131
+    <output list> 1037 1039 1045 1049 1127-1127 1128-1128-1129 1131
+    <par attr>    1351 1352-1353-1354-1355-1356-1357-1358-1359-1360-1361
+                 -1362-1363-1364-1365-1366-1367-1368-1369-1370-1371-1372
+                 -1373-1374-1375-1376-1377-1378-1379-1380-1381-1382-1383
+                 -1384-1385-1386-1387-1388-1389
+    <par begin>   1234-1348
+    <par ifclause>     1361-1422-1423-1424-1425 1427
+    <par list>    1231 1350 1351-1351-1352
+    <paralleldo begin> 1247-1455
+    <parallelsections begin>     1249-1456
+    <pardosimd begin>  1293-1472
+    <parworkshare begin>    1260-1458
+    <pause stmt>   825 -882
+    <pdo begin>   1240-1452
+    <pdt param list>    930  931 -931 -932
+    <pdt param>    931  932 -933 -934 -935 -936 -937 -938
+    <pdt>     928 -930
+    <pflsr list>  1355 1399-1399-1400 1401 1402 1403 1413 1414 1430 1431
+                  1435 1436 1437
+    <pgi begin>   1539-1541
+    <pgi compare dir>  1539-1735
+    <pgm>     -22   87   88   89   90   91   92   95   96   98  100  102
+              107  109  110  111  112  113  114  115  116  119  125  126
+              128  129  134  136  137  142  145  147  213  214  433  434
+    <pointer assignment>     830-1017 1023
+    <post seq_cst>     1331 1332 1333 1334-1338-1339
+    <pragma declaration>     124 -508 -509 -510 -511
+    <pragma stmt>  835-1024-1025-1026
+    <pre seq_cst> 1331 1332 1333 1334-1336-1337
+    <prefix spec>   48   49  -49  -50   63   64   65   65
+    <prefix>   49   50  -51  -52  -53  -54  -55  -56  -57  -58
+    <primary>      655 -667 -668 -669 -670 -671 -672  777  779  781  782
+                   801
+    <print spec>  1038 1039-1117
+    <private list>     1354-1401
+    <proc attr list>    533  534 -534 -535
+    <proc attr>    534  535 -536 -537 -538 -539 -540 -541 -542 -543 -544
+                  -545
+    <proc dcl list>     527  546 -546 -547
+    <proc dcl>     546  547 -548 -549 -550
+    <proc interf>  528 -529 -530 -531
+    <procedure declaration>  132 -527
+    <procedure stmt>    121 -464 -465
+    <procedure>    527 -528
+    <prog title>     4  -24  -25  -26  -27  -28  -29  -30  -31  -32
+    <psfunc>  839  839 -840 1017 1017
+    <ptr assoc>    356  357 -358 -359
+    <ptr list>     110  356 -356 -357
+    <quiet clause>     -877  879
+    <range list>   269  270  271 -271 -272
+    <range>   271  272 -273 -274
+    <read spec2>  1041-1119-1120
+    <read spec3>  1042 1044-1121
+    <read spec4>  1043-1122
+    <read>  -1029 1040 1041 1042 1043 1044 1047 1048
+    <record dcl>   323  324 -325 -326
+    <record list>  102  319 -319 -320
+    <record namelist>   321  323 -323 -324
+    <record>  319  320 -321
+    <red comb>     647 -650 -651
+    <reduc op>     647 1413-1415-1416-1417-1418-1419-1420-1421
+    <reduction>   1360-1413-1414 1592
+    <reflabel>     714  715  843  844 -845  847  849  849  851  871  872
+                   885  891 1059 1095 1100
+    <rel operand>  796  800  800 -801 -802 -803 -804 -805
+    <relation>     664  797 -800
+    <relop>   454  800 -806 -807 -808 -809 -810 -811
+    <rename list>  467  475 -475 -476
+    <rename operator>   478  478 -479 -480
+    <rename>  475  476 -477 -478
+    <repeat factor>    1149 1154 1155-1158-1159
+    <return>  822 -874 -875
+    <routine id list>   144 -205  206 -206
+    <routine id>    24   25   26  -43  -44  -45  -46
+    <save id>      284  285 -286 -287
+    <save list>     93  284 -284 -285
+    <scale factor>     1156-1160-1161
+    <sched type>  1404-1407-1408
+    <schedule>    1358-1404-1405-1406
+    <sections begin>   1251-1457
+    <select type stmt>  910 -917 -918
+    <seq cst>     1335 1337 1339-1340
+    <seq>     145 -417 -418
+    <simd begin>  1274-1461
+    <simple stmt>    7 -816 -817 -818 -819 -820 -821 -822 -823 -824 -825
+                  -826 -827 -828 -829 -830 -831 -832 -833 -834 -835 -836
+                  -837 -838  890
+    <single begin>     1238-1451
+    <smp stmt>     834-1232
+    <spec item>   1065 1066-1067-1068-1069-1070-1071-1072-1073-1074-1075
+                 -1076-1077-1078-1079-1080-1081-1082-1083-1084-1085-1086
+                 -1087-1088-1089-1090-1091-1092-1093-1094-1095-1096-1097
+                 -1098-1099-1100-1101-1102-1103-1104-1105-1106-1107-1108
+                 -1109-1110-1111-1112
+    <spec list>   1033 1034 1035 1050 1065-1065-1066 1118 1119 1126
+    <ssa list>     303  351  651  654  696  702  708 -708 -709  859  984
+                   987
+    <ssa>     708  709 -710 -711 -712 -713 -714 -715
+    <star repeat> 1224-1225
+    <statement>      1   -4   -5   -6   -7   -8   -9  -10  -11  -12  -13
+                   -14  -15  -16  -17  -18
+    <stbeg>     1   -2
+    <stend>     1   -3
+    <stmt>      0   -1
+    <stop pause>   876  882 -883 -884
+    <stop stmt>    824 -876
+    <struct begin1>     100 -311 -312
+    <struct begin2>     100 -313 -314
+    <struct name>  321 -322
+    <subr prefix>   43   44  -47  -48
+    <substring>    353  672 -758 -759
+    <target begin>     1281-1465
+    <target list>  116  428 -428 -429
+    <target>  428  429 -430
+    <targetdata begin> 1276-1462
+    <targetenterdata begin> 1278-1463
+    <targetexitdata begin>  1279-1464
+    <targetupdate begin>    1280-1466
+    <targpar begin>    1295-1473
+    <targpardo begin>  1297-1474
+    <targpardosimd begin>   1301-1476
+    <targparsimd begin>     1299-1475
+    <targsimd begin>   1303-1477
+    <targteams begin>  1305-1478
+    <targteamsdist begin>   1311-1481
+    <targteamsdistpardo begin>   1317-1484
+    <targteamsdistpardosimd begin>    1321-1486
+    <targteamsdistsimd begin>    1313-1482
+    <task begin>  1262-1459
+    <taskloop begin>   1267-1487
+    <taskloopsimd begin>    1269-1488
+    <teams begin> 1283-1467
+    <teamsdist begin>  1307-1479
+    <teamsdistpardo begin>  1315-1483
+    <teamsdistpardosimd begin>   1319-1485
+    <teamsdistsimd begin>   1309-1480
+    <term>    761  762 -769 -770  771  772  773
+    <tkr id list>  513  514 -514 -515
+    <tkr id>  514  515 -516
+    <tkr spec>     516 -517 -518
+    <tp item>      491  492 -493 -494
+    <tp list>      122  491 -491 -492 1347
+    <tprocedure>   551 -552
+    <tpv>     232 -233 -234 -235  236  238  239  239  241
+    <typdcl item>  246  247 -248 -249 -250
+    <typdcl list>   87  246 -246 -247
+    <type attr list>    403  404 -404 -405
+    <type attr>    404  405 -406 -407 -408 -409
+    <type bound procedure>   133 -551
+    <type guard stmt>   911 -921 -922 -923
+    <type list>    647  648 -648 -649
+    <type name>    927 -929  930
+    <type param decl list>   631 -632  633 -633
+    <type param spec list>   627  628 -628 -629
+    <type param value>  632  633 -634 -635 -636 -637 -638 -639
+    <type spec>   -215 -216  678  679  979
+    <typeis stmt>  921 -924
+    <typespec>     924 -925 -926  939
+    <uniform clause>   1373-1437
+    <unit data list>   1053 1055-1055-1056-1057
+    <unit data>   1055 1056 1057-1058-1059-1060-1061-1062 1067
+    <unit id>     1052 1054 1056 1058-1063-1064
+    <unit info>   1030 1031 1032 1051-1052-1053-1054
+    <unlimited format item> 1144 1146 1147-1224
+    <use>     119 -466 -467 -468 -469
+    <var primary ssa>   701  702 -706  858  859
+    <var primary>  703  704  705  706 -707  860  861  862
+    <var ref list>      693 -693 -694 1024 1446 1447 1448
+    <var ref>      667  686  693  694 -700 -701 -702 -703 -704 -705  707
+                   839  847  946  956  992  993  994 1017 1021 1049 1060
+                  1061 1062 1077 1078 1079 1084 1085 1086 1087 1088 1089
+                  1090 1091 1092 1103 1104 1106 1111 1124 1134
+    <vol id>  327  328 -329 -330
+    <vol list>     109  327 -327 -328
+    <vxeqc list>    98  291 -291 -292
+    <wait item>   1682-1683-1684-1685-1686
+    <where clause>      832  899 -972
+    <where construct>   972 -973 -974
+    <write> -1028 1036 1037 1038 1039 1045 1046
+

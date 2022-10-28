@@ -1,0 +1,146 @@
+
+
+************************
+Data Initialization File
+************************
+
+The file,
+*astb.df*,
+and the
+Data Initialization File are external binary files defining the
+initialization of variables.
+*astb.df*
+is written by
+the Semantic Analyzer as it processes initializers for variables
+and is read by the ast transformer in order to
+write the necessary data initialization statements.
+The Data Initialization File is written by many phases of the compiler
+to effect data initialization statements for certain variables
+(format arrays, namelist descriptors, array constructors) created
+by the compiler; this file is also processed by the ast transformer.
+
+The file ,
+*astb.df*,
+is written by the semantic analyzer as it processes initialization
+statements; this includes DATA statements and initializers in type
+statements.
+The file consists of a sequence of records, where a group of
+three consecutive records represents a single DATA statement.
+The first record is a single word whose value (a 4-byte value) is
+the line number where the initialization occurred in the source file.
+The second record is a variable length record which is the
+Initializer Variable List (IVL) representing the variables, implied-do's, etc.
+which are being initialized (see the chapter
+*Semantic Analyzer*).
+The third record is a variable length record which is the
+Initializer Constant Tree associated with the IVL
+(see the chapter
+*Semantic Analyzer*).
+
+The Data Initialization File consists of one or more
+*records.*
+Each record consists of 2 fields, a ``short int`` (dtype)
+and a 32-bit ``INT`` (conval).
+Records are written to, and read from the file via the routines
+``dinit_put`` and ``dinit_read`` in the module
+*dinitutil.c*.  These routines are also responsible
+for opening and possibly buffering the file.
+
+There are several types of record in the file,
+distinguished by the value of the first field (dtype):
+
+``dtype = DINIT_LOC``
+
+   ``DINIT_LOC``
+   is a special value chosen so as to not conflict
+   with any of the other possible values of this field.
+   ``conval``, the second field of the record, will be a
+   symbol table pointer to a variable, array, pointer, or structure.
+   This record indicates that a new symbol is being initialized.
+   It results in the name of the variable being written.
+   Ensuing records, up to the
+   ``DINIT_END`` record, will initialize consecutive
+   locations within this variable.
+
+``dtype = DINIT_FMT``
+
+   The value of ``conval`` is the symbol table of the array which
+   represents the format descriptor for the specifiers in a FORMAT
+   statement.
+   Ensuing records, up to the next
+   ``DINIT_END``, will initialize consecutive
+   locations within this array.
+
+``dtype = DINIT_NML``
+
+   The value of ``conval`` is the symbol table of the array which
+   represents the namelist descriptor for the variables in a NAMELIST
+   statement.
+   Ensuing records, up to the next
+   ``DINIT_END``, will initialize consecutive
+   locations within this array.
+
+``dtype = DINIT_END``
+
+   This record marks the end of the initializers for the variable specified
+   in the corresponding DINIT_LOC, DINIT_FMT, or DINIT_NML.
+
+``dtype = DT_DBLE``
+
+   Indicates that 2 32-bit words are to be initialized with
+   a 64-bit double precision floating point value.
+   ``conval`` is a symbol table pointer to a double precision constant.
+
+``dtype = DT_CMPLX``
+
+   Indicates that 2 32-bit words are to be initialized with
+   two 32-bit floating point values.
+   ``conval`` is a symbol table pointer to a
+   ``complex``
+   constant.
+
+``dtype = DT_DCMPLX``
+
+   Indicates that 2 64-bit words are to be initialized with
+   two 64-bit double precision floating point values.
+   ``conval`` is a symbol table pointer to a
+   ``doublecomplex``
+   constant.
+
+``dtype = Fortran Hollerith or CHARACTER``
+
+   ``dtype``
+   is actually ``DT_CHAR`` which indicates that
+   a sequence of bytes is to be initialized to the
+   characters in the
+   ``Hollerith``
+   or
+   ``CHARACTER``
+   string.
+   ``conval``
+   is a symbol table pointer to the
+   *string*
+   constant.
+   The length of the initialization is derived from the
+   *string*'s
+   ``DTYPE``,
+   not
+   ``dtype``.
+
+``dtype = other Fortran types``
+
+   Includes the integer, logical, and single precision data
+   types.
+   Indicates that the value of the current initializer
+   is conval.
+
+``dtype = DINIT_LABEL``
+   Indicates that the next integer is to be initialized with the address
+   of a variable.
+   ``conval``
+   is the symbol table pointer for the variable.
+   An initializer of this type does not actually appear in the
+   DATA statement which is emitted.
+   Instead, an assignment statement is added to the prologue of
+   the subprogram and each applicable ENTRY.
+   For example, a namelist descriptor requires the address of a variable.
